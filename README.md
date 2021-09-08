@@ -17,7 +17,7 @@
 
 * After a while the popups where gone and system32 cmd with powershell admin invoked. Cewl privesc going on here :D 
 
-# idea to get rid of enoying popups box ... 
+# The idea to get rid of enoying popups box ... 
 * The how to was pretty easy as when the cmd is called its allready elevated, so i was like lets add a user before it calls the exec of the powershell. 
 * And well behold there it was working as i wanted it.
 * I closed all boxes took me off the admin group rights and rerun the exploit. 
@@ -25,7 +25,7 @@
 * Well behold we popped it again and i was like fuck its working nicely, added user thats non admin group to the admingroup to be able to exec elevated powershell. 
 
 
-# code example of the ps1 file i made for the UAC bypass u can find in the repo
+# Code example of the ps1 file i made for the UAC bypass u can find in the repo
 * This particular code needs to files to make it all work i will include all of them here in the repo. 
 
 
