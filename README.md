@@ -11,7 +11,7 @@
 * I tested it and before i knew i had a cmd system32 incvoked .... i was like cewl we got local privesc :D
 * So with that i started to think well the windows server just been released how likely would it be same senario is going on here. 
 
-* Same senario i mean under the hood previuos mentioned part above, the internal structure.
+* Same senario i mean under the hood previous mentioned part above, the internal structure.
 * So i started transfering the files after i saw the windows 10 like start balk in windows server 2022, which made me realize this should be working. 
 * I run the files and stumbled on 2 password authentictions, and i was like ugh gotta find a way around this, so i digged around for a solution and well behold. 
 
