@@ -5,6 +5,7 @@
 # Build  : 20210809
 # Name   : UAC Bypass Win Server 2022
 # Impact : Privesc 
+# Method : DllReflection
 # 
 # Usage  : run the .ps1 file. 
 
