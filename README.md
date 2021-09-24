@@ -3,8 +3,8 @@
 # Introduction
 
 * Hello folks, i am Patrick Hoogeveen Aka x0xr00t. 
-* The quest to this hunt started 6 day's a go.... 
-* The main thing i noticed when installing windows 11 and trying it out, was that i could use a windows 10 seruial key activator. 
+* The quest to this hunt started a while back.... 
+* The main thing i noticed when installing windows 11 and trying it out, was that i could use a windows 10 serial key activator. 
 * This version it validiated on was not included in to the installer of windows 11 wich is enterprice, mine windows activated as such successfull. 
 * At that time i realized under the hood it still was the basic windows 10 for most of its structure, so with that came the next logics that came up to me. 
 * Most of the previous found local exploits should possible work on widows 11 so, with that in mind i started compiling a couple things like the needed files for the Bypass. 
@@ -29,6 +29,19 @@
 * This particular code needs two files to make it all work i will include all of them here in the repo. 
 
 
+# Setup Windows envo 
+* windows server 2022 | 2019
+* win 11 | win 10 
+
+* Add a new account non admin, on either windows server editions. Or windows editions. 
+* Set Exec policy powershell remote or bypass or unrestricted. 
+* Add a rdp 
+
+# Usage 
+* Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)  
+* Get the files on the system with the low user access. 
+* cd to dir 
+* ./
 
 
 # Thats it privesc windows server 2022 
