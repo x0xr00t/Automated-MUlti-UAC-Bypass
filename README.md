@@ -41,8 +41,14 @@
 * Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)  
 * Get the files on the system with the low user access. 
 * cd to dir 
-* ./
+* ./UAC-Bypass.ps1
 
+# What is going on in the code ??
+* Running the ps1 will make the dll from the .cs, then uses the $pwd to invoke the cmd with this reflected dll. 
+* It then runs the cmd as administrator by reflected dll attack. 
+* From here on we can invoke a powershell elevated as admin and disable all security mechanisms, forcefully uninstall defender, and lock the file system in worst case. 
+ 
 
-# Thats it privesc windows server 2022 
+ 
+# Thats it UAC Bypass privesc windows server 2022 with reflected dll.
 * X0xr00t 
