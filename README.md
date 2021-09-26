@@ -35,6 +35,7 @@
 
 # Code example of the ps1 file i made for the UAC bypass u can find in the repo
 * This particular code needs two files to make it all work i will include all of them here in the repo. 
+* The Dll i included it for easyness, but there is no need for it being on ur system as it would been made of the .cs file. 
 
 
 # Setup Windows envo 
