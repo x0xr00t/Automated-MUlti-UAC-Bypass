@@ -16,7 +16,7 @@
 * This version it validiated on was not included in to the installer of windows 11 wich is enterprise, mine windows activated as such successfull. 
 * At that time i realized under the hood it still was the basic windows 10 for most of its structure, so with that came the next logics that came up to me. 
 * Most of the previous found local exploits should possible work on widows 11 so, with that in mind i started compiling a couple things like the needed files for the Bypass. 
-* I tested it and before i knew i had a cmd system32 incvoked .... i was like cewl we got local privesc :D
+* I tested it and before i knew i had a cmd system32 invoked .... i was like cewl we got local privesc :D
 * So with that i started to think well the windows server just been released how likely would it be same senario is going on here. 
 
 * Same senario i mean under the hood previous mentioned part above, the internal structure.
