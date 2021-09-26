@@ -62,6 +62,6 @@
 # Thats it UAC Bypass privesc windows server 2022 with reflected dll.
 * X0xr00t 
 
-# Note: 
+# Legal Disclaimer: 
 * I am not responcible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
 
