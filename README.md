@@ -13,7 +13,7 @@
 * Hello folks, i am Patrick Hoogeveen Aka x0xr00t. 
 * The quest to this hunt started a while back.... 
 * The main thing i noticed when installing windows 11 and trying it out, was that i could use a windows 10 serial key activator. 
-* This version it validiated on was not included in to the installer of windows 11 wich is enterprice, mine windows activated as such successfull. 
+* This version it validiated on was not included in to the installer of windows 11 wich is enterprise, mine windows activated as such successfull. 
 * At that time i realized under the hood it still was the basic windows 10 for most of its structure, so with that came the next logics that came up to me. 
 * Most of the previous found local exploits should possible work on widows 11 so, with that in mind i started compiling a couple things like the needed files for the Bypass. 
 * I tested it and before i knew i had a cmd system32 incvoked .... i was like cewl we got local privesc :D
