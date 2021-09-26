@@ -33,9 +33,12 @@
 * Well behold we popped it again and i was like fuck its working nicely, added user thats non admin group to the admingroup to be able to exec elevated powershell. 
 
 
-# Code example of the ps1 file i made for the UAC bypass u can find in the repo
+# Code example 
 * This particular code needs two files to make it all work i will include all of them here in the repo. 
 * The Dll i included it for easyness, but there is no need for it being on ur system as it would been made of the .cs file. 
+
+* UAC-Bypass.ps1
+* sl0puacb.cs 
 
 
 # Setup Windows envo 
