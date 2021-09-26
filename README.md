@@ -1,4 +1,12 @@
 # win-server2022-UAC-Bypass
+* Affects also other versions 
+
+# Affected OS Versions
+
+* win 10 
+* win 11 
+* win server 2019
+* win server 2022
 
 # Introduction
 
