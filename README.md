@@ -53,6 +53,7 @@
 * Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)  
 * Get the files on the system with the low user access. 
 * cd to dir 
+* Edit the UAC-Bypass.ps1 on line 23 {UserNamehere} save and give it a go 
 * ./UAC-Bypass.ps1
 
 # What is going on in the code ??
