@@ -47,7 +47,7 @@
 
 * Add a new account non admin, on either windows server editions. Or windows editions. 
 * Set Exec policy powershell remote or bypass or unrestricted. 
-* Add a rdp 
+* Add a rdp if needed, i tested it with rdp (works also if u just run it on the system without rdp)
 
 # Usage 
 * Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)  
