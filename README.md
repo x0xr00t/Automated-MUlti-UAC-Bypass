@@ -39,7 +39,7 @@
 
 * UAC-Bypass.ps1
 * sl0puacb.cs 
-
+* sl0p.dll
 
 # Setup Windows envo 
 * windows server 2022 | 2019
