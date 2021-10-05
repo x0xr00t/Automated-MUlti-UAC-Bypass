@@ -34,7 +34,7 @@
 
 
 # Code example 
-* This particular code needs two files to make it all work i will include all of them here in the repo. 
+* This particular code needs three files to make it all work i will include all of them here in the repo. 
 * The Dll i included it for easyness.
 
 * UAC-Bypass.ps1
