@@ -53,8 +53,8 @@
 * Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)  
 * Get the files on the system with the low user access. 
 * cd to dir 
-* Edit the UAC-Bypass.ps1 on line 23 {UserNamehere} Put ur made username there without the {} and save the file, and give it a go 
-* ./UAC-Bypass.ps1
+* For the windows server versions Edit the UAC-Bypass.ps1 on line 23 {UserNamehere} Put ur made username there without the {} and save the file, and give it a go 
+* ./{version}-UAC-Bypass.ps1
 
 # What is going on in the code ??
 * Running the ps1 will make the dll from the .cs, then uses the $pwd to invoke the cmd with this reflected dll. 
