@@ -1,4 +1,4 @@
-# win-server2022-UAC-Bypass
+# win-server2019|2022-UAC-Bypass | Win10|win11-UAC-Bypass
 * Affects also other versions 
 
 # Affected OS Versions
@@ -69,7 +69,7 @@
 # Legal Disclaimer: 
 * I am not responcible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
  
-# Thats it UAC Bypass privesc windows server 2022 with reflected dll.
+# Thats it UAC Bypass privesc windows server 2019|2022 && wu10|win11 with reflected dll.
 * x0xr00t 
 
 
