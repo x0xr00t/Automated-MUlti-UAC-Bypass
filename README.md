@@ -34,17 +34,17 @@
 
 
 # Code example 
-* This particular code needs three files to make it all work i will include all of them here in the repo. 
+* This particular code needs four files to make it all work i will include all of them here in the repo. 
 * The Dll i included it for easyness.
 
-* UAC-Bypass.ps1
+* Win-Server2022|2019-UAC-Bypass.ps1 (For server editions)
+* Win10|1-UAC-Bypass.ps1
 * sl0puacb.cs 
 * sl0p.dll
 
 # Setup Windows envo 
-* windows server 2022 | 2019
-* win 11 | win 10 
-
+* windows server 2022 | 2019 (For Server Editions use this file...)
+* win 11 | win 10 (For regular windows use this file....) 
 * Add a new account non admin, on either windows server editions. Or windows editions. 
 * Set Exec policy powershell remote or bypass or unrestricted. 
 * Add a rdp if needed, i tested it with rdp (works also if u just run it on the system without rdp)
