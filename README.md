@@ -61,11 +61,15 @@
 * It then runs the cmd as administrator by reflected dll attack. 
 * From here on we can invoke a powershell elevated as admin and disable all security mechanisms, forcefully uninstall defender, and lock the file system in worst case. 
  
+# Side Note :
+* Added File for win10| win11 versions. 
+* Changed the main file to server editions. 
 
+
+# Legal Disclaimer: 
+* I am not responcible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
  
 # Thats it UAC Bypass privesc windows server 2022 with reflected dll.
 * x0xr00t 
 
-# Legal Disclaimer: 
-* I am not responcible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
 
