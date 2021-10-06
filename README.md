@@ -64,6 +64,8 @@
 # Side Note :
 * Added File for win10| win11 versions. 
 * Changed the main file to server editions. 
+* Main issue why this not worked on windows 10 or 11 is, that the add user is not needed and conflicts in the non server editions...
+* There for i added a secodn ps1 file wihtout the add user to group, which would fix the issue on non server based OS. 
 
 
 # Legal Disclaimer: 
