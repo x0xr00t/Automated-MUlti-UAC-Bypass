@@ -38,7 +38,7 @@
 * The Dll i included it for easyness.
 
 * Win-Server2022|2019-UAC-Bypass.ps1 (For server editions)
-* Win10|1-UAC-Bypass.ps1
+* Win10|1-UAC-Bypass.ps1 (For non server editions)
 * sl0puacb.cs 
 * sl0p.dll
 
