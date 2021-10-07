@@ -52,7 +52,6 @@
 * Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)  
 * Get the files on the system with the low user access. 
 * cd to dir 
-* For the windows server versions Edit the UAC-Bypass.ps1 on line 23 {UserNamehere} Put ur made username there without the {} and save the file, and give it a go 
 * ./{version}-UAC-Bypass.ps1
 
 # What is going on in the code ??
@@ -61,7 +60,7 @@
 * From here on we can invoke a powershell elevated as admin and disable all security mechanisms, forcefully uninstall defender, and lock the file system in worst case. 
  
 # Change log 
-* after being notified of a windows 10 not working, i investigated the issue, main thing it would not work is solved. 
+* After being notified of a windows 10 not working, i investigated the issue, main thing it would not work is solved. 
 * Changed the main file to have os check handling, so the UAC Bypass gets served for the OS it sees. 
 * This limitates the risk on failers with the code due to net \add command is not needed for the non windows server OS's... 
 * Shortest way to solve this without need of 2 files is the OS check i implemented here. 
