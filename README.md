@@ -37,8 +37,7 @@
 * This particular code needs four files to make it all work i will include all of them here in the repo. 
 * The Dll i included it for easyness.
 
-* Win-Server2022|2019-UAC-Bypass.ps1 (For server editions)
-* Win10|1-UAC-Bypass.ps1 (For non server editions)
+* Win-Multi-UAC-Bypass.ps1 
 * sl0puacb.cs 
 * sl0p.dll
 
@@ -61,11 +60,11 @@
 * It then runs the cmd as administrator by reflected dll attack. 
 * From here on we can invoke a powershell elevated as admin and disable all security mechanisms, forcefully uninstall defender, and lock the file system in worst case. 
  
-# Side Note :
-* Added File for win10| win11 versions. 
-* Changed the main file to server editions. 
-* Main issue why this not worked on windows 10 or 11 is, that the add user is not needed and conflicts in the non server editions...
-* There for i added a secodn ps1 file wihtout the add user to group, which would fix the issue on non server based OS. 
+# Change log 
+* after being notified of a windows 10 not working, i investigated the issue, main thing it would not work is solved. 
+* Changed the main file to have os check handling, so the UAC Bypass gets served for the OS it sees. 
+* This limitates the risk on failers with the code due to net \add command is not needed for the non windows server OS's... 
+* Shortest way to solve this without need of 2 files is the OS check i implemented here. 
 
 
 # Legal Disclaimer: 
