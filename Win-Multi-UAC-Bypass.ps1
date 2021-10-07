@@ -9,7 +9,7 @@
 # 
 # Usage  : run the .ps1 file. 
 
-$user= (whoami)
+$user = (whoami)
 write-Host ""
 write-Host ""
 write-Host ""
