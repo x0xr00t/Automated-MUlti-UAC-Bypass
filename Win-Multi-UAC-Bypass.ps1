@@ -84,7 +84,7 @@ switch ($OSVersion)
         }
         whoami
     }
-    "Microsoft Windows Server 2022"
+    "Windows Server 2022"
     {
 	Write-Host " 00000000000000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows Server 2022! 0"
