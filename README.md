@@ -1,5 +1,5 @@
 # win-server2019|2022-UAC-Bypass | Win10|win11-UAC-Bypass
-* Affects also other versions 
+
 
 # Affected OS Versions
 
