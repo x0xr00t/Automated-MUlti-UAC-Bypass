@@ -57,10 +57,12 @@
 * From here on we can invoke a powershell elevated as admin and disable all security mechanisms, forcefully uninstall defender, and lock the file system in worst case. 
  
 # Change log 
-* After being notified of a windows 10 not working, i investigated the issue, main thing it would not work is solved. 
-* Changed the main file to have os check handling, so the UAC Bypass gets served for the OS it sees. 
-* This limitates the risk on failers with the code due to net \add command is not needed for the non windows server OS's... 
-* Shortest way to solve this without need of 2 files is the OS check i implemented here. 
+v1.3 rolled out
+
+* Improved the handling checks for admin 
+* Red powershell background, when elevated 
+* Title change cause we can :D 
+* More to come maybe, just maybe...
 
 
 # Legal Disclaimer: 
