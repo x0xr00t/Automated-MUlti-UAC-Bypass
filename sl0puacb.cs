@@ -40,8 +40,8 @@ taskkill /IM cmstp.exe /F
 ""HKLM"", ""SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\CMMGR32.EXE"", ""ProfileInstallPath"", ""%UnexpectedError%"", """"
 
 [Strings]
-ServiceName=""sl0ppyr00tVPN""
-ShortSvcName=""Sl0ppyr00tVPN""
+ServiceName=""CorpVPN""
+ShortSvcName=""CorpVPN""
 
 ";
 
