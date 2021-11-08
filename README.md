@@ -1,10 +1,3 @@
-# Affected OS Versions
-
-* win 10 
-* win 11 
-* win server 2019
-* win server 2022
-
 # Introduction
 
 * Hello folks, i am Patrick Hoogeveen Aka x0xr00t. 
@@ -55,6 +48,13 @@
 * Running the ps1 will make the dll from the .cs, then uses the $pwd to invoke the cmd with this reflected dll. 
 * It then runs the cmd as administrator by reflected dll attack. 
 * From here on we can invoke a powershell elevated as admin and disable all security mechanisms, forcefully uninstall defender, and lock the file system in worst case. 
+
+# Affected OS Versions
+
+* win 10 
+* win 11 
+* win server 2019
+* win server 2022
  
 # Change log 
 v1.3 rolled out
