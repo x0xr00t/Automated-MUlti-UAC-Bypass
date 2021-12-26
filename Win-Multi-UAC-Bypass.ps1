@@ -23,7 +23,7 @@ write-Host ""
 write-Host ""
 $user=$(cmd.exe /c echo %username%)
 # OS-Check
-$OSVersion = (Get-WmiObject -class Win32_OperatingSystem).Caption# original code (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
+$OSVersion = (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
 switch ($OSVersion)
 {
     "Windows 10 Enterprise"
@@ -212,7 +212,7 @@ switch ($OSVersion)
            }
 
     }
-    "Windows 11 Enterprise"
+    "Windows 11 Enterprise "
     {
 	    Write-Host " 00000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows 11! 0"
@@ -305,7 +305,7 @@ switch ($OSVersion)
            }
 
     }
-    "Windows Server 2022 Datacenter Evaluation"
+    "Windows Server 2022 Datacenter Eveluation "
     {
 	    Write-Host " 00000000000000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows Server 2022! 0"
