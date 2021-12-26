@@ -23,7 +23,7 @@ write-Host ""
 write-Host ""
 $user=$(cmd.exe /c echo %username%)
 # OS-Check
-$OSVersion = (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
+$OSVersion = (Get-WmiObject -class Win32_OperatingSystem).Caption# original code (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
 switch ($OSVersion)
 {
     "Windows 10 Enterprise"
