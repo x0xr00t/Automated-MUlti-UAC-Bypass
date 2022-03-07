@@ -19,6 +19,11 @@ v1.3-beta rolled out
 
 * A test with mock folder, to import dll in to mock folder and exec uac. (not fully implemented yet) 
 
+# Usage
+* Extract.
+* Cd to dir.
+
+* ./file.ps1
 
 # Legal Disclaimer: 
 * I am not responcible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
