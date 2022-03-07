@@ -80,7 +80,6 @@ switch ($OSVersion)
  
            # Exit from the current, unelevated, process
            exit
-           whoami
            }
         # Get the ID and security principal of the current user account
         $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
@@ -117,7 +116,6 @@ switch ($OSVersion)
  
            # Exit from the current, unelevated, process
            exit
-           whoami
            }
 
     }
@@ -175,7 +173,6 @@ switch ($OSVersion)
  
            # Exit from the current, unelevated, process
            exit
-           whoami
            }
         # Get the ID and security principal of the current user account
         $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
@@ -270,7 +267,6 @@ switch ($OSVersion)
  
            # Exit from the current, unelevated, process
            exit
-           whoami
            }
         # Get the ID and security principal of the current user account
         $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
@@ -365,7 +361,6 @@ switch ($OSVersion)
  
            # Exit from the current, unelevated, process
            exit
-           whoami
            }
         # Get the ID and security principal of the current user account
         $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
@@ -402,7 +397,6 @@ switch ($OSVersion)
  
            # Exit from the current, unelevated, process
            exit
-           whoami
            }
     }
 }
