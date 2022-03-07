@@ -10,12 +10,14 @@
 * win server 2022
  
 # Change log 
-v1.3 rolled out
+v1.3-beta rolled out
 
 * Improved the handling checks for admin 
 * Red powershell background, when elevated 
 * Title change cause we can :D 
 * More to come maybe, just maybe...
+
+* A test with mock folder, to import dll in to mock folder and exec uac.
 
 
 # Legal Disclaimer: 
