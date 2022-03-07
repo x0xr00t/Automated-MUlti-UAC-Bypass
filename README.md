@@ -17,7 +17,7 @@ v1.3-beta rolled out
 * Title change cause we can :D 
 * More to come maybe, just maybe...
 
-* A test with mock folder, to import dll in to mock folder and exec uac.
+* A test with mock folder, to import dll in to mock folder and exec uac. (not fully implemented yet) 
 
 
 # Legal Disclaimer: 
