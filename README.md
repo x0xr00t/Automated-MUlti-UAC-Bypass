@@ -22,8 +22,7 @@ v1.3-beta rolled out
 
 # Legal Disclaimer: 
 * I am not responcible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
- 
-# Thats it UAC Bypass privesc windows server 2019|2022 && win10|win11 with reflected dll.
+
 * x0xr00t 
 
 
