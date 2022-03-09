@@ -10,7 +10,7 @@
 * win server 2022
  
 # Change log 
-v1.3-beta rolled out
+v1.3.2-beta rolled out
 
 * Improved the handling checks for admin 
 * Red powershell background, when elevated 
