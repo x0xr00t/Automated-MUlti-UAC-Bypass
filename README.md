@@ -8,7 +8,18 @@
 * win 11 
 * win server 2019
 * win server 2022
+
+# Setup 
+* Make user non admin. 
+* Set Exec policy powershell remote or bypass or unrestricted.
  
+# Usage
+* Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)
+* Get the files on the system with the low user access.
+* cd to dir
+* ./{File}.ps1
+
+
 # Change log 
 v1.3.2-beta rolled out
 
