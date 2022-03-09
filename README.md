@@ -12,9 +12,6 @@
 # Change log 
 v1.3.2-beta rolled out
 
-* Improved the handling checks for admin 
-* Red powershell background, when elevated 
-* Title change cause we can :D 
 * Make mock folder of system32 
 * Copy DLL to mock folder
 * More to come maybe, just maybe...
