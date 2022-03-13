@@ -11,7 +11,7 @@
 
 # Setup 
 * Make user non admin. 
-* Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser << needed 
+* Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser << needed 
  
 # Usage
 * Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)
