@@ -11,8 +11,9 @@
 
 # Setup 
 * Make user non admin. 
-* Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser << needed 
+* Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser 
 * disable real time protection  
+
 # Usage
 * Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)
 * Get the files on the system with the low user access.
