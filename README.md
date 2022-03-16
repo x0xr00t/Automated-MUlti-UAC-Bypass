@@ -18,7 +18,7 @@
 * Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)
 * Get the files on the system with the low user access.
 * cd to dir
-* ./{File}.ps1
+* ./{File}.ps1 or use the the .exe
 
 
 # Change log 
@@ -26,6 +26,7 @@ v1.3.2-beta rolled out
 
 * Make mock folder of system32 
 * Copy DLL to mock folder
+* Added a .exe (this is made from the UAC.ps1)
 * More to come maybe, just maybe...
  
 # Legal Disclaimer: 
