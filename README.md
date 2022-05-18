@@ -15,7 +15,7 @@
 * disable real time protection  
 
 # Usage
-* Download these files from either this repo directly if machine has inet cappabilities. (Or downlaod these files and serve them with python :D)
+* Download these files from either this repo directly if machine has inet capabilities. (Or downlaod these files and serve them with python :D)
 * Get the files on the system with the low user access.
 * cd to dir
 * ./{File}.ps1 (or use the .exe)
