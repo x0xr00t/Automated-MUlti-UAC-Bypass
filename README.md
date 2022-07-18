@@ -10,9 +10,7 @@
 * win server 2022
 
 # Setup 
-* Make user non admin. 
-* Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser 
-* disable real time protection  
+* Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser   
 
 # Usage
 * Download these files from either this repo directly if machine has inet capabilities. (Or downlaod these files and serve them with python :D)
