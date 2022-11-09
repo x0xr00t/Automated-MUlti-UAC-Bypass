@@ -9,6 +9,28 @@
 * win server 2019
 * win server 2022
 
+# windows 10 versions support 
+
+*    Windows 10 Home
+*    Windows 10 Pro
+*    Windows 10 Education
+*    Windows 10 Enterprise
+*    Windows 10 Enterprise 2015 LTSB
+*    Windows 10 Mobile and Mobile Enterprise
+*    Windows 10 IoT Core
+
+
+# windows 11 version support
+
+*    Windows 11 Home
+*    Windows 11 Pro
+*    Windows 11 Education
+*    Windows 11 Enterprise
+*    Windows 11 Pro Education
+*    Windows 11 Pro for Workstations
+*    Windows 11 Mixed Reality
+
+
 # Setup 
 * Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser   
 
