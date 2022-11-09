@@ -42,11 +42,10 @@
 
 
 # Change log 
-v1.3.2-beta rolled out
+v1.3.3-beta rolled out
 
-* Make mock folder of system32 
-* Copy DLL to mock folder
-* Added a .exe (this is made from the UAC.ps1)
+* added more supported versions to check for, to start uac bypass based on OS versionS
+* see list above for added version windows 10 and 11 :D
 * More to come maybe, just maybe...
  
 # Legal Disclaimer: 
