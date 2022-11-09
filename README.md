@@ -46,6 +46,7 @@ v1.3.3-beta rolled out
 
 * added more supported versions to check for, to start uac bypass based on OS versionS
 * see list above for added version windows 10 and 11 :D
+* the exe is outdated atm needs to be rolled out a new version of it ... soon will come
 * More to come maybe, just maybe...
  
 # Legal Disclaimer: 
