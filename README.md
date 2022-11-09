@@ -32,7 +32,8 @@
 
 
 # Setup 
-* Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser   
+* `Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser`   
+* Or use one of the bypasses like `type file.ps1 | poweshell.exe -no-profile` or what ever suites
 
 # Usage
 * Download these files from either this repo directly if machine has inet capabilities. (Or downlaod these files and serve them with python :D)
