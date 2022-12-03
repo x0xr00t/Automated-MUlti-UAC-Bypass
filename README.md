@@ -30,10 +30,21 @@
 *    Windows 11 Pro for Workstations
 *    Windows 11 Mixed Reality
 
+# Windows Server 2019 Support
+*    Windows Server 2019 Datacenter evolution
+*    Windows Server 2019 Standard
+*    Windows Server 2019 Datacenter
+*    Windows Server 2019 Essentials
+
+# Windows Server 2022 Support
+*    Windows Server 2022 Datacenter Evolution
+*    Windows Server 2022 Datacenter
+*    Windows Server 2022 Standard 
 
 # Setup 
 * `Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser`   
 * Or use one of the bypasses like `type file.ps1 | poweshell.exe -no-profile` or what ever suites
+
 
 # Usage
 * Download these files from either this repo directly if machine has inet capabilities. (Or downlaod these files and serve them with python :D)
@@ -43,12 +54,12 @@
 
 
 # Change log 
-v1.3.3-beta rolled out
+v1.4-beta rolled out
 
 * added more supported versions to check for, to start uac bypass based on OS versionS
-* see list above for added version windows 10 and 11 :D
+* see list above for added version windows server2019 and 2022 :D
 * the exe is outdated atm needs to be rolled out a new version of it ... soon will come
-* More to come maybe, just maybe...
+* This is the last version update i have pushed..
  
 # Legal Disclaimer: 
 * I am not responsible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
