@@ -42,6 +42,7 @@
 *    Windows Server 2022 Standard 
 
 # Setup 
+* change username in the script 
 * `Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser`   
 * Or use one of the bypasses like `type file.ps1 | poweshell.exe -no-profile` or what ever suites
 
