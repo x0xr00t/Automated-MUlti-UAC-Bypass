@@ -42,9 +42,11 @@
 *    Windows Server 2022 Standard 
 
 # Setup 
+* in sum cases u must remake the dll (if needed)
+* change username in the script (where ever needed)
 * `Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser`   
 * Or use one of the bypasses like `type file.ps1 | poweshell.exe -no-profile` or what ever suites
-
+* Add a automation tamper disable once invoked uac (this can be done!!)  
 
 # Usage
 * Download these files from either this repo directly if machine has inet capabilities. (Or downlaod these files and serve them with python :D)
