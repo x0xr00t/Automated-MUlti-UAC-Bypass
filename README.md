@@ -16,6 +16,8 @@
 *    Windows 10 Education
 *    Windows 10 Enterprise
 *    Windows 10 Enterprise 2015 LTSB
+*    Windows 10 Enterprise LTSC 2019
+*    Windows 10 Enterprise LTSC 2021 
 *    Windows 10 Mobile and Mobile Enterprise
 *    Windows 10 IoT Core
 
@@ -52,16 +54,16 @@
 * Download these files from either this repo directly if machine has inet capabilities. (Or downlaod these files and serve them with python :D)
 * Get the files on the system 
 * cd to dir
-* ./{File}.ps1 (or use the .exe)
+* ./{File}.ps1
 
 
 # Change log 
-v1.4-beta rolled out
+v1.5-beta rolled out
+* Added support for windows 10 enterprise LTSC 2019 & 2021 
 
-* added more supported versions to check for, to start uac bypass based on OS versionS
-* see list above for added version windows server2019 and 2022 :D
-* the exe is outdated atm needs to be rolled out a new version of it ... soon will come
-* This is the last version update i have pushed..
+# Issues 
+* Feel free to make issue ticket, if sum is not working, or support blocks missing.
+* To assist me when creating a ticket, list ur windows version pulled with powershell and list it with the ticket. 
  
 # Legal Disclaimer: 
 * I am not responsible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
