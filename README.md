@@ -43,6 +43,10 @@
 *    Windows Server 2022 Datacenter
 *    Windows Server 2022 Standard 
 
+# Version not supported ??
+* Make a ticket and list the windows version with the ticket, it will help me to work out a fix faster. 
+
+
 # Setup 
 * In sum cases u must remake the dll (if needed)
 * Change username in the script (where ever needed)
