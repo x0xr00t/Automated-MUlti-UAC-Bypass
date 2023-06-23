@@ -55,7 +55,7 @@
 * Add a automation tamper disable once invoked uac (this can be done!!)  
 
 # Usage
-* Download these files from either this repo directly if machine has inet capabilities. (Or downlaod these files and serve them with python :D)
+* Download these files from either this repo directly if machine has inet capabilities. (Or download these files and serve them with python :D)
 * Get the files on the system 
 * cd to dir
 * ./{File}.ps1
