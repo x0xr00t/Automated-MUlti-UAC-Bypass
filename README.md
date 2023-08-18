@@ -1,6 +1,6 @@
 # Automated Multi UAC bypass 
 
-* Automated os selector to run UAC based on OS.
+* Automated os version selector to run UAC based on OS versions.
 
 # Affected OS Versions
 
