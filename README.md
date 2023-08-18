@@ -65,6 +65,11 @@
 v1.5-beta rolled out
 * Added support for windows 10 enterprise LTSC 2019 & 2021 
 
+* Changed sl0puacb.cs to have more advanced methods
+* Changed sl0puacb.cs to have anti forensics methods
+* The DLL needs to be remade if u want to the new sl0puacb.cs
+* The old sl0puacb.cs been removed to sl0puacb-backup.cs, the dll in the package is the old one!!.
+
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
 * To assist me when creating a ticket, list ur windows version pulled with powershell and list it with the ticket. 
