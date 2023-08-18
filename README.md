@@ -65,8 +65,9 @@
 v1.5.1-beta rolled out
 * Changed sl0puacb.cs to have more advanced methods
 * Changed sl0puacb.cs to have anti forensics methods
-* The DLL needs to be remade if u want to use the new sl0puacb.cs
-* The old sl0puacb.cs been removed to sl0puacb-backup.cs, the dll in the package is the old one!!. (you can find the old sl0ppyuacb.cs under /backup/)
+
+* {Notify} !! The DLL needs to be remade if u want to use the new sl0puacb.cs !! {Notify}
+* The old sl0puacb.cs been moved to /bakcup/sl0puacb.cs, sl0p.dll been moved to /backup/ too.
 
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
