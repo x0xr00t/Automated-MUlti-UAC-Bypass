@@ -62,9 +62,7 @@
 
 
 # Change log 
-v1.5-beta rolled out
-* Added support for windows 10 enterprise LTSC 2019 & 2021 
-
+v1.5.1-beta rolled out
 * Changed sl0puacb.cs to have more advanced methods
 * Changed sl0puacb.cs to have anti forensics methods
 * The DLL needs to be remade if u want to the new sl0puacb.cs
