@@ -41,13 +41,7 @@ ShortSvcName=""CorpVPN""
 
     public static void Main(string[] args)
     {
-        if (args.Length < 1)
-        {
-            Console.WriteLine("Usage: CMSTPBypass <command_to_execute>");
-            return;
-        }
-
-        string commandToExecute = args[0];
+        string commandToExecute = "your_command_here"; // Replace with the actual command
         Execute(commandToExecute);
     }
 
