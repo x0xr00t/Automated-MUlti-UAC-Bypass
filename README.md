@@ -60,11 +60,12 @@
 * cd to dir
 * ./{File}.ps1
 
-
 # Change log 
 v1.5.1-beta rolled out
 * Changed sl0puacb.cs to have more advanced methods
 * Changed sl0puacb.cs to have anti forensics methods
+
+* Added junk data to the .INF file
 
 * {Notify} !! The DLL needs to be remade if u want to use the new sl0puacb.cs !! {Notify}
 * The old sl0puacb.cs been moved to /bakcup/sl0puacb.cs, sl0p.dll been moved to /backup/ too.
