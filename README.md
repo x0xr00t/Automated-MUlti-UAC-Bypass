@@ -47,11 +47,10 @@
 * Make a ticket and list the windows version with the ticket, it will help me to work out a fix faster. 
 
 # Compile DLL
-* You can do it with the .ps1 or do it manual with these one liners !! 
-
-# output to working dir
+You can do it with the .ps1 or do it manual with these one liners !! 
+* output to working dir
 `Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"`
-# output to system 32
+* output to system 32
 `Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows\system32\sl0p.dll`
 
 # Setup 
