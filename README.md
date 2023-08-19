@@ -46,6 +46,23 @@
 # Version not supported ??
 * Make a ticket and list the windows version with the ticket, it will help me to work out a fix faster. 
 
+# Compile Dll
+
+* powershell (the .NET Framework SDK is needed for this.)
+```
+# Define the paths
+$originalCsFilePath = "C:\path\to\CMSTPBypass.cs"      # Replace with the actual path
+$newCsFilePath = "C:\path\to\sl0puacb.cs"               # Replace with the desired new path
+$originalDllPath = "C:\output\directory\CMSTPBypass.dll"   # Replace with the actual path
+$newDllPath = "C:\output\directory\sl0p.dll"             # Replace with the desired new path
+
+# Rename the C# file
+Rename-Item -Path $originalCsFilePath -NewName $newCsFilePath
+
+# Rename the compiled DLL
+Rename-Item -Path $originalDllPath -NewName $newDllPath
+```
+* You can do it also with the .ps1 or do it manual with the oneliner in there...!! (.NET Framework SDK is needed for this.)
 
 # Setup 
 * In sum cases u must remake the dll (if needed)
