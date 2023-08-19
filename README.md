@@ -53,7 +53,7 @@
 # Define the paths
 $originalCsFilePath = "C:\path\to\CMSTPBypass.cs"      # Replace with the actual path
 $newCsFilePath = "C:\path\to\sl0puacb.cs"               # Replace with the desired new path
-$originalDllPath = "C:\output\directory\CMSTPBypass.dll"   # Replace with the actual path
+$originalDllPath = "C:\output\directory\sl0p.dll"   # Replace with the actual path
 $newDllPath = "C:\output\directory\sl0p.dll"             # Replace with the desired new path
 # Rename the C# file
 Rename-Item -Path $originalCsFilePath -NewName $newCsFilePath
