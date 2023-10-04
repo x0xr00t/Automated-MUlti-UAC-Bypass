@@ -80,6 +80,10 @@ v1.5.2-beta rolled out
     Multi-stage execution: The code is broken into multiple stages, executed at different times during the process, to further obfuscate its behavior.
 
 
+* Added obfuscation with xor on the .INF
+* Added process ghosting exec a alternative for explorer.exe 
+
+
 * {Notify} !! The DLL needs to be remade if u want to use the new sl0puacb.cs !! {Notify}
 * The old sl0puacb.cs been moved to /bakcup/sl0puacb.cs, sl0p.dll been moved to /backup/ too.
 
