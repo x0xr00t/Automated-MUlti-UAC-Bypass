@@ -83,7 +83,10 @@ v1.5.2-beta rolled out
 * Added obfuscation with xor on the .INF
 * Added process ghosting (exec a alternative for explorer.exe) 
 
+# Set B64 encoded ps1 payload in the .INF data in sl0ppyuacb.cs 
+* Don't forget to change >> '>b64PayloadHere<' << in the INF data!!..to sum b64 encoded ps1 u want to exec, before rolling out the .DLL file. 
 
+# Notify !!
 * {Notify} !! The DLL needs to be remade if u want to use the new sl0puacb.cs !! {Notify}
 * The old sl0puacb.cs been moved to /bakcup/sl0puacb.cs, sl0p.dll been moved to /backup/ too.
 
