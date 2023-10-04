@@ -86,6 +86,10 @@ v1.5.2-beta rolled out
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
 * To assist me when creating a ticket, list ur windows version pulled with powershell and list it with the ticket. 
+
+# Opened the discussion section for idea's to improve.
+* Feel free to bring idea's for improvements. 
+
  
 # Legal Disclaimer: 
 * I am not responsible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
