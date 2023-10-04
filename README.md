@@ -80,7 +80,7 @@ v1.5.2-beta rolled out
     Multi-stage execution: The code is broken into multiple stages, executed at different times during the process, to further obfuscate its behavior.
 
 
-* Added obfuscation with xor on the .INF
+* Added Obfuscation |Deobfuscation (with xor) on the .INF
 * Added process ghosting (exec a alternative for explorer.exe) 
 
 # Set B64 encoded ps1 payload in the .INF data in sl0ppyuacb.cs 
