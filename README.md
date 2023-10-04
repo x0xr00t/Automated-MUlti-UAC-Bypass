@@ -54,7 +54,7 @@ You can do it with the .ps1 or do it manual with these one liners !!
 `Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows\system32\sl0p.dll`
 
 # Setup 
-* In sum cases u must remake the dll (if needed)
+* U must remake the dll.
 * Change username in the script (where ever needed)
 * `Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser`   
 * Or use one of the bypasses like `type file.ps1 | poweshell.exe -no-profile` or what ever suites
