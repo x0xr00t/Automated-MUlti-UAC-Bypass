@@ -81,7 +81,7 @@ v1.5.2-beta rolled out
 
 
 * Added obfuscation with xor on the .INF
-* Added process ghosting exec a alternative for explorer.exe 
+* Added process ghosting (exec a alternative for explorer.exe) 
 
 
 * {Notify} !! The DLL needs to be remade if u want to use the new sl0puacb.cs !! {Notify}
