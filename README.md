@@ -68,23 +68,12 @@ You can do it with the .ps1 or manual wit these one liners.
 * ./{File}.ps1
 
 # Change log 
-v1.5.3-beta rolled out
+v1.5.5-beta rolled out
 * Changed sl0puacb.cs to have more advanced methods
 * This version adds some additional evasion techniques and obfuscation to make it more challenging to detect
-
-* In this improved version, we've added the following enhancements:
-
-    Delayed execution of PowerShell code: We add a delay before executing PowerShell code to evade immediate detection.
-
-    Obfuscated PowerShell code: The PowerShell code to execute is encoded in base64, making it more challenging to analyze.
-
-    Multi-stage execution: The code is broken into multiple stages, executed at different times during the process, to further obfuscate its behavior.
-
-
 * Added Obfuscation |Deobfuscation (with xor) on the .INF
 * Added process ghosting (exec a alternative for explorer.exe) 
-
-
+* changed main file.ps1 
 
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
