@@ -33,7 +33,7 @@ $supportedVersions = @(
         "Windows 10 Enterprise 2015"
         "Windows 10 Mobile and Mobile Enterprise"
         "Windows 10 IoT Core"
-        "Windows 10 Iot Entreprise LTSC 2021"
+        "Windows 10 IoT Enterprise LTSC 2021"
         "Windows 10 IoT Mobile Enterprise"
         "Windows Server 2019 Standard"
         "Windows Server 2019 Datacenter"
