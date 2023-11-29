@@ -68,7 +68,7 @@ You can do it with the .ps1 or manual wit these one liners.
 * ./{File}.ps1
 
 # Change log 
-v1.5.6-beta rolled out
+v1.5.7-beta rolled out
 * Changed main file `.ps1` 
 * Added `sl0p.dll`
 
