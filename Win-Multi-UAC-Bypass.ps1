@@ -1,6 +1,9 @@
 #!-.ps1 
 #
 # Author : P.Hoogeveem
+#
+# The main .ps1 file been re-dev by dev: @keytrap-x86 
+#
 # Aka    : x0xr00t
 # Build  : 20210809
 # Name   : UAC Bypass Win Server 2019| Win Server 2022 | Win 10 | Win 11
