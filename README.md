@@ -76,6 +76,9 @@ v1.5.5-beta rolled out
 * Changed main file `.ps1` 
 * Added the new `sl0p.dll`
 
+# main file change
+* .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
+
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
 * To assist me when creating a ticket, list ur windows version pulled with powershell and list it with the ticket. 
