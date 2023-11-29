@@ -47,7 +47,7 @@
 * Make a ticket and list the windows version with the ticket, it will help me to work out a fix faster. 
 
 # Compile DLL
-You can do it with the .ps1 !! 
+You can do it with the .ps1 or manual wit these one liners.
 * output to working dir
 `Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"`
 * output to system 32
@@ -66,7 +66,7 @@ You can do it with the .ps1 !!
 * ./{File}.ps1
 
 # Change log 
-v1.5.2-beta rolled out
+v1.5.3-beta rolled out
 * Changed sl0puacb.cs to have more advanced methods
 * This version adds some additional evasion techniques and obfuscation to make it more challenging to detect
 
