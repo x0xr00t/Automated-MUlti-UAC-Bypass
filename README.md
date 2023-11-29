@@ -73,7 +73,8 @@ v1.5.5-beta rolled out
 * This version adds some additional evasion techniques and obfuscation to make it more challenging to detect
 * Added Obfuscation |Deobfuscation (with xor) on the .INF
 * Added process ghosting (exec a alternative for explorer.exe) 
-* changed main file.ps1 
+* Changed main file `.ps1` 
+* Added the new `sl0p.dll`
 
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
