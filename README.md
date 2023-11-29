@@ -20,11 +20,13 @@
 *    Windows 10 Enterprise LTSC 2021 
 *    Windows 10 Mobile and Mobile Enterprise
 *    Windows 10 IoT Core
+*    Windows 10 Iot Entreprise LTSC 2021
 
 
 # windows 11 version support
 
 *    Windows 11 Home
+*    windows 11 team
 *    Windows 11 Pro
 *    Windows 11 Education
 *    Windows 11 Enterprise
