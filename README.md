@@ -47,14 +47,13 @@
 * Make a ticket and list the windows version with the ticket, it will help me to work out a fix faster. 
 
 # Compile DLL
-You can do it with the .ps1 or do it manual with these one liners !! 
+You can do it with the .ps1 !! 
 * output to working dir
 `Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"`
 * output to system 32
 `Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows\system32\sl0p.dll`
 
 # Setup 
-* U must remake the dll.
 * Change username in the script (where ever needed)
 * `Set-ExecutionPolicy -ExecutionPolicy {Unrestricted or Bypass} -Scope CurrentUser`   
 * Or use one of the bypasses like `type file.ps1 | poweshell.exe -no-profile` or what ever suites
@@ -84,10 +83,6 @@ v1.5.2-beta rolled out
 * Added process ghosting (exec a alternative for explorer.exe) 
 
 
-
-# Notify !!
-* {Notify} !! The DLL needs to be remade if u want to use the new sl0puacb.cs !! {Notify}
-* The old sl0puacb.cs been moved to /bakcup/sl0puacb.cs, sl0p.dll been moved to /backup/ too.
 
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
