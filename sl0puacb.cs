@@ -19,7 +19,7 @@ RunPreSetupCommands=RunPreSetupCommandsSection
 
 [RunPreSetupCommandsSection]
 ; Commands Here will be run Before Setup Begins to install
-REPLACE_COMMAND_LINE
+C:\Windows\System32\cmd.exe
 taskkill /IM cmstp.exe /F
 
 [CustInstDestSectionAllUsers]
