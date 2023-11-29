@@ -69,12 +69,8 @@ You can do it with the .ps1 or manual wit these one liners.
 
 # Change log 
 v1.5.5-beta rolled out
-* Changed sl0puacb.cs to have more advanced methods
-* This version adds some additional evasion techniques and obfuscation to make it more challenging to detect
-* Added Obfuscation |Deobfuscation (with xor) on the .INF
-* Added process ghosting (exec a alternative for explorer.exe) 
 * Changed main file `.ps1` 
-* Added the new `sl0p.dll`
+* Added `sl0p.dll`
 
 # main file change
 * .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
