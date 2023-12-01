@@ -163,7 +163,6 @@ if ($myWindowsPrincipal.IsInRole($adminRole)) {
         $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Sl0ppyr00t=000==Elevated==0000)"
         $Host.UI.RawUI.BackgroundColor = "DarkRed"
         clear-host
-        whoami
 }
 else {
         # We are not running "as Administrator" - so relaunch as administrator
