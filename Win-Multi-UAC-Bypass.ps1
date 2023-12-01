@@ -195,3 +195,10 @@ write-host "------------------------"
 sleep 5
 gpresult /Scope Computer /v
 write-host "________________________"
+sleep 2
+write-host "------------------------"
+write-host "- Getting LUA Settings -"
+write-host "------------------------"
+sleep 5 
+Get-ItemProperty HKLM:Software\Microsoft\Windows\CurrentVersion\policies\system
+write-host "________________________"
