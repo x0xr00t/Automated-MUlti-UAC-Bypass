@@ -102,7 +102,7 @@ Write-Host ""
 Write-Host " 0000000000000000000000000000000000000000"
 Write-Host " 0 Sl0ppyR00t Verify Place of DLL Files 0"
 Write-Host " 0000000000000000000000000000000000000000"
-Get-ChildItem C:\Windows\sl0p.dll
+Get-ChildItem C:\Windows \sytem32\sl0p.dll
 Write-Host ""
 Write-Host ""
 Write-Host " {Sl0ppyr00t} File Is there."
