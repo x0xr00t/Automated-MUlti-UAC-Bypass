@@ -70,12 +70,12 @@ You can do it with the .ps1 or manual wit these one liners.
 # Change log 
 v1.5.7-beta rolled out
 * Changed main file `.ps1` 
-* Added `sl0p.dll`
-* Added xor Encoding on the .INF file.
-* Added xor Decoding on the .INF file.
-* Added Obfuscate data on the .INF file.
-* Added Debfuscate data on the .INF file.
-* Added Clear Event Logs (CEL) on the .INF file.
+* Added `sl0p.dll` << Generated from the new .cs (old files in backup folder, including old .cs and old dll). 
+* Added xor Encoding 
+* Added xor Decoding 
+* Added Obfuscate data 
+* Added Debfuscate 
+* Added Clear Event Logs
 
 # main file change
 * .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
