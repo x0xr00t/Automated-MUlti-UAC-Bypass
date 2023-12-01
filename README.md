@@ -71,6 +71,11 @@ You can do it with the .ps1 or manual wit these one liners.
 v1.5.7-beta rolled out
 * Changed main file `.ps1` 
 * Added `sl0p.dll`
+* Added xor Encoding on the .INF file.
+* Added xor Decoding on the .INF file.
+* Added Obfuscate data on the .INF file.
+* Added Debfuscate data on the .INF file.
+* Added Clear Event Logs (CEL) on the .INF file.
 
 # main file change
 * .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
