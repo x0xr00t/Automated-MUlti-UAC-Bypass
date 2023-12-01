@@ -181,3 +181,15 @@ else {
         # Exit from the current, unelevated, process
         exit
 }
+
+write-host "-----------------"
+write-host "- user scope    -"
+write-host "-----------------"
+sleep 5 
+gpresult /Scope User /v
+write-host "___________________"
+sleep 5
+write-host "-----------------"
+write-host "- system scope    -"
+write-host "-----------------"
+gpresult /Scope Computer /v
