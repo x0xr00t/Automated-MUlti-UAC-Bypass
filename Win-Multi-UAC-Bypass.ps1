@@ -68,9 +68,6 @@ else {
         Write-Host ""
 }
 
-
-
-
 Write-Host " 00000000000000000000000000000000000000"
 Write-Host " 0 Sl0ppyR00t Making Mock Folder..... 0"
 Write-Host " 00000000000000000000000000000000000000"
