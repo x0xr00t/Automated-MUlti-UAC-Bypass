@@ -69,7 +69,7 @@ Write-Host " 00000000000000000000000000000000000000"
 New-Item "\\?\C:\Windows\System32" -ItemType Directory
 Write-Host ""
 Write-Host ""
-Write-Host " {Sl0ppyr00t} Making Mock Folder of system32 is done."
+Write-Host " {Sl0ppyr00t} Making Mock Folder of (C:\windows /system32) is done."
 Write-Host ""
 Write-Host ""
 Write-Host " 00000000000000000000000000000000000000"
