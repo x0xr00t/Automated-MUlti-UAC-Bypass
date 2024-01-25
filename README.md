@@ -53,7 +53,7 @@ You can do it with the .ps1 or manual wit these one liners.
 * output to working dir
 `Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"`
 * output to system 32
-`Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows\system32\sl0p.dll`
+`Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows \system32\sl0p.dll`
 
 # Setup 
 * Change username in the script (where ever needed)
@@ -68,7 +68,7 @@ You can do it with the .ps1 or manual wit these one liners.
 * ./{File}.ps1
 
 # Change log 
-v1.5.7-beta rolled out
+v1.5.8-beta rolled out
 * Changed main file `.ps1` 
 * Added `sl0p.dll` << Generated from the new .cs (old files in backup folder, including old .cs and old dll). 
 * Added xor Encoding 
