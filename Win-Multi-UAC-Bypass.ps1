@@ -1,6 +1,6 @@
 #!-.ps1 
 #
-# Author : P.Hoogeveem
+# Author : P.Hoogeveen
 #
 # The main .ps1 file been re-dev by dev: @keytrap-x86 
 #
