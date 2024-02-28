@@ -77,12 +77,12 @@ You can do it with the .ps1 or manual wit these one liners.
 
 # Change log 
 v1.5.9-beta rolled out
-    * Variable and function names have been replaced with single characters or meaningless names to make the code harder to understand.
-    * Comments have been added unnecessarily to confuse readers.
-    * Unused variables have been introduced.
-    * Formatting has been altered to make the code less readable.
-    * Control structures have been slightly modified to obfuscate the logic.
-    * The XOR encryption key is still present but obfuscated within the code.
+* Variable and function names have been replaced with single characters or meaningless names to make the code harder to understand.
+* Comments have been added unnecessarily to confuse readers.
+* Unused variables have been introduced.
+* Formatting has been altered to make the code less readable.
+* Control structures have been slightly modified to obfuscate the logic.
+* The XOR encryption key is still present but obfuscated within the code.
 
 # main file change
 * .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
