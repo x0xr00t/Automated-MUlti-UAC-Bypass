@@ -60,7 +60,7 @@ You can do it with the .ps1 or manual wit these one liners.
 * Or use one of the bypasses like `type file.ps1 | poweshell.exe -no-profile` or what ever suites
 * Add a automation process to disable tamper once uac been invoked (this can be done!!)  
 
-# Setup 23h2 (see additional fixes added autmated fix, or you can do it manual like this below section.)
+# Setup 23h2 (see additional fixes, i've added automated fix, or you can do it manual like this below section.)
 * Fetch the location of powershell.exe for either v2 or v7. 
 * add a variable or make it auto check the exec location of powershell.exe
 * add that dir to Start-Process {location}powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
