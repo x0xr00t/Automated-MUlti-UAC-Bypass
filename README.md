@@ -76,14 +76,13 @@ You can do it with the .ps1 or manual wit these one liners.
 * ./{File}.ps1
 
 # Change log 
-v1.5.8-beta rolled out
-* Changed main file `.ps1` 
-* Added `sl0p.dll` << Generated from the new .cs (old files in backup folder, including old .cs and old dll). 
-* Added xor Encoding 
-* Added xor Decoding 
-* Added Obfuscate data 
-* Added Debfuscate 
-* Added Clear Event Logs
+v1.5.9-beta rolled out
+    * Variable and function names have been replaced with single characters or meaningless names to make the code harder to understand.
+    * Comments have been added unnecessarily to confuse readers.
+    * Unused variables have been introduced.
+    * Formatting has been altered to make the code less readable.
+    * Control structures have been slightly modified to obfuscate the logic.
+    * The XOR encryption key is still present but obfuscated within the code.
 
 # main file change
 * .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
