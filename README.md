@@ -6,6 +6,7 @@
 
 * win 10 
 * win 11 
+* win 12 pre release 
 * win server 2019
 * win server 2022
 
