@@ -35,6 +35,10 @@
 *    Windows 11 Pro for Workstations
 *    Windows 11 Mixed Reality
 
+# windows 12 version support
+*    Windows 12 pre-release
+*    !! More versions to be added !!. 
+
 # Windows Server 2019 Support
 *    Windows Server 2019 Datacenter evolution
 *    Windows Server 2019 Standard
