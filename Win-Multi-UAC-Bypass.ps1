@@ -7,6 +7,33 @@
 # Method: DllReflection
 # Usage: Run the .ps1 file.
 
+# Function to get the PowerShell location
+function Get-PowerShellLocation {
+    # Try to find PowerShell v7
+    $pwshPath = "C:\Program Files\PowerShell\7\pwsh.exe"
+    if (Test-Path $pwshPath) {
+        return $pwshPath
+    }
+
+    # Try to find PowerShell v2
+    $psPath = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
+    if (Test-Path $psPath) {
+        return $psPath
+    }
+
+    # Try to find PowerShell v1
+    $psv1Path = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
+    if (Test-Path $psv1Path) {
+        return $psv1Path
+    }
+
+    # PowerShell not found
+    Write-Host "PowerShell location not found." -ForegroundColor Red
+    exit
+}
+
+# Get the PowerShell location
+$PowerShellLocation = Get-PowerShellLocation
 
 Write-Host ""
 Write-Host ""
