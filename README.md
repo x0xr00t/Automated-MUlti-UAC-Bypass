@@ -4,11 +4,11 @@
 
 # Affected OS Versions
 
-* win 10 
-* win 11 
-* win 12 pre release 
-* win server 2019
-* win server 2022
+* Windows 10 
+* Windows 11 
+* Windows 12 pre-release 
+* Windows server 2019
+* Windows server 2022
 
 # windows 10 versions support 
 
