@@ -5,7 +5,8 @@
 # Affected OS Versions
 
 * Windows 10 
-* Windows 11 
+* Windows 11 21h2/22h2/23h2
+* Windows 11 24h2 
 * Windows 12 pre-release 
 * Windows server 2019
 * Windows server 2022
