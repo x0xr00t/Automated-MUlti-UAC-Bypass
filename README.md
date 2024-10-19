@@ -62,7 +62,7 @@ You can do it with the .ps1 or manual wit these one liners.
 `Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\Windows \system32\sl0p.dll`
 
 # Windows 10 and 11 
-* install Windows IIS, it is needed to get cmstp.
+* install Windows IIS, it is needed to get cmstp.(<< not needed any more with the below fix.)
 * Added check for cmstp files, if not there copy from /cmstp/files/ to mockfolder.(no need to install IIS, as we copy the needed files to mockfolder from the repo.)
 
 # Setup
