@@ -103,7 +103,7 @@ v1.6.0-beta rolled out
 
 # main file change
 * .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
-** Added check for cmstp files, if not there copy from /cmstp/files/ to mockfolder.
+* Added check for cmstp files, if not there copy from /cmstp/files/ to mockfolder.
 
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
