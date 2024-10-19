@@ -86,21 +86,15 @@ You can do it with the .ps1 or manual wit these one liners.
 * ./{File}.ps1
 
 # Change log 
-v1.5.9-beta rolled out
-* Variable and function names have been replaced with single characters or meaningless names to make the code harder to understand.
-* Comments have been added unnecessarily to confuse readers.
-* Unused variables have been introduced.
-* Formatting has been altered to make the code less readable.
-* Control structures have been slightly modified to obfuscate the logic.
-* The XOR encryption key is still present but obfuscated within the code.
-* Added random hash identifier to the INF file. 
-* Added random hash identifier to the DLL file. 
+v1.6.0-beta rolled out
 
 # Additional fixes:
-Added powershell check for the .ps1 file (checks for powershell v1, v2, v7) This will fix the issue for 23h2 with the powershell path.
+* Added powershell check for the .ps1 file (checks for powershell v1, v2, v7) This will fix the issue for 23h2 with the powershell path.
+* Added check if cmstp is installed else copy from path /cmstp/files/ to mockfolder path. 
 
 # main file change
 * .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
+* Added check for cmstp installed, copy files to mock. 
 
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
