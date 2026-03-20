@@ -3,7 +3,7 @@
     Name: UAC & System Elevation Wrapper
     Method: C# Reflection / Token Stealing
     Description: Bypasses UAC and elevates to SYSTEM using C# reflection and token manipulation.
-    Updated: Added OS version check for Windows 10, 11, Server 2019/2022
+    OS version check for Windows 10, 11, Server 2019/2022
 #>
 
 function Get-PSLocation {
