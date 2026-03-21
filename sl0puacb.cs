@@ -9,7 +9,7 @@ using System.Security.Principal;
 using System.Reflection;
 
 // Metadata Easter Egg
-[assembly: AssemblyTitle("Mindef > d,y.s... Wink")]
+[assembly: AssemblyTitle("Mindef > d,y.z... Wink")]
 [assembly: AssemblyDescription("1.6.2 sending kisses - x0xr00t")]
 
 public class Program
