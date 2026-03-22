@@ -5,7 +5,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/x0xr00t/Automated-MUlti-UAC-Bypass)
 # Automated Multi UAC bypass 
 
-* Automated os version selector to run UAC based on OS versions.
+* Sweet-Kisses Release >> Automated os version selector to run UAC based on OS versions.
 
 # Affected OS Versions
 
