@@ -91,25 +91,22 @@ You can do it with the .ps1 or manual wit these one liners.
 * ./{File}.ps1
 
 # Change log 
-v1.6.0-beta rolled out
-* Variable and function names have been replaced with single characters or meaningless names to make the code harder to understand.
-* Comments have been added unnecessarily to confuse readers.
-* Unused variables have been introduced.
-* Formatting has been altered to make the code less readable.
-* Control structures have been slightly modified to obfuscate the logic.
-* The XOR encryption key is still present but obfuscated within the code.
-* Added random hash identifier to the INF file. 
-* Added random hash identifier to the DLL file. 
-* Added check for cmstp files, if not there copy from /cmstp/files/ to mockfolder.
+v1.6.2-sweet-kisses rolled out
+* Easter egg embeded for mil, defensie, defense, sandbox envo. 
+* Gaslighting windows whith legit processes to find suitable ways.
+* gaslighting windows to gain NT-AUTH/system
+* Better obfuscations to evade AV|EDR|XDR 
+* Changed sl0p-uacb.cs overall 
+* changed Multi-UAC-Bypass.ps1 overall
 
 # Additional fixes:
 * Added powershell check for the .ps1 file (checks for powershell v1, v2, v7) This will fix the issue for 23h2 with the powershell path.
 * Added check for cmstp files, if not there copy from /cmstp/files/ to mockfolder. (this makes it that there is no need for installal the cmstp before hand.)
 
 # main file change
-* .ps1 file been re-dev by  `keytrap-x86` Thanks sir, Tips hat. 
-* Added check for cmstp files, if not there copy from /cmstp/files/ to mockfolder.
-
+* .ps1 file been re-dev by  `x0xr00t`. 
+* .cs file been re-dev by `x0xr00t`.
+* 
 # Issues 
 * Feel free to make issue ticket, if sum is not working, or support blocks missing.
 * To assist me when creating a ticket, list ur windows version pulled with powershell and list it with the ticket. 
