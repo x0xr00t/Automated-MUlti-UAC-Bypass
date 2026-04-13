@@ -5,7 +5,12 @@
 ![GitHub issues](https://img.shields.io/github/issues/x0xr00t/Automated-MUlti-UAC-Bypass)
 # Automated Multi UAC bypass 
 
-* Sweet-Kisses Release >> Automated os version selector to run UAC based on OS versions.
+* EASTER SPECIAL RELEASE 1.6.2.1 >> Automated os version selector to run UAC based on OS versions.
+* Extra hidden eggs gotta collect em all... XD
+
+## This was the last update for now...
+* To all of u, i want to thank all of u for the support and loves spread... 
+* Also i want to thank mine fans and code base fans, and msrc dev smile u still got a job :P
 
 # Affected OS Versions
 
@@ -91,13 +96,9 @@ You can do it with the .ps1 or manual wit these one liners.
 * ./{File}.ps1
 
 # Change log 
-v1.6.2-sweet-kisses rolled out
+v1.6.2.1-sweet-kisses easter release rolled out
 * Easter egg embeded for mil, defensie, defense, sandbox envo. 
-* Gaslighting windows whith legit processes to find suitable ways.
-* gaslighting windows to gain NT-AUTH/system
-* Better obfuscations to evade AV|EDR|XDR 
-* Changed sl0p-uacb.cs overall 
-* changed Multi-UAC-Bypass.ps1 overall
+* Easter eggs for many to be collected, gotta collect em all XD
 
 # Additional fixes:
 * Added powershell check for the .ps1 file (checks for powershell v1, v2, v7) This will fix the issue for 23h2 with the powershell path.
