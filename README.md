@@ -109,7 +109,7 @@ v1.6.2.1-sweet-kisses easter release rolled out
 * .cs file been re-dev by `x0xr00t`.
 * 
 # Issues 
-* Feel free to sent in issue tickets but immma not solving it any more after this latest stabile release!!! 
+* Feel free to sent in issue tickets but immma not solving it any more after this latest stable release!!! 
  
 # Legal Disclaimer: 
 * I am not responsible for U using it on non authorized systems, make sure u use it on systems u own or are authorized on. 
