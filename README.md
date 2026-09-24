@@ -5,7 +5,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/x0xr00t/Automated-MUlti-UAC-Bypass)
 # Automated Multi UAC bypass 
 
-* EASTER SPECIAL RELEASE 1.6.2.1 >> Automated os version selector to run UAC based on OS versions.
+* EASTER SPECIAL RELEASE 1.6.2.2 >> Automated os version selector to run UAC based on OS versions.
 * Extra hidden eggs gotta collect em all... XD
 
 ## This was the last update for now...
