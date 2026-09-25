@@ -281,7 +281,7 @@ public class Program
         {
             ShowWindow(consoleHandle, SW_SHOW);
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("\n\n [!] 1.6.2.1 sending kisses - x0xr00t");
+            Console.WriteLine("\n\n [!] 1.6.2.2 sending kisses - x0xr00t");
             Console.WriteLine(" [!] Access Denied: Defense Environment Detected.");
             Console.WriteLine(" [!] PS: We know where you live. ;)");
             Thread.Sleep(5000);
