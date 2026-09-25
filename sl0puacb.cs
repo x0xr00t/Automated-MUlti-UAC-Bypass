@@ -11,7 +11,7 @@ using System.IO;
 
 // Metadata Easter Egg
 [assembly: AssemblyTitle("Mindef > d,y.z... Wink")]
-[assembly: AssemblyDescription("1.6.2.1 sending kisses - x0xr00t")]
+[assembly: AssemblyDescription("1.6.2.2 sending kisses - x0xr00t")]
 [assembly: AssemblyCompany("x0xr00t: 'I don't break things, i just make them more interesting.'")]
 [assembly: AssemblyProduct("Red Team's Best Friend™")]
 [assembly: AssemblyCopyright("Copyright © 2026 x0xr00t. All rights reserved. Analysts: No rights reserved.")]
