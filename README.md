@@ -1,6 +1,6 @@
 
 ![GitHub release](https://img.shields.io/github/v/release/x0xr00t/Automated-MUlti-UAC-Bypass)
-![GitHub license](https://img.shields.io/github/license/x0xr00t/Automated-MUlti-UAC-Bypass/license/license)
+![GitHub license](https://img.shields.io/github/license/x0xr00t/Automated-MUlti-UAC-Bypass)
 ![GitHub stars](https://img.shields.io/github/stars/x0xr00t/Automated-MUlti-UAC-Bypass)
 ![GitHub issues](https://img.shields.io/github/issues/x0xr00t/Automated-MUlti-UAC-Bypass)
 # Automated Multi UAC bypass 
