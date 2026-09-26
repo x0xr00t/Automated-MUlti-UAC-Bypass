@@ -1,3 +1,5 @@
+is this correct 
+
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -11,9 +13,27 @@ using System.IO;
 
 // Metadata Easter Egg
 [assembly: AssemblyTitle("Mindef > d,y.z... Wink")]
-[assembly: AssemblyDescription("1.6.2.2 sending kisses - x0xr00t")]
+[assembly: AssemblyDescription("1.6.2.3 sending kernel kisses - x0xr00t")]
 [assembly: AssemblyCompany("x0xr00t: 'I don't break things, i just make them more interesting.'")]
+[assembly: AssemblyProduct("x0xr00t RED: 'If it has a lock, i'm probably gonna politely knock on it.'")]
+[assembly: AssemblyTrademark("x0xr00t: 'Recon first, root later, screenshots always.'")]
 [assembly: AssemblyProduct("Red Team's Best Friend™")]
+
+// Intel
+[assembly: AssemblyDescription("x0xr00t INTEL: 'I don't gossip, i just correlate suspiciously well.'")]
+[assembly: AssemblyInformationalVersion("x0xr00t: 'One IOC walks into a timeline... suddenly everyone has questions.'")]
+[assembly: AssemblyTitle("x0xr00t INTEL: 'Collect crumbs. Connect dots. Question everything.'")]
+
+// Forensics
+[assembly: AssemblyCopyright("x0xr00t FORENSICS: 'I don't accuse, i just let the timestamps snitch.'")]
+[assembly: AssemblyMetadata("ForensicsMotto", "x0xr00t: 'The filesystem remembers what you forgot to delete.'")]
+[assembly: AssemblyMetadata("EvidenceMotto", "x0xr00t: 'Hash it first. Touch it never. Blame the timeline later.'")]
+
+// Fans
+[assembly: AssemblyMetadata("FanMotto", "x0xr00t FANS: 'You bring the coffee, i'll bring the weird binaries.'")]
+[assembly: AssemblyMetadata("FanMotto2", "x0xr00t: 'Powered by caffeine, curiosity, and questionable terminal tabs.'")]
+[assembly: AssemblyMetadata("FanMotto3", "x0xr00t: 'Stay sl0ppy. Stay curious. Keep the terminal glowing.'")]
+[assembly: AssemblyMetadata("FanMotto4", "x0xr00t: 'No magic here, just suspicious amounts of printf().'")]
 [assembly: AssemblyCopyright("Copyright © 2026 x0xr00t. All rights reserved. Analysts: No rights reserved.")]
 
 public class Program
@@ -227,14 +247,14 @@ public class Program
     private static bool CheckDefenseEnvironment()
     {
         string d = Environment.UserDomainName.ToLower();
-        string[] t = { "mil", "gov", "defensie", "defense", "sandbox" };
+        string[] t = { "mil", "gov", "defensie", "defense", "sandbox", "NCSC", "JSCU", "NSO_GROUP", "testbak", "DCC", "Intranet-DCC", "Intranet-Sandbox", "Defensie-testback", "INTERPOL", "EUROPOL", "Laughable_Kisses" };
         return t.Any(s => d.Contains(s));
     }
 
     private static bool IsAnalystEnvironment()
     {
         string u = Environment.UserName.ToLower();
-        string[] a = { "analyst", "soc", "threat", "research", "forensic" };
+        string[] a = { "analyst", "soc", "threat", "research", "forensic", "SIEM", "Incident", "IRCER", "DIDICROSSTHEROOD_ROOSTED", "MALlist", "DID_Umissed_ME" };
         return a.Any(s => u.Contains(s));
     }
 
@@ -281,9 +301,33 @@ public class Program
         {
             ShowWindow(consoleHandle, SW_SHOW);
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("\n\n [!] 1.6.2.2 sending kisses - x0xr00t");
-            Console.WriteLine(" [!] Access Denied: Defense Environment Detected.");
-            Console.WriteLine(" [!] PS: We know where you live. ;)");
+
+            string[] lines =
+            {
+                "1.6.2.2 sending kisses - x0xr00t",
+                "Defense environment detected. Somebody brought the blue team.",
+                "Access Denied: Your machine politely declined our invitation.",
+                "PS: We know where you live. Probably in C:\\Users\\...",
+                "Nice try. The computer says no. The computer is very confident.",
+                "Security check passed. Your dignity did not.",
+                "1.6.2.2: Because apparently version numbers needed personality.",
+                "Intruder detected. Just kidding... unless?",
+                "The magic word was 'please'. You didn't say please.",
+                "Congratulations! You triggered the suspiciously pink code path.",
+                "System says: 'Absolutely not.' x0xr00t says: 'Fair enough.'",
+                "Nothing to see here. Definitely don't inspect the source code."
+            };
+
+            // Pick a random starting point and print 3 consecutive (rotating) lines
+            Random rng = new Random();
+            int start = rng.Next(lines.Length);
+
+            Console.WriteLine("\n");
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($" [!] {lines[(start + i) % lines.Length]}");
+            }
+
             Thread.Sleep(5000);
             ShowWindow(consoleHandle, SW_HIDE);
         }
@@ -296,10 +340,32 @@ public class Program
         {
             ShowWindow(consoleHandle, SW_SHOW);
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\n\n [i] Analyst detected. Preparing your daily dose of false positives...");
-            Console.WriteLine(" [i] Why did the analyst cross the road? To generate an incident report.");
-            Console.WriteLine(" [i] Pro tip: Ctrl+F is not a detection strategy.");
-            Console.WriteLine(" [i] x0xr00t: 'We see you. Keep up the good work... or not.'");
+
+            string[] lines =
+            {
+                "Analyst detected. Preparing your daily dose of false positives...",
+                "Why did the analyst cross the road? To generate an incident report.",
+                "Pro tip: Ctrl+F is not a detection strategy.",
+                "x0xr00t: 'We see you. Keep up the good work... or not.'",
+                "Your SIEM called. It wants its alert fatigue back.",
+                "Analyst detected: 47 tabs open, 0 of them the actual investigation.",
+                "Relax, the threat is probably just a printer rebooting.",
+                "Every alert you close makes a SOC fairy lose its wings.",
+                "Fun fact: 'true positive' is just a false positive with confidence.",
+                "Tick tock. That alert is getting colder. And staler.",
+                "We'd hide from you, but you'd just triage us as 'informational'."
+            };
+
+            // Pick a random starting point and print 3 consecutive (rotating) lines
+            Random rng = new Random();
+            int start = rng.Next(lines.Length);
+
+            Console.WriteLine("\n");
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($" [i] {lines[(start + i) % lines.Length]}");
+            }
+
             Thread.Sleep(5000);
             ShowWindow(consoleHandle, SW_HIDE);
         }
@@ -312,10 +378,35 @@ public class Program
         {
             ShowWindow(consoleHandle, SW_SHOW);
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\n\n [+] Red Teamer detected! Cheers to us! *clink*");
-            Console.WriteLine(" [+] 'The only easy day was yesterday.' - x0xr00t");
-            Console.WriteLine(" [+] Remember: If it's not broken, you're not trying hard enough.");
-            Console.WriteLine(" [+] Stay spicy, stay undetected.");
+
+            string[] lines =
+            {
+                "Red Teamer detected. Someone finally clicked 'Run' with confidence.",
+                "Why did the red team cross the network? Because blue team forgot to patch it.",
+                "Pro tip: If the login works on the first try, check your scope.",
+                "x0xr00t: 'The only easy day was yesterday.'",
+                "Red team detected: 47 shells open, 0 of them properly documented.",
+                "Stay spicy, stay stealthy, and remember to read the engagement scope.",
+                "Nothing says 'good morning' like a fresh shell and an unexpected 200 OK.",
+                "Blue team sees an alert. Red team sees a Tuesday.",
+                "If it's not broken, you're probably not testing hard enough.",
+                "The shell is temporary. The screenshot in the report is forever.",
+                "Red team status: caffeinated, curious, and probably reading the logs.",
+                "Congratulations. You found something. Now prove it wasn't a false positive."
+            };
+
+            // Pick a random starting point and print 3 consecutive (rotating) lines
+            Random rng = new Random();
+            int start = rng.Next(lines.Length);
+
+            Console.WriteLine("\n");
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($" [+] {lines[(start + i) % lines.Length]}");
+            }
+
+            Thread.Sleep(5000);
+            ShowWindow(consoleHandle, SW_HIDE);
         }
     }
 
@@ -326,13 +417,38 @@ public class Program
         {
             ShowWindow(consoleHandle, SW_SHOW);
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\n\n [~] MSRC or Security Dev detected. See you next round. ;)");
-            Console.WriteLine(" [~] 'Patch Tuesday? More like Patch *someday*.'");
-            Console.WriteLine(" [~] x0xr00t: 'Don't be so sad, you still got a job... for now.' *wink*");
+
+            string[] lines =
+            {
+                "MSRC or Security Dev detected. See you next round. ;)",
+                "Patch Tuesday? More like Patch whenever the build is ready.",
+                "x0xr00t: 'Don't worry, the bug report isn't going anywhere.' *wink*",
+                "Security developer detected: Time to turn that finding into a ticket.",
+                "Found a vulnerability? Please take a number. The backlog is long.",
+                "MSRC detected. Somewhere, a CVE is waiting to be born.",
+                "The patch is coming. Eventually. Probably. Maybe.",
+                "Congratulations: You found the bug before the coffee finished brewing.",
+                "Security review detected. Everyone suddenly remembers the threat model.",
+                "One vulnerability enters the queue. Twelve meetings immediately spawn.",
+                "Dear security team: It wasn't personal. It was just an interesting endpoint.",
+                "x0xr00t says: 'See you in the next security advisory.' ;)"
+            };
+
+            // Pick a random starting point and print 3 consecutive (rotating) lines
+            Random rng = new Random();
+            int start = rng.Next(lines.Length);
+
+            Console.WriteLine("\n");
+            for (int i = 0; i < 3; i++)
+            {
+            Console.WriteLine($" [~] {lines[(start + i) % lines.Length]}");
+            }
+
             Thread.Sleep(5000);
             ShowWindow(consoleHandle, SW_HIDE);
         }
     }
+
 
     private static void TriggerSloppyFanEasterEgg()
     {
@@ -341,10 +457,33 @@ public class Program
         {
             ShowWindow(consoleHandle, SW_SHOW);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\n\n [%] sl0ppy fan detected! Big love from x0xr00t!");
-            Console.WriteLine(" [%] 'Sloppy code, sharp results.'");
-            Console.WriteLine(" [%] Remember: The messier the desk, the more brilliant the mind.");
-            Console.WriteLine(" [%] Keep those tools coming. We appreciate the chaos.");
+
+            string[] lines =
+            {
+                "sl0ppy fan detected! Big love from x0xr00t! <3",
+                "Sloppy code, sharp results. That's the whole philosophy.",
+                "The messier the desk, the more dangerous the debugging session.",
+                "Keep those tools coming. We appreciate the beautiful chaos.",
+                "sl0ppy detected: Coffee levels critical, creativity levels maximum.",
+                "Welcome, fellow chaos engineer. Your terminal awaits.",
+                "One does not simply clean the sl0ppy workspace.",
+                "If the code works, it isn't sloppy. It's aggressively optimized.",
+                "x0xr00t says: Keep hacking, keep learning, keep breaking things safely.",
+                "Congratulations! You have officially entered the sl0ppy zone.",
+                "Warning: Excessive sl0ppy energy may cause spontaneous shell sessions.",
+                "Stay cyan, stay curious, and keep those terminals busy. ;)"
+            };
+
+            // Pick a random starting point and print 3 consecutive (rotating) lines
+            Random rng = new Random();
+            int start = rng.Next(lines.Length);
+
+            Console.WriteLine("\n");
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($" [%] {lines[(start + i) % lines.Length]}");
+            }
+
             Thread.Sleep(5000);
             ShowWindow(consoleHandle, SW_HIDE);
         }
