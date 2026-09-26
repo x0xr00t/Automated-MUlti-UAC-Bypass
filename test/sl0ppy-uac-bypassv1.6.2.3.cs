@@ -13,10 +13,28 @@ using System.IO;
 
 // Metadata Easter Egg
 [assembly: AssemblyTitle("Mindef > d,y.z... Wink")]
-[assembly: AssemblyDescription("1.6.2.2 sending kisses - x0xr00t")]
+[assembly: AssemblyDescription("1.6.2.3 sending kernel kisses - x0xr00t")]
 [assembly: AssemblyCompany("x0xr00t: 'I don't break things, i just make them more interesting.'")]
+[assembly: AssemblyProduct("x0xr00t RED: 'If it has a lock, i'm probably gonna politely knock on it.'")]
+[assembly: AssemblyTrademark("x0xr00t: 'Recon first, root later, screenshots always.'")]
 [assembly: AssemblyProduct("Red Team's Best Friend™")]
 [assembly: AssemblyCopyright("Copyright © 2026 x0xr00t. All rights reserved. Analysts: No rights reserved.")]
+
+// Intel
+[assembly: AssemblyDescription("x0xr00t INTEL: 'I don't gossip, i just correlate suspiciously well.'")]
+[assembly: AssemblyInformationalVersion("x0xr00t: 'One IOC walks into a timeline... suddenly everyone has questions.'")]
+[assembly: AssemblyTitle("x0xr00t INTEL: 'Collect crumbs. Connect dots. Question everything.'")]
+
+// Forensics
+[assembly: AssemblyCopyright("x0xr00t FORENSICS: 'I don't accuse, i just let the timestamps snitch.'")]
+[assembly: AssemblyMetadata("ForensicsMotto", "x0xr00t: 'The filesystem remembers what you forgot to delete.'")]
+[assembly: AssemblyMetadata("EvidenceMotto", "x0xr00t: 'Hash it first. Touch it never. Blame the timeline later.'")]
+
+// Fans
+[assembly: AssemblyMetadata("FanMotto", "x0xr00t FANS: 'You bring the coffee, i'll bring the weird binaries.'")]
+[assembly: AssemblyMetadata("FanMotto2", "x0xr00t: 'Powered by caffeine, curiosity, and questionable terminal tabs.'")]
+[assembly: AssemblyMetadata("FanMotto3", "x0xr00t: 'Stay sl0ppy. Stay curious. Keep the terminal glowing.'")]
+[assembly: AssemblyMetadata("FanMotto4", "x0xr00t: 'No magic here, just suspicious amounts of printf().'")]
 
 public class Program
 {
