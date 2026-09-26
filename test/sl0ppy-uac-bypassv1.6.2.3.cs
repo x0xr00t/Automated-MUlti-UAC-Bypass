@@ -18,7 +18,6 @@ using System.IO;
 [assembly: AssemblyProduct("x0xr00t RED: 'If it has a lock, i'm probably gonna politely knock on it.'")]
 [assembly: AssemblyTrademark("x0xr00t: 'Recon first, root later, screenshots always.'")]
 [assembly: AssemblyProduct("Red Team's Best Friend™")]
-[assembly: AssemblyCopyright("Copyright © 2026 x0xr00t. All rights reserved. Analysts: No rights reserved.")]
 
 // Intel
 [assembly: AssemblyDescription("x0xr00t INTEL: 'I don't gossip, i just correlate suspiciously well.'")]
@@ -35,6 +34,7 @@ using System.IO;
 [assembly: AssemblyMetadata("FanMotto2", "x0xr00t: 'Powered by caffeine, curiosity, and questionable terminal tabs.'")]
 [assembly: AssemblyMetadata("FanMotto3", "x0xr00t: 'Stay sl0ppy. Stay curious. Keep the terminal glowing.'")]
 [assembly: AssemblyMetadata("FanMotto4", "x0xr00t: 'No magic here, just suspicious amounts of printf().'")]
+[assembly: AssemblyCopyright("Copyright © 2026 x0xr00t. All rights reserved. Analysts: No rights reserved.")]
 
 public class Program
 {
